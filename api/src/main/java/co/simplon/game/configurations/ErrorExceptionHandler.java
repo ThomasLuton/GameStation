@@ -20,4 +20,13 @@ public class ErrorExceptionHandler
 		new HttpHeaders(), HttpStatus.UNAUTHORIZED,
 		null);
     }
+
+    @ExceptionHandler(value = CredentialAlreadyUseException.class)
+    protected ResponseEntity<Object> handleCredentialAlreadyUseException(
+	    CredentialAlreadyUseException ex) {
+	String body = ex.getMessage();
+	return handleExceptionInternal(ex, body,
+		new HttpHeaders(), HttpStatus.BAD_REQUEST,
+		null);
+    }
 }

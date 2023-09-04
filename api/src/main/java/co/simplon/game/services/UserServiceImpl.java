@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.configurations.AuthHelper;
+import co.simplon.game.configurations.CredentialAlreadyUseException;
 import co.simplon.game.dtos.authentication.CreateUserAccount;
 import co.simplon.game.dtos.authentication.Credentials;
 import co.simplon.game.dtos.authentication.TokenInfo;
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserService {
 	UserAccount existingAccount = users
 		.findOneByEmailOrNickname(email, nickname);
 	if (existingAccount != null) {
-	    throw new BadCredentialsException(
-		    "This email is already used");
+	    throw new CredentialAlreadyUseException(
+		    "This email or this nickname is already used");
 	}
 
 	UserAccount user = new UserAccount();

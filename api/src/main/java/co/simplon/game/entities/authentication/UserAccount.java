@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import co.simplon.game.entities.AbstractEntity;
 
 @Entity
-@Table(name = "user_account")
+@Table(name = "users")
 public class UserAccount extends AbstractEntity {
 
     @Column(name = "email")
