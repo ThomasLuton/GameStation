@@ -74,9 +74,11 @@ public class UserServiceImpl implements UserService {
 	List<String> roles = new ArrayList<String>();
 	String role = candidate.getRole().getName();
 	roles.add(role);
-	String token = authHelper.createJWT(roles, "roles");
+	String token = authHelper.createJWT(roles,
+		candidate.getNickname());
 	tokenInfo.setToken(token);
 	tokenInfo.setRole(role);
+	tokenInfo.setSubject(candidate.getNickname());
 	return tokenInfo;
     }
 

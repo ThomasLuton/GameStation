@@ -4,6 +4,7 @@ public class TokenInfo {
 
     private String token;
     private String role;
+    private String subject;
 
     public TokenInfo() {
     }
@@ -24,9 +25,18 @@ public class TokenInfo {
 	this.role = role;
     }
 
+    public String getSubject() {
+	return subject;
+    }
+
+    public void setSubject(String subject) {
+	this.subject = subject;
+    }
+
     @Override
     public String toString() {
-	return "{token=" + token + ", role=" + role + "}";
+	return "{token=" + token + ", role=" + role
+		+ ", subject=" + subject + "}";
     }
 
 }

@@ -16,7 +16,10 @@ const router = createRouter({
     {
       path: '/history',
       name: 'history',
-      component: GameHistory
+      component: GameHistory,
+      beforeEnter: (to, from) => {
+        return true;
+      }
     },
     {
       path: '/fake-game',

@@ -9,7 +9,24 @@ export default {
     },
     data() {
         return {
-            isAuthenticated: true
+            isAuthenticated: localStorage.getItem("isAuthenticated") === "true" ? true : false
+        }
+    },
+    methods: {
+        switchAuth() {
+            if (this.isAuthenticated) {
+                this.disconnect();
+            } else {
+                localStorage.setItem("isAuthenticated", "true");
+                localStorage.setItem("subject", "Toto le testeur");
+                this.$router.go();
+            }
+        },
+        disconnect() {
+            localStorage.setItem("isAuthenticated", null);
+            localStorage.setItem("subject", "");
+            localStorage.setItem("token", null)
+            this.$router.go();
         }
     }
 }
@@ -24,7 +41,7 @@ export default {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <button class="btn btn-light" type="button" @click="isAuthenticated = !isAuthenticated">Switch
+                    <button class="btn btn-light" type="button" @click="switchAuth()">Switch
                         auth</button>
                     <ul class="navbar-nav">
                         <li v-if="isAuthenticated" class="nav-item">
@@ -38,7 +55,7 @@ export default {
                             data-bs-target="#signUp">
                             <a class="nav-link" href="#">Sign Up</a>
                         </li>
-                        <li v-if="isAuthenticated" class="nav-item">
+                        <li v-if="isAuthenticated" type="button" @click="disconnect()" class="nav-item">
                             <a class="nav-link" href="#">Log Out</a>
                         </li>
                     </ul>

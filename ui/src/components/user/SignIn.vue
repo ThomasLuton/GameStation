@@ -1,13 +1,60 @@
+<script>
+
+export default {
+    data() {
+        return {
+            credentials: {
+                email: "",
+                password: ""
+            }
+        }
+    },
+    methods: {
+        async submit() {
+            const resp = await this.$http.post("/sign-in", this.credentials);
+            if (resp.status === 200) {
+                this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
+                const signInModal = document.getElementById('signIn');
+                signInModal.classList.remove("show");
+                const modalFade = document.querySelector("div.modal-backdrop.fade.show");
+                modalFade.remove();
+                //C'est horrible je sais je need un store
+                localStorage.setItem("isAuthenticated", "true");
+                localStorage.setItem("subject", resp.body.subject);
+                localStorage.setItem("token", resp.body.token);
+                setTimeout(() => this.$router.go(), 5000);
+            } else {
+                this.$toast.error('toast-global', "Wrong credentials");
+            }
+        }
+    }
+}
+
+</script>
+
 <template>
     <div class="modal fade" id="signIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Sign in</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h1>Sign In</h1>
+                    <form novalidate @submit.prevent="submit">
+                        <div class="mb-3">
+                            <label for="email" class="form-label required ">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" v-model="credentials.email">
+                            <div class=" form-text">e.g. john.doe@mail.com</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label required">Password</label>
+                            <input type="password" name="password" class="form-control" id="password"
+                                v-model="credentials.password">
+                            <div class="form-text">e.g. Garfield2022!</div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-dark col-12 col-md-3">Sign up</button>
+                    </form>
                 </div>
             </div>
         </div>
