@@ -1,5 +1,7 @@
 package co.simplon.game.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -36,9 +38,15 @@ public class UserController {
 	return userService.signIn(inputs);
     }
 
+    @PostMapping("/log-out")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logOut(@RequestBody String nickname) {
+	userService.logOut(nickname);
+    }
+
     @GetMapping("/test")
-    public String test() {
-	return "Works";
+    public List<String> test() {
+	return userService.getConnectedUsers();
     }
 
 }
