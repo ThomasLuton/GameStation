@@ -24,7 +24,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Collection<GameLightView> getAllGames() {
-	return games.findAllProjectedByOrderByThumbnail();
+	return games.findAllProjectedByOrderById();
     }
 
 }

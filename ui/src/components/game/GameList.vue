@@ -7,16 +7,31 @@ export default {
     },
     data() {
         return {
-            games: [1, 2, 3, 4, 5, 6]
+            games: []
         }
+    },
+    methods: {
+        async getAllGames() {
+            const resp = await this.$http.get("/game");
+            //temporaire pour les tests 
+            //supprimer la boucle puis enlever le commentaire
+            //this.games = resp.body;
+            for (let i = 0; i < 5; i++) {
+                this.games.push(resp.body[0]);
+                this.games.push(resp.body[1]);
+            }
+        }
+    },
+    async mounted() {
+        await this.getAllGames();
     }
 }
 
 </script>
 <template>
     <div class="container-fluid col-9 border border-dark">
-        <div class="container" v-for="game in games">
-            <GameCard></GameCard>
+        <div class="row d-flex justify-content-around">
+            <GameCard v-for="game in games" :game="game"></GameCard>
         </div>
     </div>
 </template>

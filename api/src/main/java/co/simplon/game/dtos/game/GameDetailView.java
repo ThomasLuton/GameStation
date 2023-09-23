@@ -2,6 +2,8 @@ package co.simplon.game.dtos.game;
 
 public interface GameDetailView {
 
+    Long getId();
+
     String getGameName();
 
     String getGameDetail();

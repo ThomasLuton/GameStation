@@ -11,7 +11,7 @@ import co.simplon.game.entities.game.Game;
 public interface GameRepository
 	extends JpaRepository<Game, Long> {
 
-    Collection<GameLightView> findAllProjectedByOrderByThumbnail();
+    Collection<GameLightView> findAllProjectedByOrderById();
 
     GameDetailView findOneProjectById(Long id);
 
