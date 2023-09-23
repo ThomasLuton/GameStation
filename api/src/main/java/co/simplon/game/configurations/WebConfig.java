@@ -30,7 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
     SecurityFilterChain filterChain(HttpSecurity http)
 	    throws Exception {
 	http.csrf().disable().authorizeRequests()
-		.antMatchers("/sign-in", "/sign-up")
+		.antMatchers("/sign-in", "/sign-up",
+			"/game/**")
 		.permitAll().anyRequest().authenticated()
 		.and().oauth2ResourceServer().jwt();
 	return http.build();

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 
@@ -14,3 +15,16 @@ CREATE TABLE users (
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
     coins INTEGER
 );
+
+CREATE TABLE games (
+	id SERIAL PRIMARY KEY,
+	game_name VARCHAR(255) NOT NULL UNIQUE,
+	game_detail VARCHAR(1000) NOT NULL UNIQUE,
+	min_player INTEGER NOT NULL,
+	max_player INTEGER NOT NULL,
+	thumbnail VARCHAR(1000) NOT NULL UNIQUE,
+	available BOOLEAN,
+	victory_point INTEGER NOT NULL,
+	lose_point INTEGER NOT NUll,
+	draw_point INTEGER NOT Null
+)

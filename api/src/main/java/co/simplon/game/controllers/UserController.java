@@ -38,12 +38,15 @@ public class UserController {
 	return userService.signIn(inputs);
     }
 
+    // Plein de problèmes, juste pour tester un proto store
+    // Pas relier au front
     @PostMapping("/log-out")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logOut(@RequestBody String nickname) {
 	userService.logOut(nickname);
     }
 
+    // Test du proto store à changer!!
     @GetMapping("/test")
     public List<String> test() {
 	return userService.getConnectedUsers();
