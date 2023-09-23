@@ -1,8 +1,13 @@
 <script>
+import { mapStores } from 'pinia';
+import { useUserStore } from '../stores/userStore';
 export default {
+    computed: {
+        ...mapStores(useUserStore)
+    },
     methods: {
         async test() {
-            const token = localStorage.getItem("token");
+            const token = this.userStore.token;
             const resp = await this.$http.get("/test", {
                 headers: {
                     Authorization: `Bearer ${token}`

@@ -2,9 +2,9 @@ package co.simplon.game.services;
 
 import java.util.List;
 
-import co.simplon.game.dtos.authentication.CreateUserAccount;
-import co.simplon.game.dtos.authentication.Credentials;
-import co.simplon.game.dtos.authentication.TokenInfo;
+import co.simplon.game.dtos.user.CreateUserAccount;
+import co.simplon.game.dtos.user.Credentials;
+import co.simplon.game.dtos.user.TokenInfo;
 
 public interface UserService {
 

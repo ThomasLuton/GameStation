@@ -1,4 +1,4 @@
-package co.simplon.game.dtos.authentication;
+package co.simplon.game.dtos.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

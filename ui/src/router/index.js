@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import GameHistory from '../pages/GameHistory.vue';
 import FakeGame from '../pages/FakeGame.vue';
+import { useUserStore } from '../stores/userStore';
 
 const delay = (t) => new Promise((r) => setTimeout(r, t)); // FF issue
 
@@ -17,8 +18,9 @@ const router = createRouter({
       path: '/history',
       name: 'history',
       component: GameHistory,
-      beforeEnter: (to, from) => {
-        return true;
+      beforeEnter: (to) => {
+        const userStore = useUserStore();
+        return userStore.isAuthenticated;
       }
     },
     {

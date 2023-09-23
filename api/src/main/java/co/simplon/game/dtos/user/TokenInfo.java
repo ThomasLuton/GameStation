@@ -1,4 +1,4 @@
-package co.simplon.game.dtos.authentication;
+package co.simplon.game.dtos.user;
 
 public class TokenInfo {
 

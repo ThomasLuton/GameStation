@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.configurations.AuthHelper;
 import co.simplon.game.configurations.CredentialAlreadyUseException;
-import co.simplon.game.dtos.authentication.CreateUserAccount;
-import co.simplon.game.dtos.authentication.Credentials;
-import co.simplon.game.dtos.authentication.TokenInfo;
-import co.simplon.game.entities.authentication.Role;
-import co.simplon.game.entities.authentication.UserAccount;
+import co.simplon.game.dtos.user.CreateUserAccount;
+import co.simplon.game.dtos.user.Credentials;
+import co.simplon.game.dtos.user.TokenInfo;
+import co.simplon.game.entities.user.Role;
+import co.simplon.game.entities.user.UserAccount;
 import co.simplon.game.repositories.RoleRepository;
 import co.simplon.game.repositories.UserRepository;
 import co.simplon.game.stores.ActiveUserStore;

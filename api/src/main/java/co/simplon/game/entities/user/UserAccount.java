@@ -1,4 +1,4 @@
-package co.simplon.game.entities.authentication;
+package co.simplon.game.entities.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

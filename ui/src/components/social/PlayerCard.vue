@@ -1,5 +1,23 @@
+<script>
+export default {
+    props: {
+        player: {}
+    },
+    data() {
+        return {
+            listStyle: "list-group-item my-1"
+        }
+    },
+    mounted() {
+        if (this.player.role === "user") {
+            this.listStyle = this.listStyle + " list-group-item-primary"
+        } else if (this.player.role === "group") {
+            this.listStyle = this.listStyle + " list-group-item-secondary"
+        }
+    }
+}
+</script>
+
 <template>
-    <div class="container-fluid border border-dark">
-        à remplir
-    </div>
+    <li :class="listStyle">{{ player.name }}</li>
 </template>

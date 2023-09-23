@@ -8,10 +8,9 @@ import toast from './plugins/toast';
 const pinia = createPinia();
 const app = createApp(App);
 
-
+app.use(pinia);
 app.use(router);
 app.use(axios);
 app.use(toast);
-app.use(pinia);
 
 app.mount('#app');

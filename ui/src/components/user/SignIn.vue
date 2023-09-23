@@ -1,4 +1,6 @@
 <script>
+import { useUserStore } from '../../stores/userStore';
+import { mapStores } from 'pinia';
 
 export default {
     data() {
@@ -9,6 +11,9 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapStores(useUserStore)
+    },
     methods: {
         async submit() {
             const resp = await this.$http.post("/sign-in", this.credentials);
@@ -18,14 +23,16 @@ export default {
                 signInModal.classList.remove("show");
                 const modalFade = document.querySelector("div.modal-backdrop.fade.show");
                 modalFade.remove();
-                //C'est horrible je sais je need un store
-                localStorage.setItem("isAuthenticated", "true");
-                localStorage.setItem("subject", resp.body.subject);
-                localStorage.setItem("token", resp.body.token);
-                setTimeout(() => this.$router.go(), 5000);
+
+                this.setUserStore(resp.body);
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
+        },
+        setUserStore(tokenInfo) {
+            this.userStore.isAuthenticated = true;
+            this.userStore.name = tokenInfo.subject;
+            this.userStore.token = tokenInfo.token;
         }
     }
 }
