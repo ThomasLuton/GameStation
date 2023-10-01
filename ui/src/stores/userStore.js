@@ -5,7 +5,8 @@ export const useUserStore = defineStore('user', {
         return {
             isAuthenticated: false,
             name: "",
-            token: ""
+            token: "",
+            connection: {}
         }
     },
     actions: {
@@ -13,6 +14,10 @@ export const useUserStore = defineStore('user', {
             this.isAuthenticated = false;
             this.name = "";
             this.token = "";
+            this.connection = null;
+        },
+        createConnection(connection) {
+            this.connection = connection;
         }
     }
 })

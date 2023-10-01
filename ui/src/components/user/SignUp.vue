@@ -3,6 +3,7 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, helpers, email, minLength, maxLength } from '@vuelidate/validators'
 
 const passwordValidator = helpers.regex(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[%||!||*])(?!.* ).{8,42}/);
+const passwordInvalid = helpers.withMessage("Your password does'nt respect the pattern", passwordValidator);
 
 export default {
     setup() {
@@ -23,7 +24,7 @@ export default {
         return {
             inputs: {
                 email: { required, email },
-                password: { required, passwordValidator },
+                password: { required, passwordInvalid },
                 nickname: { required, minLength: minLength(4), maxLength: maxLength(20) }
             }
         }
@@ -39,6 +40,7 @@ export default {
                     this.$toast.success('toast-global', 'Account created with success.');
                     const signUpModal = document.getElementById('signUp');
                     signUpModal.classList.remove("show");
+                    signUpModal.style.display = "none";
                     const modalFade = document.querySelector("div.modal-backdrop.fade.show");
                     modalFade.remove();
                 } else {

@@ -1,6 +1,6 @@
 <script>
 import { useUserStore } from '../../stores/userStore';
-import { mapStores } from 'pinia';
+import { mapStores, mapActions } from 'pinia';
 
 export default {
     data() {
@@ -8,11 +8,15 @@ export default {
             credentials: {
                 email: "",
                 password: ""
+            },
+            connectInput: {
+                nickname: ""
             }
         }
     },
     computed: {
-        ...mapStores(useUserStore)
+        ...mapStores(useUserStore),
+        ...mapActions(useUserStore, ['createConnection'])
     },
     methods: {
         async submit() {
@@ -21,9 +25,12 @@ export default {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
                 const signInModal = document.getElementById('signIn');
                 signInModal.classList.remove("show");
+                signInModal.style.display = "none";
                 const modalFade = document.querySelector("div.modal-backdrop.fade.show");
                 modalFade.remove();
-
+                this.connectInput.nickname = resp.body.subject;
+                const connection = this.$ws.connect(this.connectInput);
+                this.userStore.createConnection(connection);
                 this.setUserStore(resp.body);
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");

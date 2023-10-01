@@ -13,7 +13,7 @@ export default {
     },
     data() {
         return {
-            isAuthenticated: localStorage.getItem("isAuthenticated") === "true" ? true : false
+            isAuthenticated: false
         }
     },
     computed: {
@@ -21,18 +21,14 @@ export default {
         ...mapActions(useUserStore, ['reset'])
     },
     methods: {
-        switchAuth() {
-            if (this.userStore.isAuthenticated) {
-                this.disconnect();
-            } else {
-                this.userStore.isAuthenticated = true;
-                this.userStore.name = "Toto le store"
-            }
-        },
-        disconnect() {
+        async disconnect() {
+            this.$ws.disconnect(this.userStore.connection);
             this.userStore.reset();
             this.$router.push("/");
         }
+    },
+    beforeMount() {
+        this.isAuthenticated = this.userStore.isAuthenticated;
     }
 }
 </script>
@@ -46,8 +42,6 @@ export default {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <button class="btn btn-light" type="button" @click="switchAuth()">Switch
-                        auth</button>
                     <ul class="navbar-nav">
                         <li v-if="userStore.isAuthenticated" class="nav-item">
                             <RouterLink :to="{ name: 'history' }" class="nav-link">GameHistory</RouterLink>

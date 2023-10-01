@@ -23,6 +23,7 @@ export default {
 <template>
     <div class="container-fluid">
         <h1 class="text-center">Welcome at Game Station {{ userStore.name }}</h1>
+
         <div class="d-flex">
             <PlayerList v-if=userStore.isAuthenticated class="d-none d-md-block"></PlayerList>
             <GameList></GameList>

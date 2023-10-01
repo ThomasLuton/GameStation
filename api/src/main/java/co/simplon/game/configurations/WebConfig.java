@@ -29,9 +29,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http)
 	    throws Exception {
-	http.csrf().disable().authorizeRequests()
-		.antMatchers("/sign-in", "/sign-up",
-			"/game/**")
+	http.cors().and().csrf().disable()
+		.authorizeRequests()
+		.antMatchers("/ws/**", "/sign-in",
+			"/sign-up", "/game/**")
 		.permitAll().anyRequest().authenticated()
 		.and().oauth2ResourceServer().jwt();
 	return http.build();

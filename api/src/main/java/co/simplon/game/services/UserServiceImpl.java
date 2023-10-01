@@ -16,7 +16,6 @@ import co.simplon.game.entities.user.Role;
 import co.simplon.game.entities.user.UserAccount;
 import co.simplon.game.repositories.RoleRepository;
 import co.simplon.game.repositories.UserRepository;
-import co.simplon.game.stores.ActiveUserStore;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,15 +24,12 @@ public class UserServiceImpl implements UserService {
     private final AuthHelper authHelper;
     private final UserRepository users;
     private final RoleRepository roles;
-    private final ActiveUserStore activeUsers;
 
     public UserServiceImpl(AuthHelper authHelper,
-	    UserRepository users, RoleRepository roles,
-	    ActiveUserStore activeUsers) {
+	    UserRepository users, RoleRepository roles) {
 	this.authHelper = authHelper;
 	this.users = users;
 	this.roles = roles;
-	this.activeUsers = activeUsers;
     }
 
     @Override
@@ -86,25 +82,16 @@ public class UserServiceImpl implements UserService {
 	tokenInfo.setRole(role);
 	String nickname = candidate.getNickname();
 	tokenInfo.setSubject(nickname);
-	// Store user as active
-	List<String> users = activeUsers.getActiveUsers();
-	if (!users.contains(nickname)) {
-	    users.add(nickname);
-	}
 	return tokenInfo;
     }
 
     @Override
     public void logOut(String nickname) {
-	List<String> users = activeUsers.getActiveUsers();
-	if (users.contains(nickname)) {
-	    users.remove(nickname);
-	}
     }
 
     @Override
     public List<String> getConnectedUsers() {
-	return activeUsers.getActiveUsers();
+	return null;
     }
 
 }
