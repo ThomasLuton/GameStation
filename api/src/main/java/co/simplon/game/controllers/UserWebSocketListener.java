@@ -20,7 +20,6 @@ public class UserWebSocketListener {
 		.wrap(event.getMessage());
 	String username = (String) headerAccessor
 		.getSessionAttributes().get("username");
-
 	if (username != null) {
 	    String message = username
 		    + " has been deconnected";
