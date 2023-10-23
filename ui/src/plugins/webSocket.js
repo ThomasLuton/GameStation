@@ -11,11 +11,9 @@ export default {
                 const connection = Stomp.over(sock);
                 connection.connect({}, () => {
                     connection.subscribe('/topic/users', (payload) => {
-                        const input = payload.body;
+                        const input = JSON.parse(payload.body);
                         const store = useConnectedStore();
                         store.updateUsers(input);
-                        console.log("ws + " + input);
-                        // convertir tout ça compliqué merci
                     })
                     connection.send("/app/connect", {},
                         JSON.stringify(connectInput)
@@ -27,6 +25,8 @@ export default {
                 return connection;
             },
             disconnect: (connection) => {
+                const store = useConnectedStore();
+                store.selfRemove()
                 connection.disconnect();
             }
         }

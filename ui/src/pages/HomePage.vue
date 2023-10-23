@@ -11,8 +11,6 @@ export default {
     },
     data() {
         return {
-            isAuthenticated: localStorage.getItem("isAuthenticated") === "true" ? true : false,
-            userName: localStorage.getItem("subject") ? localStorage.getItem("subject") : ""
         }
     },
     computed: {

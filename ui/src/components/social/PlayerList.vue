@@ -1,47 +1,33 @@
 <script>
-import PlayerCard from './PlayerCard.vue';
-import { mapStores } from 'pinia';
+import UserCard from './UserCard.vue';
+import GroupCard from './GroupCard.vue';
+import OtherCard from './OtherCard.vue';
+import { mapStores, mapActions } from 'pinia';
 import { useConnectedStore } from '../../stores/connectedStore'
 
 export default {
     components: {
-        PlayerCard: PlayerCard
+        UserCard: UserCard,
+        GroupCard: GroupCard,
+        OtherCard: OtherCard
     },
     data() {
         return {
-            user: {
-                name: "user",
-                role: "user"
-            },
-            groupedPlayer1: {
-                name: "Pote numéro 1",
-                role: "group"
-            },
-            groupedPlayer2: {
-                name: "Pote numéro 2",
-                role: "group"
-            },
-            randomPlayer: {
-                name: "random pelo",
-                role: ""
-            },
-            connectedPlayers: []
+            groups: []
         }
     },
     computed: {
-        ...mapStores(useConnectedStore)
-    },
-    mounted() {
-        this.connectedPlayers = this.connectedStore.users;
-        console.log("connected player from list = " + this.connectedPlayers);
+        ...mapStores(useConnectedStore),
+        ...mapActions(useConnectedStore, ['getOthers'])
     }
-
 }
 </script>
 <template>
     <div class="container-fluid col-3">
         <ul class="list-group">
-            <PlayerCard v-for="player in connectedPlayers" :player="player"></PlayerCard>
+            <UserCard></UserCard>
+            <GroupCard v-for="member in connectedStore.members" :key=member.nickName :member="member"></GroupCard>
+            <OtherCard v-for="player in getOthers" :key=player.nickName :player="player"></OtherCard>
         </ul>
     </div>
 </template>

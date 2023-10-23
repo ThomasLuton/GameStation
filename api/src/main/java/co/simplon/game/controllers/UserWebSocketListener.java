@@ -36,6 +36,8 @@ public class UserWebSocketListener {
 		    .getConnectedUsers();
 	    messageTemplate.convertAndSend("/topic/users",
 		    message);
+	    // messageTemplate.convertAndSend("/topic/users",
+	    // message);
 	}
     }
 }
