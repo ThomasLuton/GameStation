@@ -1,5 +1,7 @@
 <script>
 import PlayerCard from './PlayerCard.vue';
+import { mapStores } from 'pinia';
+import { useConnectedStore } from '../../stores/connectedStore'
 
 export default {
     components: {
@@ -26,13 +28,12 @@ export default {
             connectedPlayers: []
         }
     },
+    computed: {
+        ...mapStores(useConnectedStore)
+    },
     mounted() {
-        this.connectedPlayers.push(this.user);
-        this.connectedPlayers.push(this.groupedPlayer1);
-        this.connectedPlayers.push(this.groupedPlayer2);
-        this.connectedPlayers.push(this.randomPlayer);
-        this.connectedPlayers.push(this.randomPlayer);
-        this.connectedPlayers.push(this.randomPlayer);
+        this.connectedPlayers = this.connectedStore.users;
+        console.log("connected player from list = " + this.connectedPlayers);
     }
 
 }

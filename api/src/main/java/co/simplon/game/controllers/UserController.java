@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.simplon.game.dtos.user.CreateUserAccount;
 import co.simplon.game.dtos.user.Credentials;
 import co.simplon.game.dtos.user.TokenInfo;
+import co.simplon.game.dtos.user.UserView;
 import co.simplon.game.services.UserService;
 
 @RestController
@@ -40,7 +41,7 @@ public class UserController {
 
     // Test du proto store à changer!!
     @GetMapping("/test")
-    public List<String> test() {
+    public List<UserView> getConnectedUsers() {
 	return userService.getConnectedUsers();
     }
 

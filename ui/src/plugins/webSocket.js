@@ -1,5 +1,6 @@
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { useConnectedStore } from "../stores/connectedStore";
 
 
 export default {
@@ -11,7 +12,10 @@ export default {
                 connection.connect({}, () => {
                     connection.subscribe('/topic/users', (payload) => {
                         const input = payload.body;
-                        console.log("J'ai reçu => " + input);
+                        const store = useConnectedStore();
+                        store.updateUsers(input);
+                        console.log("ws + " + input);
+                        // convertir tout ça compliqué merci
                     })
                     connection.send("/app/connect", {},
                         JSON.stringify(connectInput)

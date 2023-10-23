@@ -9,15 +9,16 @@ export default {
         }
     },
     mounted() {
-        if (this.player.role === "user") {
-            this.listStyle = this.listStyle + " list-group-item-primary"
-        } else if (this.player.role === "group") {
-            this.listStyle = this.listStyle + " list-group-item-secondary"
-        }
+        // if (this.player.role === "user") {
+        //     this.listStyle = this.listStyle + " list-group-item-primary"
+        // } else if (this.player.role === "group") {
+        //     this.listStyle = this.listStyle + " list-group-item-secondary"
+        // }
     }
 }
 </script>
 
 <template>
-    <li :class="listStyle">{{ player.name }}</li>
+    <!-- :class="listStyle" -->
+    <li>{{ player.name }}</li>
 </template>

@@ -1,5 +1,7 @@
 package co.simplon.game.entities.user;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -64,6 +66,29 @@ public class UserAccount extends AbstractEntity {
 	return "{email=" + email + ", password={protected} "
 		+ ", nickname=" + nickname + ", role="
 		+ role + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = (prime * result) + Objects.hash(email);
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!super.equals(obj)) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	UserAccount other = (UserAccount) obj;
+	return Objects.equals(email, other.email);
     }
 
 }

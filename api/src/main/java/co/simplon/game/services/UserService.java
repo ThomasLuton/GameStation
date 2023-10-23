@@ -5,6 +5,7 @@ import java.util.List;
 import co.simplon.game.dtos.user.CreateUserAccount;
 import co.simplon.game.dtos.user.Credentials;
 import co.simplon.game.dtos.user.TokenInfo;
+import co.simplon.game.dtos.user.UserView;
 
 public interface UserService {
 
@@ -14,5 +15,5 @@ public interface UserService {
 
     public void logOut(String nickname);
 
-    public List<String> getConnectedUsers();
+    public List<UserView> getConnectedUsers();
 }

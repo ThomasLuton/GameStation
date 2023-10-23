@@ -12,6 +12,8 @@ import co.simplon.game.configurations.CredentialAlreadyUseException;
 import co.simplon.game.dtos.user.CreateUserAccount;
 import co.simplon.game.dtos.user.Credentials;
 import co.simplon.game.dtos.user.TokenInfo;
+import co.simplon.game.dtos.user.UserView;
+import co.simplon.game.entities.user.ConnectedUsers;
 import co.simplon.game.entities.user.Role;
 import co.simplon.game.entities.user.UserAccount;
 import co.simplon.game.repositories.RoleRepository;
@@ -24,12 +26,15 @@ public class UserServiceImpl implements UserService {
     private final AuthHelper authHelper;
     private final UserRepository users;
     private final RoleRepository roles;
+    private final ConnectedUsers connectedUsers;
 
     public UserServiceImpl(AuthHelper authHelper,
-	    UserRepository users, RoleRepository roles) {
+	    UserRepository users, RoleRepository roles,
+	    ConnectedUsers connectedUsers) {
 	this.authHelper = authHelper;
 	this.users = users;
 	this.roles = roles;
+	this.connectedUsers = connectedUsers;
     }
 
     @Override
@@ -71,6 +76,7 @@ public class UserServiceImpl implements UserService {
 	    throw new BadCredentialsException(
 		    "Wrong credentials");
 	}
+	this.connectedUsers.getUsers().add(candidate);
 	// token
 	TokenInfo tokenInfo = new TokenInfo();
 	List<String> roles = new ArrayList<String>();
@@ -87,11 +93,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logOut(String nickname) {
+	UserAccount user = users.findOneByEmailOrNickname(
+		nickname, nickname);
+	this.connectedUsers.getUsers().remove(user);
     }
 
     @Override
-    public List<String> getConnectedUsers() {
-	return null;
+    public List<UserView> getConnectedUsers() {
+	List<UserView> connectedUsers = new ArrayList<UserView>();
+	for (UserAccount user : this.connectedUsers
+		.getUsers()) {
+	    UserView userView = new UserView();
+	    userView.setNickName(user.getNickname());
+	    connectedUsers.add(userView);
+	}
+	return connectedUsers;
     }
 
 }
