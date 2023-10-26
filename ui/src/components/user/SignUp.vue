@@ -56,7 +56,7 @@ export default {
     <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary bg-opacity-10">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -89,7 +89,7 @@ export default {
                                 {{ validator.inputs.password.$errors[0].$message }}
                             </span>
                         </div>
-                        <button type="submit" class="btn btn-outline-dark col-12 col-md-3">Sign
+                        <button type="submit" class="btn btn-primary col-12 col-md-3">Sign
                             up</button>
                     </form>
                 </div>

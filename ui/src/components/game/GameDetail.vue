@@ -30,7 +30,7 @@ export default {
     <div class="modal fade" :id="gameID" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary bg-opacity-10">
                     <h1 class="modal-title fs-5">{{ game.gameName }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -44,7 +44,7 @@ export default {
                         game.losePoint }} point(s)
                     </p>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer bg-primary bg-opacity-10">
                     <button type="button" class="btn btn-primary" :disabled="!game.available">Jouer</button>
                 </div>
             </div>

@@ -22,8 +22,8 @@ export default {
     <div class="container-fluid">
         <h1 class="text-center">Welcome at Game Station {{ userStore.name }}</h1>
 
-        <div class="d-flex">
-            <PlayerList v-if=userStore.isAuthenticated class="d-none d-md-block"></PlayerList>
+        <div class="d-flex flex-column flex-md-row">
+            <PlayerList v-if=userStore.isAuthenticated></PlayerList>
             <GameList></GameList>
         </div>
     </div>

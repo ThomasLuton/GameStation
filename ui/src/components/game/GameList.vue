@@ -29,7 +29,7 @@ export default {
 
 </script>
 <template>
-    <div class="container-fluid col-9 border border-dark rounded">
+    <div class="container-fluid col-9">
         <div class="row d-flex justify-content-around">
             <GameCard v-for="game in games" :game="game"></GameCard>
         </div>

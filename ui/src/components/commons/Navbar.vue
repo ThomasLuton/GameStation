@@ -34,10 +34,12 @@ export default {
 </script>
 
 <template>
-    <header class="sticky-top bg-dark">
-        <nav class="container-xl navbar navbar-dark navbar-expand-lg">
+    <header class="sticky-top bg-primary">
+        <nav class="container-xl navbar navbar-expand-lg">
             <div class="container-fluid">
-                <RouterLink :to="{ name: 'home' }" class="navbar-brand">Logo</RouterLink>
+                <RouterLink :to="{ name: 'home' }" class="navbar-brand"><img src="public\images\logo_ecrit.png" alt="logo"
+                        width="160" height="40">
+                </RouterLink>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
                     <span class="navbar-toggler-icon"></span>
                 </button>

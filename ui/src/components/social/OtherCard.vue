@@ -12,5 +12,5 @@ export default {
 </script>
 
 <template>
-    <li class="list-group-item my-1">{{ player.nickName }}</li>
+    <li class="list-group-item">{{ player.nickName }}</li>
 </template>

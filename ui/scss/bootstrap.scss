@@ -1,1 +1,17 @@
+$primary: #00e1ff;
+$secondary: #e8cf10;
+
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+h1,
+h2 {
+    font-family: Sigmar;
+}
+
+.required::after {
+    content: ' *';
+    color: red;
+}

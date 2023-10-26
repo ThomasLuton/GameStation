@@ -15,5 +15,5 @@ export default {
 </script>
 
 <template>
-    <li class="list-group-item my-1 list-group-item-primary">{{ userStore.name }}</li>
+    <li class="list-group-item list-group-item-primary">{{ userStore.name }}</li>
 </template>
