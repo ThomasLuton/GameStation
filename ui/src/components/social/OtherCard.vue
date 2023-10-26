@@ -12,5 +12,5 @@ export default {
 </script>
 
 <template>
-    <li class="list-group-item">{{ player.nickName }}</li>
+    <li class="list-group-item"><i class="bi bi-person-fill"></i>{{ player.nickName }}</li>
 </template>
