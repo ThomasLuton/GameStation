@@ -23,7 +23,7 @@ export default {
         <h1 class="text-center">Welcome at Game Station {{ userStore.name }}</h1>
 
         <div class="d-flex flex-column flex-md-row">
-            <PlayerList v-if=userStore.isAuthenticated></PlayerList>
+            <PlayerList v-if="userStore.isAuthenticated"></PlayerList>
             <GameList></GameList>
         </div>
     </div>

@@ -23,11 +23,7 @@ export default {
             const resp = await this.$http.post("/sign-in", this.credentials);
             if (resp.status === 200) {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
-                const signInModal = document.getElementById('signIn');
-                signInModal.classList.remove("show");
-                signInModal.style.display = "none";
-                const modalFade = document.querySelector("div.modal-backdrop.fade.show");
-                modalFade.remove();
+                this.$modal.remove('signIn');
                 this.connectInput.nickname = resp.body.subject;
                 const connection = this.$ws.connect(this.connectInput);
                 this.userStore.createConnection(connection);

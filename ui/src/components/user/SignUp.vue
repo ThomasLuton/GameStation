@@ -38,11 +38,7 @@ export default {
                     Object.assign(this.inputs, this.$options.data().inputs);
                     this.validator.$reset();
                     this.$toast.success('toast-global', 'Account created with success.');
-                    const signUpModal = document.getElementById('signUp');
-                    signUpModal.classList.remove("show");
-                    signUpModal.style.display = "none";
-                    const modalFade = document.querySelector("div.modal-backdrop.fade.show");
-                    modalFade.remove();
+                    this.$modal.remove('signUp');
                 } else {
                     this.$toast.error('toast-global', resp.body);
                 }

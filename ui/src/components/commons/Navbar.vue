@@ -24,7 +24,7 @@ export default {
         async disconnect() {
             this.$ws.disconnect(this.userStore.connection);
             this.userStore.reset();
-            this.$router.push("/");
+            this.$router.go("/");
         }
     },
     beforeMount() {

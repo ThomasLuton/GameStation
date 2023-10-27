@@ -17,7 +17,7 @@ export const useConnectedStore = defineStore('connected', {
             this.users = this.users.filter((user) => user.nickName !== userStore.name);
         },
         getOthers() {
-            // filter les membres du groupes !!!
+            // filtrer les membres du groupes !!!
             const userStore = useUserStore();
             return this.users.filter((user) => user.nickName !== userStore.name);
         }
