@@ -6,7 +6,9 @@ export const useUserStore = defineStore('user', {
             isAuthenticated: false,
             name: "",
             token: "",
-            connection: {}
+            connection: {},
+            isLeader: true,
+            favorites: []
         }
     },
     actions: {
@@ -15,9 +17,18 @@ export const useUserStore = defineStore('user', {
             this.name = "";
             this.token = "";
             this.connection = null;
+            this.isLeader = true;
+            this.favorites = [];
         },
         createConnection(connection) {
             this.connection = connection;
+        },
+        addFavorite(favorite) {
+            this.favorites.push(favorite);
+        },
+        removeFavorite(favorite) {
+            const newfavorites = this.favorites.filter((candidate) => favorite !== candidate);
+            this.favorites = newfavorites;
         }
     }
 })

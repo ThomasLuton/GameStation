@@ -11,38 +11,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.game.dtos.user.CreateUserAccount;
+import co.simplon.game.dtos.user.CreatePlayer;
 import co.simplon.game.dtos.user.Credentials;
+import co.simplon.game.dtos.user.PlayerDetailView;
 import co.simplon.game.dtos.user.TokenInfo;
-import co.simplon.game.dtos.user.UserView;
-import co.simplon.game.services.UserService;
+import co.simplon.game.services.PlayerService;
 
 @RestController
-public class UserController {
+public class PlayerController {
 
-    private UserService userService;
+    private PlayerService playerService;
 
-    public UserController(UserService userService) {
-	this.userService = userService;
+    public PlayerController(PlayerService playerService) {
+	this.playerService = playerService;
     }
 
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void signUp(
-	    @RequestBody @Valid CreateUserAccount inputs) {
-	userService.signUp(inputs);
+	    @RequestBody @Valid CreatePlayer inputs) {
+	playerService.signUp(inputs);
     }
 
     @PostMapping("/sign-in")
     public TokenInfo signIn(
 	    @RequestBody Credentials inputs) {
-	return userService.signIn(inputs);
+	return playerService.signIn(inputs);
     }
 
     // Test du proto store à changer!!
-    @GetMapping("/test")
-    public List<UserView> getConnectedUsers() {
-	return userService.getConnectedUsers();
+    @GetMapping("/users")
+    public List<PlayerDetailView> getAllUsers() {
+	return playerService.getAllUsers();
     }
 
 }

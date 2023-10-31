@@ -3,14 +3,14 @@ package co.simplon.game.configurations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import co.simplon.game.entities.user.ConnectedUsers;
+import co.simplon.game.entities.user.ConnectedPlayers;
 
 @Configuration
-public class UsersConfig {
+public class PlayersConfig {
 
     @Bean
-    public ConnectedUsers createConnectedUsersSet() {
-	return ConnectedUsers.getInstance();
+    public ConnectedPlayers createConnectedUsersSet() {
+	return ConnectedPlayers.getInstance();
     }
 
 }

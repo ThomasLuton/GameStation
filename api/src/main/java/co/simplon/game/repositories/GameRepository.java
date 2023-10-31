@@ -15,4 +15,5 @@ public interface GameRepository
 
     GameDetailView findOneProjectById(Long id);
 
+    Game findOneProjectedById(Long id);
 }

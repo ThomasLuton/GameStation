@@ -9,17 +9,17 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import co.simplon.game.dtos.user.UserView;
-import co.simplon.game.services.UserService;
+import co.simplon.game.dtos.user.PlayerView;
+import co.simplon.game.services.PlayerService;
 
 @Component
-public class UserWebSocketListener {
+public class PlayerWebSocketListener {
 
     @Autowired
     private SimpMessagingTemplate messageTemplate;
 
     @Autowired
-    private UserService userService;
+    private PlayerService playerService;
 
     @EventListener
     public void handleWebSocketDisconnectListener(
@@ -31,8 +31,8 @@ public class UserWebSocketListener {
 	if (username != null) {
 	    // Methode la plus importante
 	    // Envoie un message sur un lien ws
-	    userService.logOut(username);
-	    List<UserView> message = userService
+	    playerService.logOut(username);
+	    List<PlayerView> message = playerService
 		    .getConnectedUsers();
 	    messageTemplate.convertAndSend("/topic/users",
 		    message);

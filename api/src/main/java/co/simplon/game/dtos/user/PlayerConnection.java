@@ -1,10 +1,10 @@
 package co.simplon.game.dtos.user;
 
-public class UserConnection {
+public class PlayerConnection {
 
     private String nickname;
 
-    public UserConnection() {
+    public PlayerConnection() {
 	super();
 	// TODO Auto-generated constructor stub
     }

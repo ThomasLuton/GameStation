@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import co.simplon.game.entities.AbstractEntity;
 
 @Entity
-@Table(name = "users")
-public class UserAccount extends AbstractEntity {
+@Table(name = "players")
+public class Player extends AbstractEntity {
 
     @Column(name = "email")
     private String email;
@@ -24,7 +24,7 @@ public class UserAccount extends AbstractEntity {
     @ManyToOne
     private Role role;
 
-    public UserAccount() {
+    public Player() {
 	super();
 	// TODO Auto-generated constructor stub
     }
@@ -63,9 +63,10 @@ public class UserAccount extends AbstractEntity {
 
     @Override
     public String toString() {
-	return "{email=" + email + ", password={protected} "
+	return "{email=" + email + ", password={protected)"
 		+ ", nickname=" + nickname + ", role="
 		+ role + "}";
+
     }
 
     @Override
@@ -87,7 +88,7 @@ public class UserAccount extends AbstractEntity {
 	if (getClass() != obj.getClass()) {
 	    return false;
 	}
-	UserAccount other = (UserAccount) obj;
+	Player other = (Player) obj;
 	return Objects.equals(email, other.email);
     }
 

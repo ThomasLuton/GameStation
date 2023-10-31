@@ -1,4 +1,7 @@
 <script>
+import { useConnectedStore } from '../../stores/connectedStore';
+import { mapStores } from 'pinia';
+import { useUserStore } from '../../stores/userStore';
 
 export default {
     props: {
@@ -10,6 +13,10 @@ export default {
             gameID: ""
         }
     },
+    computed: {
+        ...mapStores(useConnectedStore),
+        ...mapStores(useUserStore)
+    },
     methods: {
         async getGameById(id) {
             const resp = await this.$http.get(`/game/${id}`);
@@ -17,6 +24,10 @@ export default {
         },
         createID() {
             this.gameID = `game${this.game.id}`;
+        },
+        isAvailable() {
+            const groupSize = this.connectedStore.members.length + 1;
+            return this.game.available && (groupSize >= this.game.minPlayer && groupSize <= this.game.maxPlayer) && this.userStore.isAuthenticated;
         }
     },
     async mounted() {
@@ -45,7 +56,7 @@ export default {
                     </p>
                 </div>
                 <div class="modal-footer bg-primary bg-opacity-10">
-                    <button type="button" class="btn btn-primary" :disabled="!game.available">Jouer</button>
+                    <button type="button" class="btn btn-primary" :disabled="!isAvailable()">Jouer</button>
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ export default {
 }
 </script> 
 <template>
-    <div class="container-fluid col-10 col-md-3 h-100">
+    <div class="container-fluid my-3 col-10 col-md-3 h-100">
         <div class="p-2 rounded-4 border border-5 border-secondary bg-secondary bg-opacity-25">
             <h2 class="text-center">Connected Players</h2>
             <ul class="list-group">

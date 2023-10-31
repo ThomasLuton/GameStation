@@ -20,7 +20,7 @@ export default {
 </script>
 <template>
     <div class="container-fluid">
-        <h1 class="text-center">Welcome at Game Station {{ userStore.name }}</h1>
+        <h1 class="text-center my-2">Welcome at Game Station {{ userStore.name }}</h1>
 
         <div class="d-flex flex-column flex-md-row">
             <PlayerList v-if="userStore.isAuthenticated"></PlayerList>

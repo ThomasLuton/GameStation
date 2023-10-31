@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
-public class CreateUserAccount {
+public class CreatePlayer {
 
     @NotNull
     @Email
@@ -18,7 +18,7 @@ public class CreateUserAccount {
     @Length(min = 4, max = 20)
     private String nickname;
 
-    public CreateUserAccount() {
+    public CreatePlayer() {
 	super();
 	// TODO Auto-generated constructor stub
     }

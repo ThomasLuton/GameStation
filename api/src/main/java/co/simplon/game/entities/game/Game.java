@@ -1,5 +1,7 @@
 package co.simplon.game.entities.game;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -124,6 +126,33 @@ public class Game extends AbstractEntity {
 		+ ", victoryPoint=" + victoryPoint
 		+ ", losePoint=" + losePoint
 		+ ", drawPoint=" + drawPoint + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = super.hashCode();
+	result = (prime * result) + Objects.hash(gameDetail,
+		gameName, thumbnail);
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!super.equals(obj)) {
+	    return false;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	Game other = (Game) obj;
+	return Objects.equals(gameDetail, other.gameDetail)
+		&& Objects.equals(gameName, other.gameName)
+		&& Objects.equals(thumbnail,
+			other.thumbnail);
     }
 
 }

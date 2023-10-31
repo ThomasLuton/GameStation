@@ -1,5 +1,6 @@
+DROP TABLE IF EXISTS favorites;
 DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
@@ -7,7 +8,7 @@ CREATE TABLE roles (
 	name VARCHAR(50) UNIQUE NOT NULL
 );
 
-CREATE TABLE users (
+CREATE TABLE players (
 	id SERIAL PRIMARY KEY,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	nickname VARCHAR(20) NOT NULL UNIQUE,
@@ -27,4 +28,11 @@ CREATE TABLE games (
 	victory_point INTEGER NOT NULL,
 	lose_point INTEGER NOT NUll,
 	draw_point INTEGER NOT Null
-)
+);
+
+CREATE TABLE favorites (
+	id SERIAL PRIMARY KEY,
+	player_id INTEGER REFERENCES players(id) NOT NULL,
+	game_id INTEGER REFERENCES games(id) NOT NULL,
+	UNIQUE (player_id, game_id)
+);

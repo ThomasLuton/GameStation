@@ -25,9 +25,9 @@ export default {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
                 this.$modal.remove('signIn');
                 this.connectInput.nickname = resp.body.subject;
+                this.setUserStore(resp.body);
                 const connection = this.$ws.connect(this.connectInput);
                 this.userStore.createConnection(connection);
-                this.setUserStore(resp.body);
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
@@ -36,6 +36,8 @@ export default {
             this.userStore.isAuthenticated = true;
             this.userStore.name = tokenInfo.subject;
             this.userStore.token = tokenInfo.token;
+            this.userStore.favorites = tokenInfo.favorites;
+            this.userStore.id = tokenInfo.id;
         }
     }
 }

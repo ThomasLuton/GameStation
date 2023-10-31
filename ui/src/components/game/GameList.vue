@@ -13,13 +13,7 @@ export default {
     methods: {
         async getAllGames() {
             const resp = await this.$http.get("/game");
-            //temporaire pour les tests 
-            //supprimer la boucle puis enlever le commentaire
-            //this.games = resp.body;
-            for (let i = 0; i < 5; i++) {
-                this.games.push(resp.body[0]);
-                this.games.push(resp.body[1]);
-            }
+            this.games = resp.body;
         }
     },
     async mounted() {
