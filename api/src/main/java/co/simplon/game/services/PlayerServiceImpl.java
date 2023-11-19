@@ -7,7 +7,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.simplon.game.configurations.AuthHelper;
 import co.simplon.game.configurations.CredentialAlreadyUseException;
 import co.simplon.game.dtos.favorite.FavoriteView;
 import co.simplon.game.dtos.user.CreatePlayer;
@@ -21,6 +20,7 @@ import co.simplon.game.entities.user.Role;
 import co.simplon.game.repositories.GameRepository;
 import co.simplon.game.repositories.PlayerRepository;
 import co.simplon.game.repositories.RoleRepository;
+import co.simplon.game.utils.AuthHelper;
 
 @Service
 @Transactional(readOnly = true)

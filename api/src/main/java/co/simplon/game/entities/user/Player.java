@@ -71,10 +71,7 @@ public class Player extends AbstractEntity {
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = super.hashCode();
-	result = (prime * result) + Objects.hash(email);
-	return result;
+	return Objects.hash(email);
     }
 
     @Override
@@ -82,10 +79,7 @@ public class Player extends AbstractEntity {
 	if (this == obj) {
 	    return true;
 	}
-	if (!super.equals(obj)) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (!(obj instanceof Player)) {
 	    return false;
 	}
 	Player other = (Player) obj;

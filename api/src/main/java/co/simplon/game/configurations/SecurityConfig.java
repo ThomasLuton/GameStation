@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.auth0.jwt.algorithms.Algorithm;
 
+import co.simplon.game.utils.AuthHelper;
+
 @Configuration
 public class SecurityConfig {
 

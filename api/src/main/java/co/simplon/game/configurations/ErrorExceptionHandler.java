@@ -15,6 +15,7 @@ public class ErrorExceptionHandler
     @ExceptionHandler(value = BadCredentialsException.class)
     protected ResponseEntity<Object> handleBadCredentialException(
 	    BadCredentialsException ex) {
+	// dto
 	String body = ex.getMessage();
 	return handleExceptionInternal(ex, body,
 		new HttpHeaders(), HttpStatus.UNAUTHORIZED,

@@ -130,11 +130,7 @@ public class Game extends AbstractEntity {
 
     @Override
     public int hashCode() {
-	final int prime = 31;
-	int result = super.hashCode();
-	result = (prime * result) + Objects.hash(gameDetail,
-		gameName, thumbnail);
-	return result;
+	return Objects.hash(gameName);
     }
 
     @Override
@@ -142,17 +138,11 @@ public class Game extends AbstractEntity {
 	if (this == obj) {
 	    return true;
 	}
-	if (!super.equals(obj)) {
-	    return false;
-	}
-	if (getClass() != obj.getClass()) {
+	if (!(obj instanceof Game)) {
 	    return false;
 	}
 	Game other = (Game) obj;
-	return Objects.equals(gameDetail, other.gameDetail)
-		&& Objects.equals(gameName, other.gameName)
-		&& Objects.equals(thumbnail,
-			other.thumbnail);
+	return Objects.equals(gameName, other.gameName);
     }
 
 }

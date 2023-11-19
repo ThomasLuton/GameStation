@@ -1,5 +1,7 @@
 package co.simplon.game.entities.associations;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -44,6 +46,24 @@ public class Favorite extends AbstractEntity {
     @Override
     public String toString() {
 	return "{user=" + user + ", game=" + game + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(game, user);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Favorite)) {
+	    return false;
+	}
+	Favorite other = (Favorite) obj;
+	return Objects.equals(game, other.game)
+		&& Objects.equals(user, other.user);
     }
 
 }

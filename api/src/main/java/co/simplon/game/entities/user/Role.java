@@ -1,5 +1,7 @@
 package co.simplon.game.entities.user;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -29,6 +31,23 @@ public class Role extends AbstractEntity {
     @Override
     public String toString() {
 	return "{name=" + name + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Role)) {
+	    return false;
+	}
+	Role other = (Role) obj;
+	return Objects.equals(name, other.name);
     }
 
 }

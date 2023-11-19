@@ -1,4 +1,4 @@
-package co.simplon.game.configurations;
+package co.simplon.game.utils;
 
 import java.time.Instant;
 import java.util.List;

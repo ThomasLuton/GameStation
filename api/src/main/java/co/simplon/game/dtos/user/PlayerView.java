@@ -1,14 +1,8 @@
 package co.simplon.game.dtos.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import co.simplon.game.entities.game.Game;
-
 public class PlayerView {
 
     private String nickName;
-    private List<Game> favorites = new ArrayList<Game>();
 
     public PlayerView() {
 	super();
@@ -23,18 +17,9 @@ public class PlayerView {
 	this.nickName = nickName;
     }
 
-    public List<Game> getFavorites() {
-	return favorites;
-    }
-
-    public void setFavorites(List<Game> favorites) {
-	this.favorites = favorites;
-    }
-
     @Override
     public String toString() {
-	return "{nickName=" + nickName + ", favorites="
-		+ favorites + "}";
+	return "{nickName=" + nickName + "}";
     }
 
 }

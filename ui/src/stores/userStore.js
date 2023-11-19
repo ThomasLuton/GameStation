@@ -1,20 +1,23 @@
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core"
 
 export const useUserStore = defineStore('user', {
     state: () => {
         return {
-            isAuthenticated: false,
-            name: "",
-            token: "",
-            connection: {},
-            isLeader: true,
-            favorites: []
+            isAuthenticated: useLocalStorage('isAuthenticated', false),
+            name: useLocalStorage('name', ""),
+            id: useLocalStorage('id', 0),
+            token: useLocalStorage('token', ""),
+            connection: useLocalStorage('connection', {}),
+            isLeader: useLocalStorage('isLeader', true),
+            favorites: useLocalStorage('favorites', [])
         }
     },
     actions: {
         reset() {
             this.isAuthenticated = false;
             this.name = "";
+            this.id = 0;
             this.token = "";
             this.connection = null;
             this.isLeader = true;

@@ -1,14 +1,15 @@
 <script>
 import { useUserStore } from '../../stores/userStore';
 import GameDetail from './GameDetail.vue';
-import { mapStores, mapActions } from 'pinia';
+import { mapStores } from 'pinia';
 
 export default {
     components: {
         GameDetail: GameDetail
     },
     props: {
-        game: {}
+        game: {},
+        favorite: {}
     },
     data() {
         return {
@@ -17,61 +18,49 @@ export default {
         }
     },
     computed: {
-        ...mapStores(useUserStore),
-        ...mapActions(useUserStore, ['addFavorite', 'removeFavorite'])
+        ...mapStores(useUserStore)
     },
     methods: {
         createID() {
             this.gameID = `#game${this.game.id}`;
         },
-        isFavorite() {
-            const favorites = this.userStore.favorites;
-            for (let i = 0; i < favorites.length; i++) {
-                if (favorites[i].gameName === this.game.gameName) {
-                    return true;
-                }
-            }
-            return false;
+        createFavoriteClass() {
+            this.favoriteClass = this.favorite ? "bi bi-star-fill text-secondary" : "bi bi-star";
         },
         async switchFavorite() {
             const token = this.userStore.token;
-            if (this.isFavorite()) {
-                const favorites = this.userStore.favorites;
-                let favorite = {};
-                for (let i = 0; i < favorites.length; i++) {
-                    if (favorites[i].gameName === this.game.gameName) {
-                        favorite = favorites[i];
-                    }
-                }
-                const resp = await this.$http.delete(`favorites/${favorite.id}`, {
+            if (this.favorite) {
+                const resp = await this.$http.delete(`favorites/${this.favorite.id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
                 if (resp.status == 204) {
-                    console.log("Remove " + favorite.id);
+                    console.log("Remove " + this.favorite.id);
+                    this.favoriteClass = "bi bi-star";
                 }
             } else {
                 const input = {
                     userID: this.userStore.id,
                     gameID: this.game.id
                 }
-                const resp = await this.$http.post(`favorites/${input.userID}/${input.gameID}`, {
+                // user use subject with security context holder
+                const resp = await this.$http.post(`favorites/${input.userID}/${input.gameID}`, null, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                // stop repeat authorization
                 if (resp.status == 204) {
                     console.log("Add game " + input.gameID + " to user " + input.userID);
+                    this.favoriteClass = "bi bi-star-fill text-secondary";
                 }
             }
         }
     },
     mounted() {
         this.createID();
-    },
-    updated() {
-        this.favoriteClass = this.isFavorite() ? "bi bi-star-fill text-secondary" : "bi bi-star";
+        this.createFavoriteClass();
     }
 }
 </script>
@@ -81,7 +70,7 @@ export default {
             <h5 class="card-title text-center">{{ game.gameName }}</h5>
             <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0"><i :class="favoriteClass"
                     @click="switchFavorite"></i></button>
-
+            <!-- parameter game.id -->
             <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="gameID">
                 <img :src="game.thumbnail" class="card-img-top" :alt=game.gameName>
             </button>

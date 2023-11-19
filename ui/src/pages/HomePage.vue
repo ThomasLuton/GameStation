@@ -16,6 +16,14 @@ export default {
     computed: {
         ...mapStores(useUserStore)
     },
+    async mounted() {
+        if (this.userStore.name !== "") {
+            const connection = await this.$ws.connect({
+                nickname: this.userStore.name
+            });
+            this.userStore.createConnection(connection);
+        }
+    }
 }
 </script>
 <template>
