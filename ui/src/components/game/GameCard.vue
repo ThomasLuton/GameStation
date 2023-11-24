@@ -29,32 +29,15 @@ export default {
         },
         async switchFavorite() {
             const token = this.userStore.token;
-            if (this.favorite) {
-                const resp = await this.$http.delete(`favorites/${this.favorite.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                if (resp.status == 204) {
-                    console.log("Remove " + this.favorite.id);
-                    this.favoriteClass = "bi bi-star";
+            const resp = await this.$http.patch(`favorites/${this.game.id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
+            });
+            if (resp.body == null) {
+                this.favoriteClass = "bi bi-star";
             } else {
-                const input = {
-                    userID: this.userStore.id,
-                    gameID: this.game.id
-                }
-                // user use subject with security context holder
-                const resp = await this.$http.post(`favorites/${input.userID}/${input.gameID}`, null, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                // stop repeat authorization
-                if (resp.status == 204) {
-                    console.log("Add game " + input.gameID + " to user " + input.userID);
-                    this.favoriteClass = "bi bi-star-fill text-secondary";
-                }
+                this.favoriteClass = "bi bi-star-fill text-secondary";
             }
         }
     },
@@ -68,9 +51,8 @@ export default {
     <div class="card mx-1 my-3 col-12 col-md-5 col-lg-3 border-primary border-5 bg-primary bg-opacity-10 rounded-4">
         <div class="card-body position-relative">
             <h5 class="card-title text-center">{{ game.gameName }}</h5>
-            <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0"><i :class="favoriteClass"
-                    @click="switchFavorite"></i></button>
-            <!-- parameter game.id -->
+            <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0" @click="switchFavorite"><i
+                    :class="favoriteClass"></i></button>
             <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="gameID">
                 <img :src="game.thumbnail" class="card-img-top" :alt=game.gameName>
             </button>

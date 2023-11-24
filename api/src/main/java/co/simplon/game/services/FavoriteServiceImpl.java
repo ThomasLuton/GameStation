@@ -48,6 +48,26 @@ public class FavoriteServiceImpl
     }
 
     @Override
+    @Transactional
+    public Long patch(String userName, Long game_id) {
+	Player player = users.findOneByNickname(userName);
+	if (player != null) {
+	    Long playerID = player.getId();
+	    Favorite favorite = favorites
+		    .getOneByPlayerIDAndGameID(playerID,
+			    game_id);
+	    if (favorite == null) {
+		this.add(playerID, game_id);
+		favorites.flush();
+		return favorites.getOneByPlayerIDAndGameID(
+			playerID, game_id).getId();
+	    }
+	    this.remove(favorite.getId());
+	}
+	return null;
+    }
+
+    @Override
     public List<FavoriteView> getAllFavoriteForOnePlayer(
 	    Long playerID) {
 	List<Favorite> playerFavorites = favorites

@@ -10,6 +10,8 @@ public interface FavoriteService {
 
     public void remove(Long favoriteID);
 
+    public Long patch(String userName, Long game_id);
+
     public List<FavoriteView> getAllFavoriteForOnePlayer(
 	    Long playerID);
 }

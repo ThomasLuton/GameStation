@@ -17,4 +17,9 @@ public interface FavoriteRepository
     List<Favorite> getAllForOnePlayer(
 	    @Param("playerID") Long playerID);
 
+    @Query(value = "SELECT * FROM favorites f WHERE f.player_id = :playerID AND f.game_id = :gameID", nativeQuery = true)
+    Favorite getOneByPlayerIDAndGameID(
+	    @Param("playerID") Long playerID,
+	    @Param("gameID") Long gameID);
+
 }

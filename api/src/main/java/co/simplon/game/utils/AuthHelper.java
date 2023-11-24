@@ -1,9 +1,15 @@
 package co.simplon.game.utils;
 
 import java.time.Instant;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -42,6 +48,23 @@ public class AuthHelper {
 		.withExpiresAt(expirationTime)
 		.withArrayClaim("roles", rolesAsArray)
 		.sign(algorithm);
+    }
+
+    public Map<String, Object> getPrincipalInfo(
+	    JwtAuthenticationToken principal) {
+
+	Collection<String> authorities = principal
+		.getAuthorities().stream()
+		.map(GrantedAuthority::getAuthority)
+		.collect(Collectors.toList());
+
+	Map<String, Object> info = new HashMap<>();
+	info.put("name", principal.getName());
+	info.put("authorities", authorities);
+	info.put("tokenAttributes",
+		principal.getTokenAttributes());
+
+	return info;
     }
 
     public static class Builder {
