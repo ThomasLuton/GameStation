@@ -48,6 +48,9 @@ export default {
                         <li v-if="userStore.isAuthenticated" class="nav-item">
                             <RouterLink :to="{ name: 'history' }" class="nav-link">GameHistory</RouterLink>
                         </li>
+                        <li v-if="userStore.isAuthenticated" class="nav-item">
+                            <RouterLink :to="{ name: 'admin' }" class="nav-link">Admin</RouterLink>
+                        </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
                             data-bs-target="#signIn">
                             <a class="nav-link" href="#">Sign In</a>

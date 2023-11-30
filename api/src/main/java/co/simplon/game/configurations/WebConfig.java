@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
 	JwtGrantedAuthoritiesConverter autoritiesConverter = new JwtGrantedAuthoritiesConverter();
 	autoritiesConverter
 		.setAuthoritiesClaimName("roles");
-	autoritiesConverter.setAuthorityPrefix("");
+	autoritiesConverter.setAuthorityPrefix("ROLE_");
 	JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
 	authenticationConverter
 		.setJwtGrantedAuthoritiesConverter(

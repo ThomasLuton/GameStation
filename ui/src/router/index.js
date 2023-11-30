@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import GameHistory from '../pages/GameHistory.vue';
+import EditGame from '../components/admin/EditGame.vue';
 import FakeGame from '../pages/FakeGame.vue';
 import { useUserStore } from '../stores/userStore';
 
@@ -13,6 +14,20 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomePage
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: EditGame,
+      beforeEnter: (to) => {
+        const userStore = useUserStore();
+        return userStore.isAuthenticated;
+      }
+    },
+    {
+      path: '/admin/game/:id/update',
+      name: 'game-update',
+      component: () => import('../components/admin/GameUpdate.vue')
     },
     {
       path: '/history',
