@@ -24,7 +24,7 @@ export default {
         async disconnect() {
             this.$ws.disconnect(this.userStore.connection);
             this.userStore.reset();
-            this.$router.go("/");
+            this.$router.push('/');
         }
     },
     beforeMount() {
@@ -46,21 +46,23 @@ export default {
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li v-if="userStore.isAuthenticated" class="nav-item">
-                            <RouterLink :to="{ name: 'history' }" class="nav-link">GameHistory</RouterLink>
+                            <RouterLink :to="{ name: 'history' }" class="nav-link">{{ $t('labels.navigation.history') }}
+                            </RouterLink>
                         </li>
                         <li v-if="userStore.isAuthenticated" class="nav-item">
-                            <RouterLink :to="{ name: 'admin' }" class="nav-link">Admin</RouterLink>
+                            <RouterLink :to="{ name: 'admin' }" class="nav-link">{{ $t('labels.navigation.admin') }}
+                            </RouterLink>
                         </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
                             data-bs-target="#signIn">
-                            <a class="nav-link" href="#">Sign In</a>
+                            <a class="nav-link" href="#">{{ $t('labels.navigation.signIn') }}</a>
                         </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
                             data-bs-target="#signUp">
-                            <a class="nav-link" href="#">Sign Up</a>
+                            <a class="nav-link" href="#">{{ $t('labels.navigation.signUp') }}</a>
                         </li>
                         <li v-if="userStore.isAuthenticated" type="button" @click="disconnect()" class="nav-item">
-                            <a class="nav-link" href="#">Log Out</a>
+                            <a class="nav-link" href="#">{{ $t('labels.navigation.logOut') }}</a>
                         </li>
                     </ul>
                 </div>

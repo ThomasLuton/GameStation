@@ -53,40 +53,40 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary bg-opacity-10">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Sign up</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $t('labels.auth.signUp') }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form novalidate @submit.prevent="submit">
                         <div class="mb-3">
-                            <label for="email" class="form-label required ">Email</label>
+                            <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
                             <input type="email" class="form-control" name="email" id="email" v-model="inputs.email"
                                 :class="{ 'is-invalid': validator.inputs.email.$error }">
-                            <div class=" form-text">e.g. john.doe@mail.com</div>
+                            <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
                             <span v-if="validator.inputs.email.$error">
                                 {{ validator.inputs.email.$errors[0].$message }}
                             </span>
                         </div>
                         <div class="mb-3">
-                            <label for="nickname" class="form-label required ">Nickname</label>
+                            <label for="nickname" class="form-label required ">{{ $t('labels.auth.nickName') }}</label>
                             <input type="nickname" class="form-control" name="nickname" id="nickname"
                                 v-model="inputs.nickname" :class="{ 'is-invalid': validator.inputs.nickname.$error }">
-                            <div class=" form-text">e.g. Kevindu67</div>
+                            <div class=" form-text">{{ $t('labels.auth.helpNickName') }}</div>
                             <span v-if="validator.inputs.nickname.$error">
                                 {{ validator.inputs.nickname.$errors[0].$message }}
                             </span>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label required">Password</label>
+                            <label for="password" class="form-label required">{{ $t('labels.auth.password') }}</label>
                             <input type="password" name="password" class="form-control" id="password"
                                 v-model="inputs.password" :class="{ 'is-invalid': validator.inputs.password.$error }">
-                            <div class="form-text">e.g. Garfield2022!</div>
+                            <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
                             <span v-if="validator.inputs.password.$error">
                                 {{ validator.inputs.password.$errors[0].$message }}
                             </span>
                         </div>
-                        <button type="submit" class="btn btn-primary col-12 col-md-3">Sign
-                            up</button>
+                        <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signUp')
+                        }}</button>
                     </form>
                 </div>
             </div>

@@ -47,16 +47,20 @@ export default {
                 </div>
                 <div class="modal-body">
                     <img :src="game.thumbnail" class="card-img-top" :alt=game.gameName>
-                    <p>Règles: </p>
+                    <p>{{ $t('labels.game.rules') }}</p>
                     <p>{{ game.gameDetail }}</p>
-                    <p>Nombre de joueurs : </p>
-                    <p>{{ game.minPlayer }} à {{ game.maxPlayer }} joueur(s)</p>
-                    <p>Victoire : {{ game.victoryPoint }} point(s), Egalité : {{ game.drawPoint }} point(s), Défaite : {{
-                        game.losePoint }} point(s)
+                    <p>{{ $t('labels.game.playerNumber') }}</p>
+                    <p>{{ game.minPlayer }} {{ $t('labels.game.to') }} {{ game.maxPlayer }} {{ $t('labels.game.players') }}
+                    </p>
+                    <p>{{ $t('labels.game.victory') }} {{ game.victoryPoint }} {{ $t('labels.game.point') }} {{
+                        $t('labels.game.draw') }} {{
+        game.drawPoint }}{{ $t('labels.game.point') }} {{ $t('labels.game.lose') }} {{
+        game.losePoint }} {{ $t('labels.game.point') }}
                     </p>
                 </div>
                 <div class="modal-footer bg-primary bg-opacity-10">
-                    <button type="button" class="btn btn-primary" :disabled="!isAvailable()">Jouer</button>
+                    <button type="button" class="btn btn-primary" :disabled="!isAvailable()">{{
+                        $t('labels.game.play') }}</button>
                 </div>
             </div>
         </div>
