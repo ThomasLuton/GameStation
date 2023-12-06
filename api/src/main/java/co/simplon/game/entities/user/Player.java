@@ -23,6 +23,10 @@ public class Player extends AbstractEntity {
     @JoinColumn(name = "role_id")
     @ManyToOne
     private Role role;
+    @Column(name = "coins")
+    private int coins;
+    @Column(name = "connection")
+    private boolean connection;
 
     public Player() {
 	super();
@@ -61,12 +65,27 @@ public class Player extends AbstractEntity {
 	this.nickname = nickname;
     }
 
+    public int getCoins() {
+	return coins;
+    }
+
+    public void setCoins(int coins) {
+	this.coins = coins;
+    }
+
+    public boolean isConnection() {
+	return connection;
+    }
+
+    public void setConnection(boolean connection) {
+	this.connection = connection;
+    }
+
     @Override
     public String toString() {
-	return "{email=" + email + ", password={protected)"
-		+ ", nickname=" + nickname + ", role="
-		+ role + "}";
-
+	return "{email=" + email + ", nickname=" + nickname
+		+ ", role=" + role + ", coins=" + coins
+		+ ", connection=" + connection + "}";
     }
 
     @Override

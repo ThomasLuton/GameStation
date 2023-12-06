@@ -9,7 +9,7 @@ const enMessages = {
             email: "Email",
             nickName: "Nickname",
             password: "Password",
-            helpEmail: "e.g. john.doe@mail.com",
+            helpEmail: "e.g. john.doemail.com",
             helpNickName: "e.g. JohnDoe",
             helpPassword: "e.g. Garfield2022!"
         },

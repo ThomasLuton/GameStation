@@ -3,6 +3,7 @@ package co.simplon.game.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import co.simplon.game.entities.user.Player;
@@ -20,5 +21,8 @@ public interface PlayerRepository
 	    String nickname);
 
     List<Player> findAllProjectedByOrderById();
+
+    @Query(value = "Select * from players p where p.connection = true", nativeQuery = true)
+    List<Player> findAllConnectedPlayer();
 
 }

@@ -14,7 +14,8 @@ CREATE TABLE players (
 	nickname VARCHAR(20) NOT NULL UNIQUE,
 	password CHAR(60) NOT NULL,
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
-    coins INTEGER
+    coins INTEGER NOT NULL,
+	connection BOOLEAN NOT NULL
 );
 
 CREATE TABLE games (
@@ -24,7 +25,7 @@ CREATE TABLE games (
 	min_player INTEGER NOT NULL,
 	max_player INTEGER NOT NULL,
 	thumbnail VARCHAR(1000) NOT NULL UNIQUE,
-	available BOOLEAN,
+	available BOOLEAN NOT NULL,
 	victory_point INTEGER NOT NULL,
 	lose_point INTEGER NOT NUll,
 	draw_point INTEGER NOT Null

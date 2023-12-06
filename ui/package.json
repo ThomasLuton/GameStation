@@ -13,6 +13,7 @@
     "@vueuse/core": "^10.5.0",
     "axios": "^1.5.0",
     "bootstrap-vue": "^2.23.1",
+    "jwt-decode": "^4.0.0",
     "pinia": "^2.1.6",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",

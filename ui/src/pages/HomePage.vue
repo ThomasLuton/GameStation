@@ -3,6 +3,7 @@ import GameList from '../components/game/GameList.vue';
 import PlayerList from '../components/social/PlayerList.vue';
 import { mapStores } from 'pinia';
 import { useUserStore } from '../stores/userStore';
+import { jwtDecode } from "jwt-decode";
 
 export default {
     components: {
@@ -17,11 +18,19 @@ export default {
         ...mapStores(useUserStore)
     },
     async mounted() {
-        if (this.userStore.name !== "") {
-            const connection = await this.$ws.connect({
-                nickname: this.userStore.name
-            });
-            this.userStore.createConnection(connection);
+        if (this.userStore.token !== "") {
+            const token = this.userStore.token;
+            const decoded = jwtDecode(token);
+            const now = Math.floor(Date.now() / 1000);
+            if (decoded.exp > now) {
+                console.log("expire in " + (decoded.exp - now) + "sec")
+                const connection = await this.$ws.connect({
+                    nickname: this.userStore.name
+                });
+                this.userStore.createConnection(connection);
+            } else {
+                this.userStore.reset();
+            }
         }
     }
 }

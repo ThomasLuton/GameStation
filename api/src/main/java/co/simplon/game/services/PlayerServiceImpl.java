@@ -14,7 +14,6 @@ import co.simplon.game.dtos.user.Credentials;
 import co.simplon.game.dtos.user.PlayerDetailView;
 import co.simplon.game.dtos.user.PlayerView;
 import co.simplon.game.dtos.user.TokenInfo;
-import co.simplon.game.entities.user.ConnectedPlayers;
 import co.simplon.game.entities.user.Player;
 import co.simplon.game.entities.user.Role;
 import co.simplon.game.repositories.GameRepository;
@@ -29,19 +28,16 @@ public class PlayerServiceImpl implements PlayerService {
     private final AuthHelper authHelper;
     private final PlayerRepository players;
     private final RoleRepository roles;
-    private final ConnectedPlayers connectedPlayers;
     private final GameRepository games;
     private final FavoriteService favoriteService;
 
     public PlayerServiceImpl(AuthHelper authHelper,
 	    PlayerRepository users, RoleRepository roles,
-	    ConnectedPlayers connectedPlayers,
 	    GameRepository games,
 	    FavoriteService favoriteService) {
 	this.authHelper = authHelper;
 	this.players = users;
 	this.roles = roles;
-	this.connectedPlayers = connectedPlayers;
 	this.games = games;
 	this.favoriteService = favoriteService;
     }
@@ -66,6 +62,8 @@ public class PlayerServiceImpl implements PlayerService {
 	user.setPassword(hash);
 	Role role = roles.findOneProjectedById(1L);
 	user.setRole(role);
+	user.setCoins(0);
+	user.setConnection(false);
 	players.save(user);
     }
 
@@ -85,7 +83,6 @@ public class PlayerServiceImpl implements PlayerService {
 	    throw new BadCredentialsException(
 		    "Wrong credentials");
 	}
-	this.connectedPlayers.getUsers().add(candidate);
 	// token
 	TokenInfo tokenInfo = new TokenInfo();
 	List<String> roles = new ArrayList<String>();
@@ -105,16 +102,33 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Transactional
+    public void logIn(String nickname) {
+	Player user = players.findOneByNickname(nickname);
+	boolean isConnected = user.isConnection();
+	if (!isConnected) {
+	    user.setConnection(true);
+	    players.save(user);
+	} else {
+	    throw new BadCredentialsException(
+		    "User already connected");
+	}
+    }
+
+    @Override
+    @Transactional
     public void logOut(String nickname) {
 	Player user = players.findOneByNickname(nickname);
-	this.connectedPlayers.getUsers().remove(user);
+	user.setConnection(false);
+	players.save(user);
     }
 
     @Override
     public List<PlayerView> getConnectedUsers() {
 	List<PlayerView> connectedUsers = new ArrayList<PlayerView>();
-	for (Player user : this.connectedPlayers
-		.getUsers()) {
+	List<Player> connectedPlayers = players
+		.findAllConnectedPlayer();
+	for (Player user : connectedPlayers) {
 	    PlayerView playerView = new PlayerView();
 	    playerView.setNickName(user.getNickname());
 	    connectedUsers.add(playerView);
