@@ -9,7 +9,7 @@ const frMessages = {
             email: "Email",
             nickName: "Pseudonyme",
             password: "Mot de passe",
-            helpEmail: "e.g. john.doe@mail.com",
+            helpEmail: "e.g. john.do@mail.com",
             helpNickName: "e.g. Kevindu67",
             helpPassword: "e.g. Garfield2022!"
         },

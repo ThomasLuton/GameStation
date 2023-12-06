@@ -34,7 +34,6 @@ export default {
                 } else {
                     this.favorites = [];
                 }
-                console.log(this.favorites);
             }
         },
         isFavorite(game) {
