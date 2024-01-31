@@ -2,8 +2,6 @@ package co.simplon.game.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +15,7 @@ import co.simplon.game.dtos.user.PlayerDetailView;
 import co.simplon.game.dtos.user.PlayerView;
 import co.simplon.game.dtos.user.TokenInfo;
 import co.simplon.game.services.PlayerService;
+import jakarta.validation.Valid;
 
 @RestController
 public class PlayerController {

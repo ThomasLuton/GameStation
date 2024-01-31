@@ -2,14 +2,13 @@ package co.simplon.game.entities.associations;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import co.simplon.game.entities.AbstractEntity;
 import co.simplon.game.entities.game.Game;
 import co.simplon.game.entities.user.Player;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "favorites")

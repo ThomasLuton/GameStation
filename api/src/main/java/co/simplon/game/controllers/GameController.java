@@ -2,8 +2,6 @@ package co.simplon.game.controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +17,7 @@ import co.simplon.game.dtos.game.GameDetailView;
 import co.simplon.game.dtos.game.GameLightView;
 import co.simplon.game.dtos.game.UpdateGame;
 import co.simplon.game.services.GameService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/game")

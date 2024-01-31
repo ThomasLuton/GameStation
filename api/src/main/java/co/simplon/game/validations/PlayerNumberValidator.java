@@ -1,9 +1,8 @@
 package co.simplon.game.validations;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import co.simplon.game.dtos.game.UpdateGame;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class PlayerNumberValidator implements
 	ConstraintValidator<PlayerNumber, UpdateGame> {

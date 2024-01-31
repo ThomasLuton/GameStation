@@ -1,11 +1,10 @@
 package co.simplon.game.dtos.game;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import co.simplon.game.validations.GamePoint;
 import co.simplon.game.validations.PlayerNumber;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @GamePoint
 @PlayerNumber
