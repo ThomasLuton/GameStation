@@ -1,4 +1,4 @@
-package co.simplon.game.entities.user;
+package co.simplon.game.players.entities;
 
 import java.util.Objects;
 

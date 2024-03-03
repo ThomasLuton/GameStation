@@ -30,9 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     public SecurityFilterChain configure(HttpSecurity http)
 	    throws Exception {
 	http.cors().and().csrf().disable()
-		.authorizeRequests()
-		.requestMatchers("/ws/**", "/sign-in",
-			"/sign-up", "/game/**")
+		.authorizeRequests().requestMatchers("/**")
 		.permitAll().anyRequest().authenticated()
 		.and().oauth2ResourceServer().jwt();
 	return http.build();
