@@ -36,8 +36,8 @@ public class AuthHelper {
 	return encoder.matches(candidate, hash);
     }
 
-    public String createJWT(List<String> roles,
-	    String name) {
+    public String createJWT(List<String> roles, String name,
+	    Long suffix) {
 	Instant now = Instant.now();
 	Instant expirationTime = now
 		.plusSeconds(expiration);
@@ -47,6 +47,7 @@ public class AuthHelper {
 		.withSubject(name).withIssuedAt(now)
 		.withExpiresAt(expirationTime)
 		.withArrayClaim("roles", rolesAsArray)
+		.withClaim("suffix", suffix)
 		.sign(algorithm);
     }
 
@@ -60,6 +61,10 @@ public class AuthHelper {
 
 	Map<String, Object> info = new HashMap<>();
 	info.put("name", principal.getName());
+	Map<String, Object> tokenAttributes = principal
+		.getTokenAttributes();
+	Long suffix = (Long) tokenAttributes.get("suffix");
+	info.put("suffix", suffix);
 	info.put("authorities", authorities);
 	info.put("tokenAttributes",
 		principal.getTokenAttributes());

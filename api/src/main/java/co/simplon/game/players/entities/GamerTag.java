@@ -31,8 +31,7 @@ public class GamerTag {
 
     @Override
     public String toString() {
-	return "{playerName=" + playerName + ", suffix="
-		+ suffix + "}";
+	return String.format("%s#%d", playerName, suffix);
     }
 
 }

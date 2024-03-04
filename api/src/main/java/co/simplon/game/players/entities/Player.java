@@ -1,5 +1,7 @@
 package co.simplon.game.players.entities;
 
+import java.util.Set;
+
 import co.simplon.game.entities.AbstractEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -7,6 +9,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -34,6 +38,9 @@ public class Player extends AbstractEntity {
     private Integer dayBeforeNotification;
     @Column(name = "is_connected")
     private boolean connection;
+    @ManyToMany
+    @JoinTable(name = "to_be_friend", joinColumns = @JoinColumn(name = "player_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private Set<Player> friends;
 
     public Player() {
 	super();
@@ -104,6 +111,14 @@ public class Player extends AbstractEntity {
 
     public void setConnection(boolean connection) {
 	this.connection = connection;
+    }
+
+    public Set<Player> getFriends() {
+	return friends;
+    }
+
+    public void setFriends(Set<Player> friends) {
+	this.friends = friends;
     }
 
     @Override

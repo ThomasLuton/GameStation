@@ -36,7 +36,8 @@ CREATE TABLE players (
 CREATE TABLE to_be_friend (
 	id SERIAL PRIMARY KEY,
 	player_id INTEGER REFERENCES players(id) NOT NULL,
-	friend_id INTEGER REFERENCES players(id) NOT NULL
+	friend_id INTEGER REFERENCES players(id) NOT NULL,
+	UNIQUE(player_id, friend_id)
 );
 
 -- notifications related
