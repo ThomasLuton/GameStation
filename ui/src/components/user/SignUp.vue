@@ -16,7 +16,7 @@ export default {
             inputs: {
                 email: "",
                 password: "",
-                nickname: ""
+                playerName: ""
             }
         }
     },
@@ -25,7 +25,7 @@ export default {
             inputs: {
                 email: { required, email },
                 password: { required, passwordInvalid },
-                nickname: { required, minLength: minLength(4), maxLength: maxLength(20) }
+                playerName: { required, minLength: minLength(4), maxLength: maxLength(20) }
             }
         }
     },
@@ -33,7 +33,7 @@ export default {
         async submit() {
             const valid = await this.validator.$validate();
             if (valid) {
-                const resp = await this.$http.post("/sign-up", this.inputs);
+                const resp = await this.$http.post("/player/sign-up", this.inputs);
                 if (resp.status === 204) {
                     Object.assign(this.inputs, this.$options.data().inputs);
                     this.validator.$reset();
@@ -68,12 +68,14 @@ export default {
                             </span>
                         </div>
                         <div class="mb-3">
-                            <label for="nickname" class="form-label required ">{{ $t('labels.auth.nickName') }}</label>
-                            <input type="nickname" class="form-control" name="nickname" id="nickname"
-                                v-model="inputs.nickname" :class="{ 'is-invalid': validator.inputs.nickname.$error }">
-                            <div class=" form-text">{{ $t('labels.auth.helpNickName') }}</div>
-                            <span v-if="validator.inputs.nickname.$error">
-                                {{ validator.inputs.nickname.$errors[0].$message }}
+                            <label for="playerName" class="form-label required ">{{ $t('labels.auth.playerName')
+                                }}</label>
+                            <input type="playerName" class="form-control" name="playerName" id="playerName"
+                                v-model="inputs.playerName"
+                                :class="{ 'is-invalid': validator.inputs.playerName.$error }">
+                            <div class=" form-text">{{ $t('labels.auth.helpPlayerName') }}</div>
+                            <span v-if="validator.inputs.playerName.$error">
+                                {{ validator.inputs.playerName.$errors[0].$message }}
                             </span>
                         </div>
                         <div class="mb-3">
@@ -86,7 +88,7 @@ export default {
                             </span>
                         </div>
                         <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signUp')
-                        }}</button>
+                            }}</button>
                     </form>
                 </div>
             </div>

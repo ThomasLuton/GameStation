@@ -51,8 +51,8 @@ export default {
     <div class="card mx-1 my-3 col-12 col-md-5 col-lg-3 border-primary border-5 bg-primary bg-opacity-10 rounded-4">
         <div class="card-body position-relative">
             <h5 class="card-title text-center">{{ game.gameName }}</h5>
-            <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0" @click="switchFavorite"><i
-                    :class="favoriteClass"></i></button>
+            <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0"
+                @click="switchFavorite"><i :class="favoriteClass"></i></button>
             <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="gameID">
                 <img :src="game.thumbnail" class="card-img-top" :alt=game.gameName>
             </button>

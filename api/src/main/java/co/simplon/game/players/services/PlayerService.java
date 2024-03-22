@@ -1,4 +1,4 @@
-package co.simplon.game.players;
+package co.simplon.game.players.services;
 
 import java.util.List;
 

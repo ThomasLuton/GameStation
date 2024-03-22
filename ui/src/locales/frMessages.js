@@ -7,10 +7,10 @@ const frMessages = {
             signIn: "Se connecter",
             signUp: "S'inscrire",
             email: "Email",
-            nickName: "Pseudonyme",
+            playerName: "Nom de joueur",
             password: "Mot de passe",
             helpEmail: "e.g. john.do@mail.com",
-            helpNickName: "e.g. Kevindu67",
+            helpPlayerName: "e.g. Kevindu67",
             helpPassword: "e.g. Garfield2022!"
         },
         game: {

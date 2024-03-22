@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.game.players.PlayerService;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
 import co.simplon.game.players.dtos.TokenInfo;
+import co.simplon.game.players.services.PlayerService;
 import jakarta.validation.Valid;
 
 @RestController

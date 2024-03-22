@@ -1,5 +1,7 @@
 package co.simplon.game.players.entities;
 
+import java.util.Objects;
+
 import co.simplon.game.entities.AbstractEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -43,5 +45,25 @@ public class Friend extends AbstractEntity {
 	return "{player=" + player + ", friend=" + friend
 		+ "}";
     }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(friend, player);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Friend)) {
+	    return false;
+	}
+	Friend other = (Friend) obj;
+	return Objects.equals(friend, other.friend)
+		&& Objects.equals(player, other.player);
+    }
+    
+    
 
 }

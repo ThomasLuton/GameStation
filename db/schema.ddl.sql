@@ -28,8 +28,8 @@ CREATE TABLE players (
 	password CHAR(60) NOT NULL,
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
     avatar VARCHAR(1000),
-	email_notification_enable BOOLEAN NOT NULL,
-	day_before_notification INTEGER,
+	email_notification_enable BOOLEAN NOT NULL DEFAULT false,
+	day_before_notification INTEGER NOT NULL DEFAULT 7,
 	is_connected BOOLEAN NOT NULL
 );
 
@@ -41,7 +41,6 @@ CREATE TABLE to_be_friend (
 );
 
 -- notifications related
-
 
 CREATE TABLE notification_templates (
 	id SERIAL PRIMARY KEY,
@@ -99,7 +98,6 @@ CREATE TABLE to_earn (
 );
 
 -- instances related
-
 
 CREATE TABLE instance_steps (
 	id SERIAL PRIMARY KEY,

@@ -7,9 +7,9 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import co.simplon.game.players.PlayerService;
 import co.simplon.game.players.dtos.ConnectDto;
 import co.simplon.game.players.dtos.PlayerSimpleView;
+import co.simplon.game.players.services.PlayerService;
 
 @Controller
 public class PlayerWebSocket {

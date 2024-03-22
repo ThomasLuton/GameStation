@@ -1,5 +1,6 @@
 package co.simplon.game.players.entities;
 
+import java.util.Objects;
 import java.util.Set;
 
 import co.simplon.game.entities.AbstractEntity;
@@ -130,6 +131,35 @@ public class Player extends AbstractEntity {
 		+ ", dayBeforeNotification="
 		+ dayBeforeNotification + ", connection="
 		+ connection + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(avatar, connection,
+		dayBeforeNotification, email,
+		emailNotificationEnable, friends, gamerTag,
+		password, role);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Player)) {
+	    return false;
+	}
+	Player other = (Player) obj;
+	return Objects.equals(avatar, other.avatar)
+		&& (connection == other.connection)
+		&& Objects.equals(dayBeforeNotification,
+			other.dayBeforeNotification)
+		&& Objects.equals(email, other.email)
+		&& (emailNotificationEnable == other.emailNotificationEnable)
+		&& Objects.equals(friends, other.friends)
+		&& Objects.equals(gamerTag, other.gamerTag)
+		&& Objects.equals(password, other.password)
+		&& Objects.equals(role, other.role);
     }
 
 }

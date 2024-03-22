@@ -18,16 +18,16 @@ export default {
     },
     methods: {
         async getAllGames() {
-            const resp = await this.$http.get("/game");
+            const resp = await this.$http.get("/games");
             this.games = resp.body;
         },
         async getAllFavorites() {
             const token = this.userStore.token;
-            const resp = await this.$http.get(`/favorites/${this.userStore.id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            // const resp = await this.$http.get(`/favorites/${this.userStore.id}`, {
+            //     headers: {
+            //         Authorization: `Bearer ${token}`
+            //     }
+            // });
             if (resp.status == 200) {
                 if (resp.body != null) {
                     this.favorites = resp.body;

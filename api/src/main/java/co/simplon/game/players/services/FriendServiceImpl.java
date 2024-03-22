@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
-import co.simplon.game.players.FriendService;
 import co.simplon.game.players.dtos.GamerTagDto;
 import co.simplon.game.players.entities.Friend;
 import co.simplon.game.players.entities.Player;
@@ -38,6 +37,7 @@ public class FriendServiceImpl implements FriendService {
     @Transactional
     public void accept(GamerTagDto newFriend,
 	    Integer userSuffix) {
+	// attention verifier si notification existe avant
 	Player friend = getPlayer(newFriend);
 	Player user = players
 		.findOneByGamerTagSuffix(userSuffix);
@@ -49,6 +49,7 @@ public class FriendServiceImpl implements FriendService {
 
     @Override
     public void refuse(GamerTagDto newFriend) {
+	// attention verifier si notification existe avant
 	Player friend = getPlayer(newFriend);
 	System.out.println("Je ne suis pas ton pote "
 		+ friend.getGamerTag());

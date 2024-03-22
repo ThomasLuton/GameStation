@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
-import co.simplon.game.players.PlayerService;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
@@ -57,6 +56,7 @@ public class PlayerServiceImpl implements PlayerService {
 	GamerTag gamerTag = createTag(inputs.playerName());
 	player.setGamerTag(gamerTag);
 	player.setEmailNotificationEnable(false);
+	player.setDayBeforeNotification(7);
 	player.setConnection(false);
 	Role role = roles.findOneProjectedByName("player");
 	player.setRole(role);

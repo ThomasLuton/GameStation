@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         async submit() {
-            const resp = await this.$http.post("/sign-in", this.credentials);
+            const resp = await this.$http.post("/player/sign-in", this.credentials);
             if (resp.status === 200) {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
                 this.$modal.remove('signIn');
@@ -56,7 +56,8 @@ export default {
                     <form novalidate @submit.prevent="submit">
                         <div class="mb-3">
                             <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
-                            <input type="email" class="form-control" name="email" id="email" v-model="credentials.email">
+                            <input type="email" class="form-control" name="email" id="email"
+                                v-model="credentials.email">
                             <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
                         </div>
                         <div class="mb-3">
@@ -66,7 +67,7 @@ export default {
                             <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
                         </div>
                         <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signIn')
-                        }}</button>
+                            }}</button>
                     </form>
                 </div>
             </div>

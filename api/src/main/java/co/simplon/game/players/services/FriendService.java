@@ -1,4 +1,4 @@
-package co.simplon.game.players;
+package co.simplon.game.players.services;
 
 import co.simplon.game.players.dtos.GamerTagDto;
 
