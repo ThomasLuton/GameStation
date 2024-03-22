@@ -6,9 +6,7 @@ DROP TABLE IF EXISTS to_earn;
 DROP TABLE IF EXISTS successes;
 DROP TABLE IF EXISTS to_prefer;
 DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS to_inform;
 DROP TABLE IF EXISTS notifications;
-DROP TABLE IF EXISTS notification_templates;
 DROP TABLE IF EXISTS to_be_friend;
 DROP TABLE IF EXISTS players;
 DROP TABLE IF EXISTS roles;
@@ -37,15 +35,11 @@ CREATE TABLE to_be_friend (
 	id SERIAL PRIMARY KEY,
 	player_id INTEGER REFERENCES players(id) NOT NULL,
 	friend_id INTEGER REFERENCES players(id) NOT NULL,
+	pending BOOLEAN NOT NULL DEFAULT false,
 	UNIQUE(player_id, friend_id)
 );
 
 -- notifications related
-
-CREATE TABLE notification_templates (
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(50) UNIQUE NOT NULL
-);
 
 CREATE TABLE notifications(
 	id SERIAL PRIMARY KEY,
@@ -54,17 +48,10 @@ CREATE TABLE notifications(
 	send_at TIMESTAMP NOT NULL,
 	is_read BOOLEAN NOT NULL,
 	redirect_link VARCHAR(255),
-	template_id INTEGER REFERENCES notification_templates(id)
-);
-
-CREATE TABLE to_inform(
-	id SERIAL PRIMARY KEY,
-	player_id INTEGER REFERENCES players(id) NOT NULL,
-	notification_id INTEGER REFERENCES notifications(id) NOT NULL
+	player_id INTEGER REFERENCES players(id) NOT NULL
 );
 
 -- game related
-
 
 CREATE TABLE games (
 	id SERIAL PRIMARY KEY,

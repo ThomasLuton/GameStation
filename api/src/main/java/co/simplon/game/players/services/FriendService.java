@@ -4,7 +4,8 @@ import co.simplon.game.players.dtos.GamerTagDto;
 
 public interface FriendService {
 
-    public void request(GamerTagDto newFriend);
+    public void request(GamerTagDto newFriend,
+	    Integer userSuffix);
 
     public void accept(GamerTagDto newFriend,
 	    Integer userSuffix);

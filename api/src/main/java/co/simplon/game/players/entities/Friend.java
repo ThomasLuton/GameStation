@@ -1,8 +1,7 @@
 package co.simplon.game.players.entities;
 
-import java.util.Objects;
-
 import co.simplon.game.entities.AbstractEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,6 +17,8 @@ public class Friend extends AbstractEntity {
     @JoinColumn(name = "friend_id")
     @ManyToOne
     private Player friend;
+    @Column(name = "pending")
+    private Boolean pending;
 
     public Friend() {
 	super();
@@ -40,30 +41,18 @@ public class Friend extends AbstractEntity {
 	this.friend = friend;
     }
 
+    public Boolean getPending() {
+	return pending;
+    }
+
+    public void setPending(Boolean pending) {
+	this.pending = pending;
+    }
+
     @Override
     public String toString() {
 	return "{player=" + player + ", friend=" + friend
-		+ "}";
+		+ ", pending=" + pending + "}";
     }
-
-    @Override
-    public int hashCode() {
-	return Objects.hash(friend, player);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj) {
-	    return true;
-	}
-	if (!(obj instanceof Friend)) {
-	    return false;
-	}
-	Friend other = (Friend) obj;
-	return Objects.equals(friend, other.friend)
-		&& Objects.equals(player, other.player);
-    }
-    
-    
 
 }

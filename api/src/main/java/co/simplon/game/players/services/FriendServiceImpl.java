@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
+import co.simplon.game.notifications.dtos.CreateNotification;
+import co.simplon.game.notifications.services.NotificationService;
 import co.simplon.game.players.dtos.GamerTagDto;
 import co.simplon.game.players.entities.Friend;
 import co.simplon.game.players.entities.Player;
@@ -18,19 +20,46 @@ public class FriendServiceImpl implements FriendService {
 
     private final PlayerRepository players;
     private final FriendRepository friends;
+    private final NotificationService notificationService;
 
     public FriendServiceImpl(PlayerRepository players,
-	    FriendRepository friends) {
+	    FriendRepository friends,
+	    NotificationService notificationService) {
 	this.players = players;
 	this.friends = friends;
+	this.notificationService = notificationService;
     }
 
     @Override
-    public void request(GamerTagDto newFriend) {
+    @Transactional
+    public void request(GamerTagDto newFriend,
+	    Integer playerSuffix) {
 	Player friend = getPlayer(newFriend);
-	System.out.println("Notification sent to "
-		+ friend.getGamerTag());
+	if (friend == null) {
+	    throw new GameStationError(
+		    CodeError.UnknownPlayer,
+		    "This player doesn't exist",
+		    HttpStatus.BAD_REQUEST);
+	}
+	Player player = players
+		.findOneByGamerTagSuffix(playerSuffix);
 
+	if (player.equals(friend)) {
+	    throw new GameStationError(CodeError.SamePlayer,
+		    "You can be friend with yourself (it's very sad, dude)",
+		    HttpStatus.BAD_REQUEST);
+	}
+	CreateNotification request = new CreateNotification(
+		"Demande d'ami",
+		"Je suis " + player.getGamerTag()
+			+ ", veux tu être mon ami?",
+		null, friend);
+	notificationService.create(request);
+	Friend entity = new Friend();
+	entity.setPlayer(player);
+	entity.setFriend(friend);
+	entity.setPending(true);
+	this.friends.save(entity);
     }
 
     @Override

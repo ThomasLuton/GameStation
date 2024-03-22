@@ -30,8 +30,12 @@ public class FriendController {
     @PostMapping("/request")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void requestFriend(
-	    @RequestBody GamerTagDto newFriend) {
-	service.request(newFriend);
+	    @RequestBody GamerTagDto newFriend,
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.request(newFriend, suffix.intValue());
     }
 
     @PostMapping("/accept")
