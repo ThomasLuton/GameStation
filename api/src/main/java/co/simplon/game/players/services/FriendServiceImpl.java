@@ -18,6 +18,10 @@ import co.simplon.game.players.repositories.PlayerRepository;
 @Transactional(readOnly = true)
 public class FriendServiceImpl implements FriendService {
 
+    /*
+     * Refacto possible le code de vérification se répète beaucoup à étudier
+     */
+
     private final PlayerRepository players;
     private final FriendRepository friends;
     private final NotificationService notificationService;
@@ -49,6 +53,18 @@ public class FriendServiceImpl implements FriendService {
 		    "You can be friend with yourself (it's very sad, dude)",
 		    HttpStatus.BAD_REQUEST);
 	}
+
+	Friend friendShip = friends
+		.findOneFriendShipRelation(player.getId(),
+			friend.getId());
+
+	if (friendShip != null) {
+	    throw new GameStationError(
+		    CodeError.AlreadyFriend,
+		    "You are already friend with this player or your demand is pending",
+		    HttpStatus.BAD_REQUEST);
+	}
+
 	CreateNotification request = new CreateNotification(
 		"Demande d'ami",
 		"Je suis " + player.getGamerTag()
@@ -68,20 +84,79 @@ public class FriendServiceImpl implements FriendService {
 	    Integer userSuffix) {
 	// attention verifier si notification existe avant
 	Player friend = getPlayer(newFriend);
-	Player user = players
+	Player player = players
 		.findOneByGamerTagSuffix(userSuffix);
-	Friend relation = new Friend();
-	relation.setPlayer(user);
-	relation.setFriend(friend);
-	friends.save(relation);
+
+	Friend friendship = friends
+		.findOneFriendShipRelation(player.getId(),
+			friend.getId());
+
+	if (friendship == null) {
+	    throw new GameStationError(
+		    CodeError.NotFriendWith,
+		    "There is no relation between you and this player",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (!friendship.getPending()) {
+	    throw new GameStationError(
+		    CodeError.AlreadyFriend,
+		    "You are already friend with this player",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (friendship.getPlayer().equals(player)) {
+	    throw new GameStationError(
+		    CodeError.NotYourTurn,
+		    "It's not to you to response",
+		    HttpStatus.BAD_REQUEST);
+	}
+	CreateNotification response = new CreateNotification(
+		"Demande d'ami",
+		"Vous êtes maintenant ami avec "
+			+ player.getGamerTag(),
+		null, friend);
+	notificationService.create(response);
+
+	friendship.setPending(false);
+	friends.save(friendship);
     }
 
     @Override
-    public void refuse(GamerTagDto newFriend) {
+    @Transactional
+    public void refuse(GamerTagDto newFriend,
+	    Integer userSuffix) {
 	// attention verifier si notification existe avant
 	Player friend = getPlayer(newFriend);
-	System.out.println("Je ne suis pas ton pote "
-		+ friend.getGamerTag());
+	Player player = players
+		.findOneByGamerTagSuffix(userSuffix);
+
+	Friend friendship = friends
+		.findOneFriendShipRelation(player.getId(),
+			friend.getId());
+	if (friendship == null) {
+	    throw new GameStationError(
+		    CodeError.NotFriendWith,
+		    "There is no relation between you and this player",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (!friendship.getPending()) {
+	    throw new GameStationError(
+		    CodeError.AlreadyFriend,
+		    "You are already friend with this player",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (friendship.getPlayer().equals(player)) {
+	    throw new GameStationError(
+		    CodeError.NotYourTurn,
+		    "It's not to you to response",
+		    HttpStatus.BAD_REQUEST);
+	}
+	CreateNotification response = new CreateNotification(
+		"Demande d'ami",
+		player.getGamerTag()
+			+ " a refusé votre demande d'ami",
+		null, friend);
+	notificationService.create(response);
+	friends.delete(friendship);
 
     }
 
@@ -90,11 +165,11 @@ public class FriendServiceImpl implements FriendService {
     public void delete(GamerTagDto oldFriend,
 	    Integer userSuffix) {
 	Player friend = getPlayer(oldFriend);
-	Player user = players
+	Player player = players
 		.findOneByGamerTagSuffix(userSuffix);
 	Friend oldRelation = friends
-		.findOneProjectedByPlayerIdAndFriendId(
-			user.getId(), friend.getId());
+		.findOneFriendShipRelation(player.getId(),
+			friend.getId());
 	if (oldRelation == null) {
 	    throw new GameStationError(
 		    CodeError.NotFriendWith,
@@ -102,6 +177,12 @@ public class FriendServiceImpl implements FriendService {
 			    + friend.getGamerTag(),
 		    HttpStatus.BAD_REQUEST);
 	}
+	CreateNotification notification = new CreateNotification(
+		"Demande d'ami",
+		player.getGamerTag()
+			+ " n'est plus votre ami",
+		null, friend);
+	notificationService.create(notification);
 	friends.delete(oldRelation);
     }
 
@@ -117,4 +198,5 @@ public class FriendServiceImpl implements FriendService {
 	}
 	return friend;
     }
+
 }

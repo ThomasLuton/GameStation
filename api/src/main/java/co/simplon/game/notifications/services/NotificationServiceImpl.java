@@ -41,8 +41,12 @@ public class NotificationServiceImpl
 
     @Override
     public void read(Long id) {
-	// TODO Auto-generated method stub
-
+	Notification notification = notifications
+		.findById(id).get();
+	if (!notification.getRead()) {
+	    notification.setRead(true);
+	}
+	notifications.save(notification);
     }
 
     @Override

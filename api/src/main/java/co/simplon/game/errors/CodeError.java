@@ -4,6 +4,6 @@ public enum CodeError {
 
     PlayerAlreadyExist, WrongCredentials,
     PlayerAlreadyConnected, UnknownPlayer, NotFriendWith,
-    SamePlayer;
+    SamePlayer, AlreadyFriend, NotYourTurn;
 
 }

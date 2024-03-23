@@ -10,7 +10,8 @@ public interface FriendService {
     public void accept(GamerTagDto newFriend,
 	    Integer userSuffix);
 
-    public void refuse(GamerTagDto newFriend);
+    public void refuse(GamerTagDto newFriend,
+	    Integer userSuffix);
 
     public void delete(GamerTagDto oldFriend,
 	    Integer userSuffix);

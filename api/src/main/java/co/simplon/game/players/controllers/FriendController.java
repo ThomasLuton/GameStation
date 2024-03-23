@@ -52,8 +52,12 @@ public class FriendController {
     @PostMapping("/refuse")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void refuseFriend(
-	    @RequestBody GamerTagDto newFriend) {
-	service.refuse(newFriend);
+	    @RequestBody GamerTagDto newFriend,
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.refuse(newFriend, suffix.intValue());
     }
 
     @PostMapping("/delete")
