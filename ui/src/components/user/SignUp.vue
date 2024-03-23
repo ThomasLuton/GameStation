@@ -33,7 +33,7 @@ export default {
         async submit() {
             const valid = await this.validator.$validate();
             if (valid) {
-                const resp = await this.$http.post("/player/sign-up", this.inputs);
+                const resp = await this.$http.post("/players/sign-up", this.inputs);
                 if (resp.status === 204) {
                     Object.assign(this.inputs, this.$options.data().inputs);
                     this.validator.$reset();

@@ -18,7 +18,7 @@ import co.simplon.game.players.services.PlayerService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/player")
+@RequestMapping("/players")
 public class PlayerController {
 
     private final PlayerService service;

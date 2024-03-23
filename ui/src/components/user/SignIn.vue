@@ -20,7 +20,7 @@ export default {
     },
     methods: {
         async submit() {
-            const resp = await this.$http.post("/player/sign-in", this.credentials);
+            const resp = await this.$http.post("/players/sign-in", this.credentials);
             if (resp.status === 200) {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
                 this.$modal.remove('signIn');

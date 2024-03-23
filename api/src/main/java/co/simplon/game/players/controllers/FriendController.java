@@ -15,7 +15,7 @@ import co.simplon.game.players.services.FriendService;
 import co.simplon.game.utils.AuthHelper;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/friends")
 public class FriendController {
 
     private final FriendService service;
