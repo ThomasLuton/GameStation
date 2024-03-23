@@ -21,15 +21,15 @@ export default {
         ...mapActions(useConnectedStore, ['getOthers'])
     }
 }
-</script> 
+</script>
 <template>
     <div class="container-fluid my-3 col-10 col-md-3 h-100">
         <div class="p-2 rounded-4 border border-5 border-secondary bg-secondary bg-opacity-25">
             <h2 class="text-center">Connected Players</h2>
             <ul class="list-group">
                 <UserCard></UserCard>
-                <GroupCard v-for="member in connectedStore.members" :key=member.nickName :member="member"></GroupCard>
-                <OtherCard v-for="player in getOthers" :key=player.nickName :player="player"></OtherCard>
+                <GroupCard v-for="member in connectedStore.members" :key=member.gamerTag :member="member"></GroupCard>
+                <OtherCard v-for="player in getOthers" :key=player.gamerTag :player="player"></OtherCard>
             </ul>
         </div>
     </div>

@@ -22,9 +22,9 @@ export default {
         async submit() {
             const resp = await this.$http.post("/players/sign-in", this.credentials);
             if (resp.status === 200) {
-                this.$toast.success('toast-global', `Welcome back ${resp.body.subject}`);
+                this.$toast.success('toast-global', `Welcome back ${resp.body.name}`);
                 this.$modal.remove('signIn');
-                this.connectInput.nickname = resp.body.subject;
+                this.connectInput.nickname = resp.body.name;
                 this.setUserStore(resp.body);
                 const connection = this.$ws.connect(this.connectInput);
                 this.userStore.createConnection(connection);
@@ -34,10 +34,9 @@ export default {
         },
         setUserStore(tokenInfo) {
             this.userStore.isAuthenticated = true;
-            this.userStore.name = tokenInfo.subject;
+            this.userStore.name = tokenInfo.name;
             this.userStore.token = tokenInfo.token;
-            this.userStore.favorites = tokenInfo.favorites;
-            this.userStore.id = tokenInfo.id;
+            this.userStore.role = tokenInfo.role;
         }
     }
 }

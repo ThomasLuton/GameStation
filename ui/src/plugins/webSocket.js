@@ -5,7 +5,7 @@ import { useConnectedStore } from "../stores/connectedStore";
 
 export default {
     install: (app) => {
-        app.config.globalProperties.$ws = {
+        const plugin = {
             connect: (connectInput) => {
                 const sock = new SockJS("http://localhost:8080/ws");
                 const connection = Stomp.over(sock);
@@ -30,5 +30,7 @@ export default {
                 connection.disconnect();
             }
         }
+        app.config.globalProperties.$ws = plugin;
+        app.provide("ws", plugin);
     }
 };

@@ -10,28 +10,8 @@ export default {
         GameList: GameList,
         PlayerList: PlayerList
     },
-    data() {
-        return {
-        }
-    },
     computed: {
         ...mapStores(useUserStore)
-    },
-    async mounted() {
-        if (this.userStore.token !== "") {
-            const token = this.userStore.token;
-            const decoded = jwtDecode(token);
-            const now = Math.floor(Date.now() / 1000);
-            if (decoded.exp > now) {
-                console.log("expire in " + (decoded.exp - now) + "sec")
-                const connection = await this.$ws.connect({
-                    nickname: this.userStore.name
-                });
-                this.userStore.createConnection(connection);
-            } else {
-                this.userStore.reset();
-            }
-        }
     }
 }
 </script>

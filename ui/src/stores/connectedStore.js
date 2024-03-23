@@ -14,12 +14,12 @@ export const useConnectedStore = defineStore('connected', {
         },
         selfRemove() {
             const userStore = useUserStore();
-            this.users = this.users.filter((user) => user.nickName !== userStore.name);
+            this.users = this.users.filter((user) => user.gamerTag !== userStore.name);
         },
         getOthers() {
             // filtrer les membres du groupes !!!
             const userStore = useUserStore();
-            return this.users.filter((user) => user.nickName !== userStore.name);
+            return this.users.filter((user) => user.gamerTag !== userStore.name);
         }
     }
 })

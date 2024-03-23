@@ -1,7 +1,7 @@
 <script>
 import { RouterLink } from 'vue-router';
-import SignIn from '../user/SignIn.vue';
-import SignUp from '../user/SignUp.vue';
+import SignIn from '../player/SignIn.vue';
+import SignUp from '../player/SignUp.vue';
 import { mapActions } from 'pinia';
 import { mapStores } from 'pinia';
 import { useUserStore } from '../../stores/userStore';

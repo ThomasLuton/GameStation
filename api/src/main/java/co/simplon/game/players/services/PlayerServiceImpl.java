@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
 import co.simplon.game.players.dtos.PlayerSimpleView;
+import co.simplon.game.players.dtos.PlayerUpdateNotification;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
 import co.simplon.game.players.dtos.TokenInfo;
@@ -153,6 +154,20 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<PlayerSimpleView> getAllUsers() {
 	return players.findAllProjectedByOrderById();
+    }
+
+    @Override
+    @Transactional
+    public void updatePlayerNotification(
+	    PlayerUpdateNotification inputs,
+	    Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
+	player.setDayBeforeNotification(
+		inputs.daysBefore());
+	player.setEmailNotificationEnable(
+		inputs.activate());
+	players.save(player);
     }
 
 }

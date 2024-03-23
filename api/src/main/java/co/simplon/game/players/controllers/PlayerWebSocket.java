@@ -24,9 +24,9 @@ public class PlayerWebSocket {
     @SendTo("/topic/users")
     public List<PlayerSimpleView> connect(ConnectDto player,
 	    SimpMessageHeaderAccessor headerAccessor) {
-	playerService.logIn(player.playerEmail());
+	playerService.logIn(player.gamerTag());
 	headerAccessor.getSessionAttributes().put("player",
-		player.playerEmail());
+		player.gamerTag());
 	return playerService.getConnectedUsers();
     }
 

@@ -1,5 +1,5 @@
 package co.simplon.game.players.dtos;
 
-public record ConnectDto(String playerEmail) {
+public record ConnectDto(String gamerTag) {
 
 }

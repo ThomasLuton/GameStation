@@ -28,13 +28,13 @@ export default {
             //         Authorization: `Bearer ${token}`
             //     }
             // });
-            if (resp.status == 200) {
-                if (resp.body != null) {
-                    this.favorites = resp.body;
-                } else {
-                    this.favorites = [];
-                }
-            }
+            // if (resp.status == 200) {
+            //     if (resp.body != null) {
+            //         this.favorites = resp.body;
+            //     } else {
+            //         this.favorites = [];
+            //     }
+            // }
         },
         isFavorite(game) {
             if (this.favorites.length > 0) {
