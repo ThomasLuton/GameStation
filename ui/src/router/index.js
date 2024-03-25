@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Hub from '../layouts/Hub.vue';
 import Game from '../layouts/Game.vue';
 import HomePage from '../pages/HomePage.vue'
 import GameHistory from '../pages/GameHistory.vue';
@@ -14,7 +13,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: Hub,
+      component: () => import('../layouts/Hub.vue'),
       children: [
         {
           path: '',

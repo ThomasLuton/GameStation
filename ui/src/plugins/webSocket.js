@@ -6,11 +6,11 @@ import { useUserStore } from "../stores/userStore";
 export default {
     install: (app) => {
         const plugin = {
-            connect: async () => {
+            connect: () => {
                 const token = useUserStore().token;
                 const sock = new SockJS("http://localhost:8080/ws");
                 const connection = Stomp.over(sock);
-                await connection.connect({
+                connection.connect({
                     authorization: `Bearer ${token}`
                 }, () => {
                     connection.debug("Connected to API via websocket");

@@ -25,8 +25,8 @@ public class PlayerWebSocket {
     public List<PlayerSimpleView> connect(ConnectDto player,
 	    SimpMessageHeaderAccessor headerAccessor) {
 	// playerService.logIn(player.gamerTag());
-	headerAccessor.getSessionAttributes().put("player",
-		player.gamerTag());
+//	headerAccessor.getSessionAttributes().put("player",
+//		player.gamerTag());
 	return playerService.getConnectedUsers();
     }
 

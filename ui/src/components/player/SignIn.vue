@@ -8,9 +8,6 @@ export default {
             credentials: {
                 email: "",
                 password: ""
-            },
-            connectInput: {
-                nickname: ""
             }
         }
     },
@@ -22,12 +19,11 @@ export default {
         async submit() {
             const resp = await this.$http.post("/players/sign-in", this.credentials);
             if (resp.status === 200) {
-                this.$toast.success('toast-global', `Welcome back ${resp.body.name}`);
+                this.$toast.success('toast-global', `Welcome back ${resp.body.gamerTag.playerName}`);
                 this.$modal.remove('signIn');
-                // this.connectInput.nickname = resp.body.name;
+                await this.setConnection();
                 this.setUserStore(resp.body);
-                // const connection = this.$ws.connect(this.connectInput);
-                // this.userStore.createConnection(connection);
+                this.$router.push("/")
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
@@ -37,6 +33,10 @@ export default {
             this.userStore.gamerTag = tokenInfo.gamerTag;
             this.userStore.token = tokenInfo.token;
             this.userStore.role = tokenInfo.role;
+        },
+        async setConnection() {
+            const connection = await this.$ws.connect();
+            this.userStore.createConnection(connection);
         }
     }
 }

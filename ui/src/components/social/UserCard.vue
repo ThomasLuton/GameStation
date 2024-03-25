@@ -15,5 +15,6 @@ export default {
 </script>
 
 <template>
-    <li class="list-group-item list-group-item-primary"><i class="bi bi-person-fill"></i>{{ userStore.gamerTag }}</li>
+    <li class="list-group-item list-group-item-primary"><i class="bi bi-person-fill"></i>{{
+        userStore.gamerTag.playerName }}#{{ userStore.gamerTag.suffix }}</li>
 </template>

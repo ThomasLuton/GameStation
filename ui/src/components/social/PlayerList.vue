@@ -1,6 +1,5 @@
 <script>
 import UserCard from './UserCard.vue';
-import GroupCard from './GroupCard.vue';
 import OtherCard from './OtherCard.vue';
 import { mapStores, mapActions } from 'pinia';
 import { useConnectedStore } from '../../stores/connectedStore'
@@ -8,7 +7,6 @@ import { useConnectedStore } from '../../stores/connectedStore'
 export default {
     components: {
         UserCard: UserCard,
-        GroupCard: GroupCard,
         OtherCard: OtherCard
     },
     data() {
@@ -28,7 +26,6 @@ export default {
             <h2 class="text-center">Connected Players</h2>
             <ul class="list-group">
                 <UserCard></UserCard>
-                <GroupCard v-for="member in connectedStore.members" :key=member.gamerTag :member="member"></GroupCard>
                 <OtherCard v-for="player in getOthers" :key=player.gamerTag :player="player"></OtherCard>
             </ul>
         </div>

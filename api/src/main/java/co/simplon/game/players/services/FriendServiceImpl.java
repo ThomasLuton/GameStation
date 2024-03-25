@@ -192,8 +192,9 @@ public class FriendServiceImpl implements FriendService {
 	if (friend == null) {
 	    throw new GameStationError(
 		    CodeError.UnknownPlayer,
-		    String.format("%s doesn't exist",
-			    newFriend.name()),
+		    String.format("%s#%d doesn't exist",
+			    newFriend.playerName(),
+			    newFriend.suffix()),
 		    HttpStatus.BAD_REQUEST);
 	}
 	return friend;

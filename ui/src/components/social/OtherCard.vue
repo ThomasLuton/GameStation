@@ -12,5 +12,6 @@ export default {
 </script>
 
 <template>
-    <li class="list-group-item"><i class="bi bi-person-fill"></i>{{ player.gamerTag }}</li>
+    <li class="list-group-item"><i class="bi bi-person-fill"></i>{{ player.gamerTag.playerName }}#{{
+        player.gamerTag.suffix }}</li>
 </template>
