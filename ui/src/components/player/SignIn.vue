@@ -24,17 +24,17 @@ export default {
             if (resp.status === 200) {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.name}`);
                 this.$modal.remove('signIn');
-                this.connectInput.nickname = resp.body.name;
+                // this.connectInput.nickname = resp.body.name;
                 this.setUserStore(resp.body);
-                const connection = this.$ws.connect(this.connectInput);
-                this.userStore.createConnection(connection);
+                // const connection = this.$ws.connect(this.connectInput);
+                // this.userStore.createConnection(connection);
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
         },
         setUserStore(tokenInfo) {
             this.userStore.isAuthenticated = true;
-            this.userStore.name = tokenInfo.name;
+            this.userStore.gamerTag = tokenInfo.gamerTag;
             this.userStore.token = tokenInfo.token;
             this.userStore.role = tokenInfo.role;
         }

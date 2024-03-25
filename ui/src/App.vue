@@ -14,18 +14,13 @@ onMounted(async () => {
 		const decoded = jwtDecode(token);
 		const now = Math.floor(Date.now() / 1000);
 		if (decoded.exp > now) {
-			console.log("expire in " + (decoded.exp - now) + "sec")
-			const connection = await ws.connect({
-				nickname: userStore.name
-			});
+			const connection = await ws.connect();
 			userStore.createConnection(connection);
 		} else {
 			userStore.reset();
 		}
 	}
 })
-
-
 
 </script>
 <template>

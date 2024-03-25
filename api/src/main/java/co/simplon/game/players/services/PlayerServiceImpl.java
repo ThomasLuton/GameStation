@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
+import co.simplon.game.players.dtos.GamerTagDto;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
 import co.simplon.game.players.dtos.SignIn;
@@ -118,8 +119,10 @@ public class PlayerServiceImpl implements PlayerService {
 		candidate.getEmail(),
 		candidate.getGamerTag().getSuffix()
 			.longValue());
-	return new TokenInfo(token, role,
-		candidate.getGamerTag().toString());
+	GamerTagDto gamerTag = new GamerTagDto(
+		candidate.getGamerTag().getPlayerName(),
+		candidate.getGamerTag().getSuffix());
+	return new TokenInfo(token, role, gamerTag);
     }
 
     @Override

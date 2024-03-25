@@ -5,7 +5,7 @@ export const useUserStore = defineStore('user', {
     state: () => {
         return {
             isAuthenticated: useLocalStorage('isAuthenticated', false),
-            name: useLocalStorage('name', ""),
+            gamerTag: useLocalStorage('gamerTag', {}),
             token: useLocalStorage('token', ""),
             role: useLocalStorage('role', ""),
             connection: useLocalStorage('connection', {})
@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', {
     actions: {
         reset() {
             this.isAuthenticated = false;
-            this.name = "";
+            this.gamerTag = {};
             this.role = "";
             this.token = "";
             this.connection = null;
