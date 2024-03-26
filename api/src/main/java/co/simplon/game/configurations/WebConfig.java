@@ -35,9 +35,13 @@ public class WebConfig implements WebMvcConfigurer {
 		.authorizeHttpRequests((authz) -> authz
 			.requestMatchers("/players/sign-in",
 				"players/sign-up", "/games",
-				"games/{id}", "/ws/**")
-			.permitAll().anyRequest()
-			.authenticated())
+				"games/{id}")
+			.permitAll()
+			.requestMatchers("/game/**",
+				"/hub/**")
+			.access((authentication,
+				object) -> null)
+			.anyRequest().authenticated())
 		.oauth2ResourceServer((
 			oauth2ResourceServer) -> oauth2ResourceServer
 				.jwt(Customizer

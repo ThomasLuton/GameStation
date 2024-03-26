@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Game from '../layouts/Game.vue';
-import HomePage from '../pages/HomePage.vue'
 import GameHistory from '../pages/GameHistory.vue';
 import EditGame from '../components/admin/EditGame.vue';
 import FakeGame from '../pages/FakeGame.vue';
@@ -13,12 +12,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'hub',
       component: () => import('../layouts/Hub.vue'),
       children: [
         {
           path: '',
           name: 'home',
-          component: HomePage
+          component: () => import('../pages/HomePage.vue')
         },
         {
           path: 'admin',

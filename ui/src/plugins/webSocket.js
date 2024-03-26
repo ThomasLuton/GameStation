@@ -6,37 +6,76 @@ import { useUserStore } from "../stores/userStore";
 export default {
     install: (app) => {
         const plugin = {
-            connect: () => {
+            connectToHub: (gamerTag) => {
                 const token = useUserStore().token;
-                const sock = new SockJS("http://localhost:8080/ws");
-                const connection = Stomp.over(sock);
-                connection.connect({
+                const sock = new SockJS("http://localhost:8080/hub", null, {
+                    transports: ['xhr-streaming'],
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const stompClient = Stomp.over(sock);
+                stompClient.connect({
                     authorization: `Bearer ${token}`
                 }, () => {
-                    connection.debug("Connected to API via websocket");
-                });
-                return connection;
-            },
-            disconnect: (connection) => {
-                const store = useConnectedStore();
-                store.selfRemove();
-                connection.disconnect();
-            },
-            connectToHub: (connection, gamerTag) => {
-                connection.subscribe('/topic/users', (payload) => {
-                    const input = JSON.parse(payload.body);
-                    const store = useConnectedStore();
-                    store.updateUsers(input);
-                }, {
-                    id: 1
+                    stompClient.debug("Connected to Hub via websocket");
+                    stompClient.subscribe('/topic/users', (payload) => {
+                        const input = JSON.parse(payload.body);
+                        const store = useConnectedStore();
+                        store.updateUsers(input);
+                    })
+                    stompClient.send("/app/connect", {},
+                        JSON.stringify(gamerTag)
+                    )
                 })
-                connection.send("/app/connect", {},
-                    JSON.stringify(gamerTag)
-                )
             },
-            disconnectToHub: (connection) => {
-                connection.unsubscribe(1, {})
+            connectToGame: (gamerTag) => {
+                const token = useUserStore().token;
+                const sock = new SockJS("http://localhost:8080/game", null, {
+                    transports: ['xhr-streaming'],
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const stompClient = Stomp.over(sock);
+                stompClient.connect({
+                    authorization: `Bearer ${token}`
+                }, () => {
+                    stompClient.debug("Connected to Game via websocket " + gamerTag.playerName + "#" + gamerTag.suffix);
+                })
             }
+            //     connect: async (storeConnection) => {
+            //         let connection;
+            //         if (storeConnection == null) {
+            //             const sock = new SockJS("http://localhost:8080/ws");
+            //             connection = Stomp.over(sock);
+            //         } else {
+            //             connection = storeConnection;
+            //         }
+            //         const token = useUserStore().token;
+            //         await connection.connect({
+            //             authorization: `Bearer ${token}`
+            //         }, () => {
+            //             connection.debug("Connected to API via websocket");
+            //         });
+            //         return connection;
+            //     },
+            //     disconnect: (connection) => {
+            //         useConnectedStore().selfRemove;
+            //         useUserStore().deleteConnection();
+            //         connection.disconnect();
+            //     },
+            //     connectToHub: async (connection, gamerTag) => {
+            //         await connection.subscribe('/topic/users', (payload) => {
+            //             const input = JSON.parse(payload.body);
+            //             const store = useConnectedStore();
+            //             store.updateUsers(input);
+            //         }, {
+            //             id: 1
+            //         })
+            //         await connection.send("/app/connect", {},
+            //             JSON.stringify(gamerTag)
+            //         )
+            //     },
+            //     disconnectToHub: async (connection) => {
+            //         await connection.unsubscribe(1, {})
+            //     }
         }
         app.config.globalProperties.$ws = plugin;
         app.provide("ws", plugin);

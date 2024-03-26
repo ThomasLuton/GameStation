@@ -11,7 +11,6 @@ export const useConnectedStore = defineStore('connected', {
     actions: {
         updateUsers(users) {
             this.users = users;
-            console.log("users = " + this.users)
         },
         selfRemove() {
             const userStore = useUserStore();

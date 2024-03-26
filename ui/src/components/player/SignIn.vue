@@ -21,9 +21,9 @@ export default {
             if (resp.status === 200) {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.gamerTag.playerName}`);
                 this.$modal.remove('signIn');
-                await this.setConnection();
                 this.setUserStore(resp.body);
-                this.$router.push("/")
+                this.$ws.connectToHub(this.userStore.gamerTag);
+                this.$router.push("/");
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
@@ -33,10 +33,6 @@ export default {
             this.userStore.gamerTag = tokenInfo.gamerTag;
             this.userStore.token = tokenInfo.token;
             this.userStore.role = tokenInfo.role;
-        },
-        async setConnection() {
-            const connection = await this.$ws.connect();
-            this.userStore.createConnection(connection);
         }
     }
 }

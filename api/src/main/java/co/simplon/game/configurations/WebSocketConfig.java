@@ -22,7 +22,7 @@ public class WebSocketConfig
     @Override
     public void registerStompEndpoints(
 	    StompEndpointRegistry registry) {
-	registry.addEndpoint("/ws")
+	registry.addEndpoint("/hub", "/game")
 		.setAllowedOrigins(allowedOrigins)
 		.withSockJS();
     }
