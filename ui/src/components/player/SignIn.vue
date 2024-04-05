@@ -22,7 +22,6 @@ export default {
                 this.$toast.success('toast-global', `Welcome back ${resp.body.gamerTag.playerName}`);
                 this.$modal.remove('signIn');
                 this.setUserStore(resp.body);
-                this.$ws.connectToHub(this.userStore.gamerTag);
                 this.$router.push("/");
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");

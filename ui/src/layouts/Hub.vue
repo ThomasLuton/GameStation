@@ -1,30 +1,60 @@
 <script setup>
-import { inject } from 'vue';
 import { useUserStore } from '../stores/userStore';
-import { onMounted } from 'vue';
+import { useConnectedStore } from '../stores/connectedStore';
+import { onMounted, inject } from 'vue';
 import { jwtDecode } from "jwt-decode";
+import { Client } from '@stomp/stompjs';
 
-const ws = inject('ws');
+const http = inject("http");
 const store = useUserStore();
-onMounted(() => {
+let ws;
+onMounted(async () => {
     if (store.token !== "") {
         const token = store.token;
         const decoded = jwtDecode(token);
         const now = Math.floor(Date.now() / 1000);
         if (decoded.exp > now) {
-            ws.connectToHub(store.gamerTag);
+            const body = {
+                gamerTag: store.gamerTag.playerName + '#' + store.gamerTag.suffix
+            }
+            const client = new Client({
+                connectHeaders: {
+                    Authorization: `Bearer ${token}`
+                },
+                brokerURL: 'ws://localhost:8080/hub',
+                onConnect: () => {
+                    client.subscribe('/topic/users', message => {
+                        const body = JSON.parse(message.body);
+                        useConnectedStore().updateUsers(body)
+                    }
+                    );
+                    client.publish({
+                        destination: '/app/connect',
+                        body: JSON.stringify(body)
+                    })
+                }
+            })
+            client.activate();
         } else {
             store.reset();
         }
     }
 })
 
+function sendTest() {
+    const message = {
+        name: "FrontEnd spam"
+    }
+    ws.send(JSON.stringify(message))
+}
+
 </script>
 
 <template>
     <h1>Hub</h1>
     <p>Hub de l'application</p>
-    <RouterLink :to="{ name: 'fake' }"><button>test</button></RouterLink>
+    <button @click="sendTest()">Test</button>
+    <RouterLink :to="{ name: 'fake' }"><button>GO to other layout</button></RouterLink>
     <RouterView></RouterView>
     <!-- notifications -->
 </template>

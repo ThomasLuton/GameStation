@@ -1,5 +1,7 @@
 package co.simplon.game.players.entities;
 
+import java.util.Objects;
+
 import jakarta.persistence.Embeddable;
 
 @Embeddable
@@ -34,4 +36,19 @@ public class GamerTag {
 	return String.format("%s#%d", playerName, suffix);
     }
 
+    @Override
+    public int hashCode() {
+	return Objects.hash(playerName, suffix);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	return obj instanceof GamerTag other // pattern matching
+		&& Objects.equals(playerName,
+			other.playerName)
+		&& Objects.equals(suffix, other.suffix);
+    }
 }

@@ -1,5 +1,7 @@
 package co.simplon.game.games.entities;
 
+import java.util.Objects;
+
 import co.simplon.game.entities.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -81,6 +83,23 @@ public class Game extends AbstractEntity {
 		+ ", maxPlayer=" + maxPlayer
 		+ ", thumbnail=" + thumbnail
 		+ ", aiAvailable=" + aiAvailable + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(gameName);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Game)) {
+	    return false;
+	}
+	Game other = (Game) obj;
+	return Objects.equals(gameName, other.gameName);
     }
 
 }

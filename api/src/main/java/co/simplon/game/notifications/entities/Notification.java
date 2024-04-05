@@ -1,6 +1,7 @@
 package co.simplon.game.notifications.entities;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import co.simplon.game.entities.AbstractEntity;
 import co.simplon.game.players.entities.Player;
@@ -86,6 +87,26 @@ public class Notification extends AbstractEntity {
 		+ ", sendAt=" + sendAt + ", read=" + read
 		+ ", redirectLink=" + redirectLink
 		+ ", player=" + player + "}";
+    }
+
+    @Override
+    public int hashCode() {
+	return Objects.hash(content, player, sendAt, title);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj) {
+	    return true;
+	}
+	if (!(obj instanceof Notification)) {
+	    return false;
+	}
+	Notification other = (Notification) obj;
+	return Objects.equals(content, other.content)
+		&& Objects.equals(player, other.player)
+		&& Objects.equals(sendAt, other.sendAt)
+		&& Objects.equals(title, other.title);
     }
 
 }

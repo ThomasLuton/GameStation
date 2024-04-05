@@ -18,6 +18,7 @@ export default {
         }, (error) => {
             return Promise.reject(error);
         });
+        app.provide("http", http);
         app.config.globalProperties.$http = http;
     }
 };

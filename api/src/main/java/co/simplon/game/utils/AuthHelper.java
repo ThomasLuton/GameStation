@@ -72,6 +72,10 @@ public class AuthHelper {
 	return info;
     }
 
+    public void verifyToken(String token) throws Exception {
+	algorithm.verify(JWT.decode(token));
+    }
+
     public static class Builder {
 	private String issuer;
 	private long expiration;
