@@ -53,6 +53,10 @@ export default {
                             <RouterLink :to="{ name: 'admin' }" class="nav-link">{{ $t('labels.navigation.admin') }}
                             </RouterLink>
                         </li>
+                        <li v-if="userStore.isAuthenticated" class="nav-item">
+                            <RouterLink :to="{ name: 'options' }" class="nav-link">{{ $t('labels.navigation.options') }}
+                            </RouterLink>
+                        </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
                             data-bs-target="#signIn">
                             <a class="nav-link" href="#">{{ $t('labels.navigation.signIn') }}</a>

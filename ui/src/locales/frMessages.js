@@ -33,6 +33,7 @@ const frMessages = {
         navigation: {
             history: "Historique de parties",
             admin: "Administrateur",
+            options: "Options",
             signIn: "Se connecter",
             signUp: "S'inscrire",
             logOut: "Se déconnecter"

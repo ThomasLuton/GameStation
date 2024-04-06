@@ -33,6 +33,7 @@ const enMessages = {
         navigation: {
             history: "Game history",
             admin: "Admin",
+            options: "Options",
             signIn: "Sign in",
             signUp: "Sign up",
             logOut: "Log out"

@@ -21,7 +21,7 @@ public class AuthHelper {
     private final Algorithm algorithm;
     private final PasswordEncoder encoder;
 
-    public AuthHelper(Builder builder) {
+    private AuthHelper(Builder builder) {
 	this.issuer = builder.issuer;
 	this.algorithm = builder.algorithm;
 	this.encoder = builder.passwordEncoder;

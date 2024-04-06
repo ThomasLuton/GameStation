@@ -1,17 +1,28 @@
 package co.simplon.game.players.services;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
 import co.simplon.game.players.dtos.GamerTagDto;
+import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
+import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
@@ -28,6 +39,9 @@ import co.simplon.game.utils.AuthHelper;
 public class PlayerServiceImpl implements PlayerService {
 
     private static Integer maxLenghtTag = 9999;
+
+    @Value("${gameStation.uploads.location}")
+    private String uploadDir;
 
     private final AuthHelper authHelper;
     private final PlayerRepository players;
@@ -171,6 +185,47 @@ public class PlayerServiceImpl implements PlayerService {
 	player.setEmailNotificationEnable(
 		inputs.activate());
 	players.save(player);
+    }
+
+    @Override
+    @Transactional
+    public void updateAvatar(PlayerUpdateAvatar input,
+	    Integer suffix) {
+	Player entity = players
+		.findOneByGamerTagSuffix(suffix);
+
+	if ((input.avatar() != null)) {
+	    Path oldAvatar = Paths.get(uploadDir,
+		    entity.getAvatar());
+	    MultipartFile file = input.avatar();
+	    String baseName = UUID.randomUUID().toString();
+	    String fileName = baseName
+		    + file.getOriginalFilename();
+	    entity.setAvatar(fileName);
+	    store(file, fileName);
+	    oldAvatar.toFile().delete();
+	}
+	players.save(entity);
+
+    }
+
+    private void store(MultipartFile file,
+	    String fileName) {
+	Path uploadedPath = Paths.get(uploadDir);
+	Path target = uploadedPath.resolve(fileName);
+	try (InputStream in = file.getInputStream()) {
+	    Files.copy(in, target,
+		    StandardCopyOption.REPLACE_EXISTING);
+	} catch (IOException ex) {
+	    throw new RuntimeException(ex);
+	}
+    }
+
+    @Override
+    public PlayerOptionsView getOneForOptions(
+	    Integer suffix) {
+	return players
+		.findOneProjectedByGamerTagSuffix(suffix);
     }
 
 }

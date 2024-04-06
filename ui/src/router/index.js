@@ -21,6 +21,23 @@ const router = createRouter({
           component: () => import('../pages/HomePage.vue')
         },
         {
+          path: 'options',
+          name: 'options',
+          component: () => import('../pages/Options.vue'),
+          children: [
+            {
+              path: 'notificationsSetup',
+              name: 'notificationsSetup',
+              component: () => import('../components/player/UpdateNotificationSetup.vue')
+            },
+            {
+              path: 'Identity',
+              name: 'Identity',
+              component: () => import('../components/player/IdentityUpdate.vue')
+            }
+          ]
+        },
+        {
           path: 'admin',
           name: 'admin',
           component: EditGame,

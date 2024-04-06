@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
+import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
@@ -33,6 +36,15 @@ public class PlayerController {
 	    AuthHelper authHelper) {
 	this.service = service;
 	this.authHelper = authHelper;
+    }
+
+    @GetMapping("/options")
+    public PlayerOptionsView getUserForOptions(
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	return service.getOneForOptions(suffix.intValue());
     }
 
     @PostMapping("/sign-up")
@@ -67,6 +79,17 @@ public class PlayerController {
 	Long suffix = (Long) user.get("suffix");
 	service.updatePlayerNotification(inputs,
 		suffix.intValue());
+    }
+
+    @PatchMapping("/update/avatar")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void update(
+	    @ModelAttribute @Valid PlayerUpdateAvatar input,
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.updateAvatar(input, suffix.intValue());
     }
 
 }

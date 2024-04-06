@@ -2,7 +2,9 @@ package co.simplon.game.players.services;
 
 import java.util.List;
 
+import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
+import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
@@ -16,6 +18,9 @@ public interface PlayerService {
 	    PlayerUpdateNotification inputs,
 	    Integer suffix);
 
+    void updateAvatar(PlayerUpdateAvatar input,
+	    Integer suffix);
+
     public TokenInfo connectPlayer(SignIn credentials);
 
     void logIn(String email);
@@ -25,5 +30,7 @@ public interface PlayerService {
     List<PlayerSimpleView> getConnectedUsers();
 
     List<PlayerSimpleView> getAllUsers();
+
+    PlayerOptionsView getOneForOptions(Integer suffix);
 
 }

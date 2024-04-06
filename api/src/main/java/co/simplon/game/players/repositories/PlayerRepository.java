@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.entities.Player;
 
@@ -25,4 +26,6 @@ public interface PlayerRepository
 
     List<PlayerSimpleView> findAllProjectedByOrderById();
 
+    PlayerOptionsView findOneProjectedByGamerTagSuffix(
+	    Integer suffix);
 }
