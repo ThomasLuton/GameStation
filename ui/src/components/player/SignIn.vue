@@ -19,10 +19,8 @@ export default {
         async submit() {
             const resp = await this.$http.post("/players/sign-in", this.credentials);
             if (resp.status === 200) {
-                this.$toast.success('toast-global', `Welcome back ${resp.body.gamerTag.playerName}`);
-                this.$modal.remove('signIn');
                 this.setUserStore(resp.body);
-                this.$router.push("/");
+                window.location.reload();
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }

@@ -13,8 +13,11 @@ public interface NotificationService {
     public void read(Long id);
 
     public List<NotificationLightView> getAllForOnePlayer(
-	    Long playerId);
+	    Integer suffix);
 
     public NotificationDetailView getOneById(Long id);
+
+    public Integer getNumberOfUnreadNotifications(
+	    Integer suffix);
 
 }

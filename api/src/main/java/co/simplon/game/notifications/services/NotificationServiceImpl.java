@@ -11,6 +11,8 @@ import co.simplon.game.notifications.dtos.NotificationDetailView;
 import co.simplon.game.notifications.dtos.NotificationLightView;
 import co.simplon.game.notifications.entities.Notification;
 import co.simplon.game.notifications.repositories.NotificationRepository;
+import co.simplon.game.players.entities.Player;
+import co.simplon.game.players.repositories.PlayerRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,10 +20,13 @@ public class NotificationServiceImpl
 	implements NotificationService {
 
     private final NotificationRepository notifications;
+    private final PlayerRepository players;
 
     public NotificationServiceImpl(
-	    NotificationRepository notifications) {
+	    NotificationRepository notifications,
+	    PlayerRepository player) {
 	this.notifications = notifications;
+	this.players = player;
     }
 
     @Override
@@ -51,14 +56,25 @@ public class NotificationServiceImpl
 
     @Override
     public List<NotificationLightView> getAllForOnePlayer(
-	    Long playerId) {
+	    Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
 	return notifications
-		.findAllProjectedByPlayerId(playerId);
+		.findAllProjectedByPlayerId(player.getId());
     }
 
     @Override
     public NotificationDetailView getOneById(Long id) {
 	return notifications.findOneById(id);
+    }
+
+    @Override
+    public Integer getNumberOfUnreadNotifications(
+	    Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
+	return notifications
+		.countUnreadNotifications(player.getId());
     }
 
 }

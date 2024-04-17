@@ -24,6 +24,10 @@ const router = createRouter({
           path: 'options',
           name: 'options',
           component: () => import('../pages/Options.vue'),
+          beforeEnter: (to) => {
+            const userStore = useUserStore();
+            return userStore.isAuthenticated;
+          },
           children: [
             {
               path: 'notificationsSetup',
@@ -31,9 +35,19 @@ const router = createRouter({
               component: () => import('../components/player/UpdateNotificationSetup.vue')
             },
             {
-              path: 'Identity',
-              name: 'Identity',
+              path: 'identity',
+              name: 'identity',
               component: () => import('../components/player/IdentityUpdate.vue')
+            },
+            {
+              path: 'friendList',
+              name: 'friendList',
+              component: () => import('../components/player/FriendList.vue')
+            },
+            {
+              path: 'gameHistory',
+              name: 'gameHistory',
+              component: () => import('../components/player/GameHistory.vue')
             }
           ]
         },
