@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.game.notifications.dtos.NotificationDetailView;
@@ -50,9 +53,15 @@ public class NotificationControllers {
     }
 
     @GetMapping("/{id}")
-    public NotificationDetailView getOneById(
+    public NotificationDetailView readOneById(
 	    @PathVariable Long id) {
-	return notificationService.getOneById(id);
+	return notificationService.readOneById(id);
+    }
+
+    @PatchMapping("/unread/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void markAsUnread(@PathVariable Long id) {
+	notificationService.markAsUnread(id);
     }
 
 }

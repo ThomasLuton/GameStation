@@ -36,7 +36,7 @@ export default {
                 }
             });
             if (resp.status === 200) {
-                this.unread = resp.body;
+                this.unread = resp.body ? resp.body : 0;
             }
         }
     },
@@ -95,7 +95,7 @@ export default {
             </div>
         </nav>
     </header>
-    <NotificationModal></NotificationModal>
+    <NotificationModal @reload-unread="getUnreadNotification"></NotificationModal>
     <SignIn></SignIn>
     <SignUp></SignUp>
 </template>

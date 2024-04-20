@@ -3,7 +3,6 @@
 export default {
     mounted() {
         const splitedPathName = window.location.pathname.split("/");
-        console.log(splitedPathName);
         if (splitedPathName.length === 3) {
             this.setActive(splitedPathName[2]);
         }

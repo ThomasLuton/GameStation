@@ -72,7 +72,7 @@ public class PlayerController {
     @PatchMapping("/update/notification")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateNotification(
-	    @RequestBody PlayerUpdateNotification inputs,
+	    @Valid @RequestBody PlayerUpdateNotification inputs,
 	    JwtAuthenticationToken principal) {
 	Map<String, Object> user = authHelper
 		.getPrincipalInfo(principal);
@@ -83,7 +83,7 @@ public class PlayerController {
 
     @PatchMapping("/update/avatar")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(
+    public void updateAvatar(
 	    @ModelAttribute @Valid PlayerUpdateAvatar input,
 	    JwtAuthenticationToken principal) {
 	Map<String, Object> user = authHelper

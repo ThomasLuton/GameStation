@@ -3,9 +3,12 @@ package co.simplon.game.notifications.services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.simplon.game.errors.CodeError;
+import co.simplon.game.errors.GameStationError;
 import co.simplon.game.notifications.dtos.CreateNotification;
 import co.simplon.game.notifications.dtos.NotificationDetailView;
 import co.simplon.game.notifications.dtos.NotificationLightView;
@@ -45,12 +48,17 @@ public class NotificationServiceImpl
     }
 
     @Override
-    public void read(Long id) {
+    @Transactional
+    public void markAsUnread(Long id) {
 	Notification notification = notifications
 		.findById(id).get();
-	if (!notification.getRead()) {
-	    notification.setRead(true);
+	if (notification.getRead() == false) {
+	    throw new GameStationError(
+		    CodeError.NotificationAlreadyUnread,
+		    "This notification is already in unread state",
+		    HttpStatus.BAD_REQUEST);
 	}
+	notification.setRead(false);
 	notifications.save(notification);
     }
 
@@ -64,8 +72,28 @@ public class NotificationServiceImpl
     }
 
     @Override
-    public NotificationDetailView getOneById(Long id) {
-	return notifications.findOneById(id);
+    @Transactional
+    public NotificationDetailView readOneById(Long id) {
+	markAsRead(id);
+	NotificationDetailView notification = notifications
+		.findOneById(id);
+	return notification;
+    }
+
+    private void markAsRead(Long id) {
+	Notification notification = notifications
+		.findById(id).get();
+	if (notification == null) {
+	    throw new GameStationError(
+		    CodeError.NotificationNotFound,
+		    "There is no notification with this id",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (notification.getRead()) {
+	    return;
+	}
+	notification.setRead(true);
+	notifications.save(notification);
     }
 
     @Override

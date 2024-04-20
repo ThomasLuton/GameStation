@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public interface NotificationLightView {
 
+    Long getId();
+
     String getTitle();
 
     boolean isRead();

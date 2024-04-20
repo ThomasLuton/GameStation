@@ -10,12 +10,12 @@ public interface NotificationService {
 
     public void create(CreateNotification input);
 
-    public void read(Long id);
+    public void markAsUnread(Long id);
 
     public List<NotificationLightView> getAllForOnePlayer(
 	    Integer suffix);
 
-    public NotificationDetailView getOneById(Long id);
+    public NotificationDetailView readOneById(Long id);
 
     public Integer getNumberOfUnreadNotifications(
 	    Integer suffix);

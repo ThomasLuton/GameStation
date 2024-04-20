@@ -1,4 +1,5 @@
 DELETE FROM games;
+DELETE FROM notifications;
 DELETE FROM players;
 DELETE FROM roles;
 
@@ -8,6 +9,12 @@ INSERT INTO roles (name) values ('player'), ('admin'), ('moderator');
 INSERT INTO players (email, suffix, player_name, password, role_id, avatar, is_connected) values ('bot', 1234, 'Bot', '$2a$11$h6b5Wg9TCb.05/VZTs3BieP1Ya7VFmSqh.SIvg1zurUS0yQFaJr/W', (SELECT id FROM roles WHERE name = 'player'), 'testAvatar', true);
 INSERT INTO players (email, suffix, player_name, password, role_id, avatar, is_connected) values ('modo', 1235, 'Modo', '$2a$11$h6b5Wg9TCb.05/VZTs3BieP1Ya7VFmSqh.SIvg1zurUS0yQFaJr/W', (SELECT id FROM roles WHERE name = 'moderator'), 'testAvatar', true);
 INSERT INTO players (email, suffix, player_name, password, role_id, avatar, is_connected) values ('admin', 1236, 'Admin', '$2a$11$h6b5Wg9TCb.05/VZTs3BieP1Ya7VFmSqh.SIvg1zurUS0yQFaJr/W', (SELECT id FROM roles WHERE name = 'admin'), 'testAvatar', true);
+
+INSERT INTO notifications (title, content, send_at, is_read, player_id) values ('Notification 1', 'Lorem ipsum blabla', '2024-03-23 11:54:01.657026', false, (SELECT id FROM players WHERE suffix = 1234));
+INSERT INTO notifications (title, content, send_at, is_read, player_id) values ('Notification 2', 'Lorem ipsum blabla', '2024-03-23 11:54:01.657026', false, (SELECT id FROM players WHERE suffix = 1234));
+INSERT INTO notifications (title, content, send_at, is_read, player_id) values ('Notification 3', 'Lorem ipsum blabla', '2024-03-23 11:54:01.657026', false, (SELECT id FROM players WHERE suffix = 1234));
+INSERT INTO notifications (title, content, send_at, is_read, player_id) values ('Notification 4', 'Lorem ipsum blabla', '2024-03-23 11:54:01.657026', false, (SELECT id FROM players WHERE suffix = 1234));
+
 
 INSERT INTO games (game_name, game_detail, min_player, max_player, thumbnail, ai_available)
 values ('TicTacToe', 'Jeu classique du morpion', '2', '2', '/images/morpion_total.png', 'false');
