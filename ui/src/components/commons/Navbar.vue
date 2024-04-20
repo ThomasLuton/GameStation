@@ -52,7 +52,7 @@ export default {
 <template>
     <header class="sticky-top bg-primary">
         <nav class="container-xl navbar navbar-expand-lg">
-            <div class="container-fluid d-flex">
+            <div class="container-fluid">
                 <RouterLink :to="{ name: 'home' }" class="navbar-brand"><img src="../../../public/images/logo_ecrit.png"
                         alt=" logo" width="160" height="40">
                 </RouterLink>
