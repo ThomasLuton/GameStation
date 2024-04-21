@@ -98,9 +98,9 @@ export default {
             <div>
                 <img v-if="player.avatar" :src="'/images/' + player.avatar" style="height: 100px; widows: 100px;"
                     alt="avatar">
-                <i v-else class="bi bi-person-bounding-box"></i>
+                <img v-else src="/images/noAvatar.png" style="height: 100px; widows: 100px;" alt="avatar">
             </div>
         </div>
-        <button class="mb-3 btn btn-primary" type="submit">Update avatar</button>
+        <button class=" mb-3 btn btn-primary" type="submit">Update avatar</button>
     </form>
 </template>

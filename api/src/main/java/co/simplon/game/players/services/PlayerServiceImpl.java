@@ -220,15 +220,17 @@ public class PlayerServiceImpl implements PlayerService {
 		.findOneByGamerTagSuffix(suffix);
 
 	if ((input.avatar() != null)) {
-	    Path oldAvatar = Paths.get(uploadDir,
-		    entity.getAvatar());
+	    if (entity.getAvatar() != null) {
+		Path oldAvatar = Paths.get(uploadDir,
+			entity.getAvatar());
+		oldAvatar.toFile().delete();
+	    }
 	    MultipartFile file = input.avatar();
 	    String baseName = UUID.randomUUID().toString();
 	    String fileName = baseName
 		    + file.getOriginalFilename();
 	    entity.setAvatar(fileName);
 	    store(file, fileName);
-	    oldAvatar.toFile().delete();
 	}
 	players.save(entity);
 

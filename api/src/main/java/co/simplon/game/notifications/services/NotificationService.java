@@ -20,4 +20,6 @@ public interface NotificationService {
     public Integer getNumberOfUnreadNotifications(
 	    Integer suffix);
 
+    public void deleteById(Long id);
+
 }

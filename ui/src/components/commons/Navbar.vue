@@ -30,9 +30,9 @@ export default {
                     Authorization: `Bearer ${this.userStore.token}`
                 }
             });
-            if (resp.status === 204) {
+            if (resp.status === 204 || resp.status === 401) {
                 this.userStore.reset();
-                window.location.reload();
+                this.$router.push("/");
             }
         },
         async getUnreadNotification() {

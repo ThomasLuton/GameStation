@@ -1,5 +1,8 @@
 package co.simplon.game.players.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +11,7 @@ import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
 import co.simplon.game.notifications.dtos.CreateNotification;
 import co.simplon.game.notifications.services.NotificationService;
+import co.simplon.game.players.dtos.FriendView;
 import co.simplon.game.players.dtos.GamerTagDto;
 import co.simplon.game.players.entities.Friend;
 import co.simplon.game.players.entities.Player;
@@ -69,7 +73,8 @@ public class FriendServiceImpl implements FriendService {
 		"Demande d'ami",
 		"Je suis " + player.getGamerTag()
 			+ ", veux tu être mon ami?",
-		null, friend);
+		"http://localhost:5173/options/friendList",
+		friend);
 	notificationService.create(request);
 	Friend entity = new Friend();
 	entity.setPlayer(player);
@@ -124,7 +129,6 @@ public class FriendServiceImpl implements FriendService {
     @Transactional
     public void refuse(GamerTagDto newFriend,
 	    Integer userSuffix) {
-	// attention verifier si notification existe avant
 	Player friend = getPlayer(newFriend);
 	Player player = players
 		.findOneByGamerTagSuffix(userSuffix);
@@ -198,6 +202,34 @@ public class FriendServiceImpl implements FriendService {
 		    HttpStatus.BAD_REQUEST);
 	}
 	return friend;
+    }
+
+    @Override
+    public List<FriendView> getFriends(Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
+	List<Friend> raws = friends
+		.findByPlayerOrFriend(player, player);
+	List<FriendView> output = new ArrayList<>();
+	raws.forEach((raw) -> {
+	    FriendView friendView = new FriendView();
+	    friendView.setPending(raw.getPending());
+	    if (raw.getPlayer().getGamerTag().getSuffix()
+		    .equals(suffix)) {
+		friendView.setAvatar(
+			raw.getFriend().getAvatar());
+		friendView.setGamerTag(
+			raw.getFriend().getGamerTag());
+	    } else {
+		friendView.setAvatar(
+			raw.getPlayer().getAvatar());
+		friendView.setGamerTag(
+			raw.getPlayer().getGamerTag());
+	    }
+	    output.add(friendView);
+	});
+
+	return output;
     }
 
 }

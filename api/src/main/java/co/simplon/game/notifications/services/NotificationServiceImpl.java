@@ -105,4 +105,10 @@ public class NotificationServiceImpl
 		.countUnreadNotifications(player.getId());
     }
 
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+	notifications.deleteById(id);
+    }
+
 }

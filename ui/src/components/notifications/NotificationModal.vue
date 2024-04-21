@@ -53,6 +53,16 @@ export default {
                 this.notifications.filter((notification) => notification.id === id)[0].read = false;
                 this.$emit('reloadUnread')
             }
+        },
+        async deleteNotification(id) {
+            const resp = await this.$http.delete(`/notifications/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.token}`
+                }
+            })
+            if (resp.status === 204) {
+                this.getPlayerNotifications();
+            }
         }
     },
     async mounted() {
@@ -84,12 +94,14 @@ export default {
                         <div v-if="openNotifications.get(notification.id)" :id="notification.id"
                             class="d-flex flex-column border border-secondary rounded bg-secondary bg-opacity-10">
                             <p class="mx-1">{{ openNotifications.get(notification.id).content }}</p>
-                            <p v-if="openNotifications.get(notification.id).redirectLink" class="mx-1">{{
-                        openNotifications.get(notification.id).redirectLink }}</p>
+                            <a v-if="openNotifications.get(notification.id).redirectLink" class="mx-1"
+                                :href="openNotifications.get(notification.id).redirectLink">Click here to be redirect
+                            </a>
                             <div class="d-flex justify-content-between">
-                                <button class="btn btn-secondary m-1" @click="markAsUnread(notification.id)">Marquer
-                                    comme non
-                                    lu</button>
+                                <button class="btn btn-secondary m-1" @click="markAsUnread(notification.id)">Mark as
+                                    unread</button>
+                                <button class="btn btn-secondary m-1"
+                                    @click="deleteNotification(notification.id)">Delete</button>
                                 <button @click="closeNotification(notification.id)"
                                     class="btn btn-secondary m-1">Fermer</button>
                             </div>
