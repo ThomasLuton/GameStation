@@ -59,6 +59,15 @@ public class PlayerController {
 	return service.connectPlayer(credentials);
     }
 
+    @PostMapping("/log-out")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void logOut(JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.logOut(suffix.intValue());
+    }
+
     @GetMapping("/connected")
     public List<PlayerSimpleView> getConnectedPlayer() {
 	return service.getConnectedUsers();

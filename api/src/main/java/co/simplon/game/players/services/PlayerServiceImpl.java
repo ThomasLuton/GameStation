@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import co.simplon.game.errors.CodeError;
 import co.simplon.game.errors.GameStationError;
+import co.simplon.game.notifications.dtos.CreateNotification;
+import co.simplon.game.notifications.services.NotificationService;
 import co.simplon.game.players.dtos.GamerTagDto;
 import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
@@ -46,6 +49,8 @@ public class PlayerServiceImpl implements PlayerService {
     private final AuthHelper authHelper;
     private final PlayerRepository players;
     private final RoleRepository roles;
+    @Autowired
+    private NotificationService notificationService;
 
     public PlayerServiceImpl(AuthHelper authHelper,
 	    PlayerRepository players,
@@ -82,6 +87,11 @@ public class PlayerServiceImpl implements PlayerService {
 	player.setPassword(hash);
 
 	players.save(player);
+	CreateNotification welcomeMessage = new CreateNotification(
+		"Welcome",
+		"Welcome on Game station, let's have fun with some games",
+		null, player);
+	notificationService.create(welcomeMessage);
     }
 
     private GamerTag createTag(String name) {
@@ -157,8 +167,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional
-    public void logOut(String email) {
-	Player player = players.findOneByEmail(email);
+    public void logOut(Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
 	player.setConnection(false);
 	players.save(player);
     }

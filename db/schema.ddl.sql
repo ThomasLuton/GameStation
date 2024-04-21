@@ -27,7 +27,7 @@ CREATE TABLE players (
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
     avatar VARCHAR(1000),
 	email_notification_enable BOOLEAN NOT NULL DEFAULT false,
-	day_before_notification INTEGER NOT NULL DEFAULT 7,
+	day_before_notification INTEGER DEFAULT 7,
 	is_connected BOOLEAN NOT NULL
 );
 

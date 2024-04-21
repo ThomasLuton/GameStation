@@ -21,7 +21,7 @@ export default {
             });
             if (resp.status === 200) {
                 this.notifications = resp.body
-                this.notifications.forEach((notification) => {
+                this.notifications?.forEach((notification) => {
                     notification.sendAt = notification.sendAt.slice(0, 10)
                 })
             }

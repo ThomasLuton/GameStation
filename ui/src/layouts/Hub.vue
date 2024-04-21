@@ -51,10 +51,5 @@ function sendTest() {
 </script>
 
 <template>
-    <h1>Hub</h1>
-    <p>Hub de l'application</p>
-    <button @click="sendTest()">Test</button>
-    <RouterLink :to="{ name: 'fake' }"><button>GO to other layout</button></RouterLink>
     <RouterView></RouterView>
-    <!-- notifications -->
 </template>

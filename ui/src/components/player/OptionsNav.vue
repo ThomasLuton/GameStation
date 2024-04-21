@@ -28,21 +28,21 @@ export default {
 
 </script>
 <template>
-    <ul class="list-group">
-        <li @click="goTo('notificationsSetup')" id="notificationsSetup" class="list-group-item" aria-current="true">
-            <button class="nav-link">notificationsSetup
+    <ul class="list-group border border-primary">
+        <li @click="goTo('identity')" id="identity" class="list-group-item">
+            <button class="nav-link">Player identity options
             </button>
         </li>
-        <li @click="goTo('identity')" id="identity" class="list-group-item">
-            <button class="nav-link">identity
+        <li @click="goTo('notificationsSetup')" id="notificationsSetup" class="list-group-item" aria-current="true">
+            <button class="nav-link">Notifications options
             </button>
         </li>
         <li @click="goTo('friendList')" id="friendList" class="list-group-item">
-            <button class="nav-link">friendList
+            <button class="nav-link">Friends List
             </button>
         </li>
         <li @click="goTo('gameHistory')" id="gameHistory" class="list-group-item">
-            <button class="nav-link">gameHistory
+            <button class="nav-link">Game history
             </button>
         </li>
     </ul>

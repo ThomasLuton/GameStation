@@ -6,7 +6,6 @@ import { mapActions } from 'pinia';
 import { mapStores } from 'pinia';
 import { useUserStore } from '../../stores/userStore';
 import NotificationModal from '../notifications/NotificationModal.vue';
-import { number } from 'sockjs-client/lib/utils/random';
 
 export default {
     components: {
@@ -26,8 +25,15 @@ export default {
     },
     methods: {
         async disconnect() {
-            this.userStore.reset();
-            window.location.reload();
+            const resp = await this.$http.post("/players/log-out", null, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.token}`
+                }
+            });
+            if (resp.status === 204) {
+                this.userStore.reset();
+                window.location.reload();
+            }
         },
         async getUnreadNotification() {
             const resp = await this.$http.get("notifications/unread", {

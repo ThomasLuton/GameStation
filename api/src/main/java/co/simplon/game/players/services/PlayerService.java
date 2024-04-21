@@ -25,7 +25,7 @@ public interface PlayerService {
 
     void logIn(String email);
 
-    void logOut(String email);
+    void logOut(Integer suffix);
 
     List<PlayerSimpleView> getConnectedUsers();
 

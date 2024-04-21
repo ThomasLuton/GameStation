@@ -35,14 +35,14 @@ export default {
 
 </script>
 <template>
-    <section class="container-xl">
-        <h1>Titre à I18N iser</h1>
+    <section class="container-fluid">
+        <h1 class="text-center my-2">Options</h1>
         <div class="row">
             <div class="col-1"></div>
             <div class="col-2">
                 <OptionsNav />
             </div>
-            <div class="border col-8">
+            <div class="border border-primary rounded p-2 col-8">
                 <RouterView :player="player"></RouterView>
             </div>
             <div class="col-1" </div>
