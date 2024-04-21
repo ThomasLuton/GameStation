@@ -18,6 +18,7 @@ import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
+import co.simplon.game.players.dtos.PlayerUpdatePlayerName;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
 import co.simplon.game.players.dtos.TokenInfo;
@@ -88,6 +89,17 @@ public class PlayerController {
 	Long suffix = (Long) user.get("suffix");
 	service.updatePlayerNotification(inputs,
 		suffix.intValue());
+    }
+
+    @PatchMapping("/update/player-name")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updatePlayerName(
+	    @Valid @RequestBody PlayerUpdatePlayerName inputs,
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.updatePlayerName(inputs, suffix.intValue());
     }
 
     @PatchMapping("/update/avatar")

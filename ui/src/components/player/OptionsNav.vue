@@ -15,12 +15,12 @@ export default {
         setActive(name) {
             const target = document.getElementById(name);
             this.resetActive();
-            target.classList.add("active");
+            target?.classList?.add("active");
         },
         resetActive() {
             const targets = document.getElementsByClassName("list-group-item");
             for (let i = 0; i < targets.length; i++) {
-                targets[i].classList.remove("active");
+                targets[i]?.classList?.remove("active");
             }
         }
     }

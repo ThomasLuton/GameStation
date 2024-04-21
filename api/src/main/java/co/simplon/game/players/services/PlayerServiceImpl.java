@@ -27,6 +27,7 @@ import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
+import co.simplon.game.players.dtos.PlayerUpdatePlayerName;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
 import co.simplon.game.players.dtos.TokenInfo;
@@ -36,6 +37,7 @@ import co.simplon.game.players.entities.Role;
 import co.simplon.game.players.repositories.PlayerRepository;
 import co.simplon.game.players.repositories.RoleRepository;
 import co.simplon.game.utils.AuthHelper;
+import jakarta.validation.Valid;
 
 @Service
 @Transactional(readOnly = true)
@@ -200,6 +202,18 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional
+    public void updatePlayerName(
+	    @Valid PlayerUpdatePlayerName inputs,
+	    Integer suffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(suffix);
+	player.getGamerTag()
+		.setPlayerName(inputs.playerName());
+	players.save(player);
+    }
+
+    @Override
+    @Transactional
     public void updateAvatar(PlayerUpdateAvatar input,
 	    Integer suffix) {
 	Player entity = players
@@ -238,5 +252,4 @@ public class PlayerServiceImpl implements PlayerService {
 	return players
 		.findOneProjectedByGamerTagSuffix(suffix);
     }
-
 }

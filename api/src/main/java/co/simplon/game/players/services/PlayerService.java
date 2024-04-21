@@ -6,9 +6,11 @@ import co.simplon.game.players.dtos.PlayerOptionsView;
 import co.simplon.game.players.dtos.PlayerSimpleView;
 import co.simplon.game.players.dtos.PlayerUpdateAvatar;
 import co.simplon.game.players.dtos.PlayerUpdateNotification;
+import co.simplon.game.players.dtos.PlayerUpdatePlayerName;
 import co.simplon.game.players.dtos.SignIn;
 import co.simplon.game.players.dtos.SignUp;
 import co.simplon.game.players.dtos.TokenInfo;
+import jakarta.validation.Valid;
 
 public interface PlayerService {
 
@@ -32,5 +34,9 @@ public interface PlayerService {
     List<PlayerSimpleView> getAllUsers();
 
     PlayerOptionsView getOneForOptions(Integer suffix);
+
+    public void updatePlayerName(
+	    @Valid PlayerUpdatePlayerName inputs,
+	    Integer suffix);
 
 }

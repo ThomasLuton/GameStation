@@ -24,7 +24,7 @@ const router = createRouter({
           path: 'options',
           name: 'options',
           component: () => import('../pages/Options.vue'),
-          beforeEnter: (to) => {
+          beforeEnter: () => {
             const userStore = useUserStore();
             return userStore.isAuthenticated;
           },

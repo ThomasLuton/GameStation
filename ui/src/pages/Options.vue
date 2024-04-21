@@ -28,7 +28,7 @@ export default {
             }
         }
     },
-    async mounted() {
+    async beforeMount() {
         await this.initPlayer();
     }
 }
@@ -45,7 +45,6 @@ export default {
             <div class="border border-primary rounded p-2 col-8">
                 <RouterView :player="player"></RouterView>
             </div>
-            <div class="col-1" </div>
-            </div>
+        </div>
     </section>
 </template>

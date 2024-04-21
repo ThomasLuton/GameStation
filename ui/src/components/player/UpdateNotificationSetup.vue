@@ -36,9 +36,9 @@ export default {
                     }
                 })
                 if (resp.status === 204) {
-                    window.location.reload();
+                    this.$toast.success('toast-global', "Notification setup updated")
                 } else {
-                    console.error(resp.body)
+                    this.$toast.error('toast-global', resp.body)
                 }
             }
         }
