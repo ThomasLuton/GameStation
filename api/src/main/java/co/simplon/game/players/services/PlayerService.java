@@ -25,8 +25,6 @@ public interface PlayerService {
 
     public TokenInfo connectPlayer(SignIn credentials);
 
-    void logIn(String email);
-
     void logOut(Integer suffix);
 
     List<PlayerSimpleView> getConnectedUsers();

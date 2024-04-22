@@ -82,14 +82,13 @@ export default {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div v-for="notification in  notifications ">
+                    <div v-for="notification in notifications ">
                         <div class="d-flex mt-2 mb-1 border border-primary rounded bg-primary bg-opacity-10">
                             <p class="mx-1">{{ notification.title }}</p>
-                            <p class="mx-1">Envoyé le {{ notification.sendAt }}</p>
+                            <p class="mx-1">Send at {{ notification.sendAt }}</p>
                             <i v-if="notification.read" class="bi bi-envelope ms-auto p-2"></i>
                             <i v-else class="bi bi-envelope-exclamation-fill ms-auto p-2"></i>
-                            <button class="btn btn-primary m-1"
-                                @click="openNotification(notification.id)">Ouvrir</button>
+                            <button class="btn btn-primary m-1" @click="openNotification(notification.id)">Open</button>
                         </div>
                         <div v-if="openNotifications.get(notification.id)" :id="notification.id"
                             class="d-flex flex-column border border-secondary rounded bg-secondary bg-opacity-10">
@@ -103,7 +102,7 @@ export default {
                                 <button class="btn btn-secondary m-1"
                                     @click="deleteNotification(notification.id)">Delete</button>
                                 <button @click="closeNotification(notification.id)"
-                                    class="btn btn-secondary m-1">Fermer</button>
+                                    class="btn btn-secondary m-1">Close</button>
                             </div>
                         </div>
                     </div>

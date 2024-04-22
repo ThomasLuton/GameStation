@@ -52,6 +52,13 @@ export default {
             await this.getUnreadNotification();
         }
     },
+    async unmounted() {
+        await this.$http.post("/players/log-out", null, {
+            headers: {
+                Authorization: `Bearer ${this.userStore.token}`
+            }
+        });
+    }
 }
 </script>
 
@@ -64,14 +71,6 @@ export default {
                 </RouterLink>
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
-                        <li v-if="userStore.isAuthenticated" class="nav-item">
-                            <RouterLink :to="{ name: 'history' }" class="nav-link">{{ $t('labels.navigation.history') }}
-                            </RouterLink>
-                        </li>
-                        <li v-if="userStore.isAuthenticated" class="nav-item">
-                            <RouterLink :to="{ name: 'admin' }" class="nav-link">{{ $t('labels.navigation.admin') }}
-                            </RouterLink>
-                        </li>
                         <li v-if="userStore.isAuthenticated" class="nav-item">
                             <RouterLink :to="{ name: 'options' }" class="nav-link">{{ $t('labels.navigation.options') }}
                             </RouterLink>

@@ -59,7 +59,7 @@ CREATE TABLE games (
 	game_detail VARCHAR(1000) NOT NULL UNIQUE,
 	min_player INTEGER NOT NULL,
 	max_player INTEGER NOT NULL,
-	thumbnail VARCHAR(1000) NOT NULL UNIQUE,
+	thumbnail VARCHAR(1000) NOT NULL,
 	ai_available BOOLEAN NOT NULL
 );
 

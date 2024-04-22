@@ -120,6 +120,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Transactional
     public TokenInfo connectPlayer(SignIn credentials) {
 	Player candidate = players
 		.findOneByEmail(credentials.email());
@@ -148,23 +149,9 @@ public class PlayerServiceImpl implements PlayerService {
 	GamerTagDto gamerTag = new GamerTagDto(
 		candidate.getGamerTag().getPlayerName(),
 		candidate.getGamerTag().getSuffix());
+	candidate.setConnection(true);
+	players.save(candidate);
 	return new TokenInfo(token, role, gamerTag);
-    }
-
-    @Override
-    @Transactional
-    public void logIn(String email) {
-	Player player = players.findOneByEmail(email);
-	boolean isConnected = player.isConnection();
-	if (!isConnected) {
-	    player.setConnection(true);
-	    players.save(player);
-	} else {
-	    throw new GameStationError(
-		    CodeError.PlayerAlreadyConnected,
-		    "Player already connected",
-		    HttpStatus.CONFLICT);
-	}
     }
 
     @Override

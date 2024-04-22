@@ -70,9 +70,9 @@ public class FriendServiceImpl implements FriendService {
 	}
 
 	CreateNotification request = new CreateNotification(
-		"Demande d'ami",
-		"Je suis " + player.getGamerTag()
-			+ ", veux tu être mon ami?",
+		"FriendShip request",
+		"I am " + player.getGamerTag()
+			+ ", do you want to be my friend?",
 		"http://localhost:5173/options/friendList",
 		friend);
 	notificationService.create(request);
@@ -115,8 +115,8 @@ public class FriendServiceImpl implements FriendService {
 		    HttpStatus.BAD_REQUEST);
 	}
 	CreateNotification response = new CreateNotification(
-		"Demande d'ami",
-		"Vous êtes maintenant ami avec "
+		"FriendShip response",
+		"Now, you are friend with "
 			+ player.getGamerTag(),
 		null, friend);
 	notificationService.create(response);
@@ -155,9 +155,9 @@ public class FriendServiceImpl implements FriendService {
 		    HttpStatus.BAD_REQUEST);
 	}
 	CreateNotification response = new CreateNotification(
-		"Demande d'ami",
+		"FriendShip response",
 		player.getGamerTag()
-			+ " a refusé votre demande d'ami",
+			+ " don't want to be your friend",
 		null, friend);
 	notificationService.create(response);
 	friends.delete(friendship);
@@ -182,9 +182,9 @@ public class FriendServiceImpl implements FriendService {
 		    HttpStatus.BAD_REQUEST);
 	}
 	CreateNotification notification = new CreateNotification(
-		"Demande d'ami",
+		"FriendShip information",
 		player.getGamerTag()
-			+ " n'est plus votre ami",
+			+ " is no more your friend",
 		null, friend);
 	notificationService.create(notification);
 	friends.delete(oldRelation);

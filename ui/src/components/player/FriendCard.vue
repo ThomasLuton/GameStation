@@ -58,14 +58,16 @@ export default {
 
 <template>
     <li :id="friend.gamerTag.playerName" class="list-group-item d-flex justify-content-around bg-opacity-10">
-        <div>
+        <div class="col-3">
             <img v-if="friend.avatar" :src="'/images/' + friend.avatar" style="height: 100px; widows: 100px;"
                 alt="avatar">
             <img v-else src="/images/noAvatar.png" style="height: 100px; widows: 100px;" alt="avatar">
             <p>{{ friend.gamerTag.playerName }}#{{ friend.gamerTag.suffix }}</p>
         </div>
-        <button v-if="friend.pending" class="btn btn-primary" @click="accept">Accept</button>
-        <button v-if="friend.pending" class="btn btn-primary" @click="refuse">Reject</button>
-        <button class="btn btn-primary" @click="remove">Remove</button>
+        <div class="col-8 py-5 d-flex">
+            <button v-if="friend.pending" class="btn btn-primary mx-2" @click="accept">Accept</button>
+            <button v-if="friend.pending" class="btn btn-primary mx-2" @click="refuse">Reject</button>
+            <button class="btn btn-secondary ms-auto" @click="remove">Remove</button>
+        </div>
     </li>
 </template>
