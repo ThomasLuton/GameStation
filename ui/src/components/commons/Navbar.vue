@@ -33,6 +33,7 @@ export default {
             if (resp.status === 204 || resp.status === 401) {
                 this.userStore.reset();
                 this.$router.push("/");
+                window.location.reload();
             }
         },
         async getUnreadNotification() {

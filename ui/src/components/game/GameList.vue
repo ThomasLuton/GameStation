@@ -59,6 +59,17 @@ export default {
 </script>
 <template>
     <div class="container-fluid col-9">
+        <form novalidate @submit.prevent="" class="d-flex justify-content-end">
+            <div class="d-flex p-2 border rounded border-secondary">
+                <div class="mx-4">
+                    <label class="form-label" for="joinGame">Type a game code</label>
+                    <input class="form-control" type="text" name="joinGame" id="joinGame" placeholder="Not available">
+                </div>
+                <div class="pt-3">
+                    <button class="btn btn-primary" type="submit">Play</button>
+                </div>
+            </div>
+        </form>
         <div class="row d-flex justify-content-around">
             <GameCard v-for="game in games" :game="game" :favorite="isFavorite(game)"></GameCard>
         </div>

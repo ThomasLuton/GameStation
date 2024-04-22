@@ -6,5 +6,5 @@ import Toast from './components/commons/Toast.vue';
 <template>
 	<Navbar></Navbar>
 	<RouterView />
-	<Toast id="toast-global"></Toast>
+	<Toast class="fixed-top" id="toast-global"></Toast>
 </template>

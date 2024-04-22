@@ -10,10 +10,10 @@ import modal from './plugins/modal';
 const pinia = createPinia();
 const app = createApp(App);
 
+app.use(axios);
 app.use(pinia);
 app.use(router);
 app.use(i18n);
-app.use(axios);
 app.use(toast);
 app.use(modal);
 
