@@ -30,10 +30,9 @@ export default {
                     Authorization: `Bearer ${this.userStore.token}`
                 }
             });
-            if (resp.status === 204 || resp.status === 401) {
+            if (resp.status === 204) {
                 this.userStore.reset();
                 this.$router.push("/");
-                window.location.reload();
             }
         },
         async getUnreadNotification() {
@@ -52,13 +51,6 @@ export default {
         if (this.isAuthenticated) {
             await this.getUnreadNotification();
         }
-    },
-    async unmounted() {
-        await this.$http.post("/players/log-out", null, {
-            headers: {
-                Authorization: `Bearer ${this.userStore.token}`
-            }
-        });
     }
 }
 </script>

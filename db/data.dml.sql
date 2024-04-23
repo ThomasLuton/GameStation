@@ -36,6 +36,3 @@ INSERT INTO games (game_name, game_detail, min_player, max_player, thumbnail, ai
 values ('Fake game 5', 'Fake game 5 to be implement, victoire random, nombre de joueurs variables selon mes tests, jeu non valable', '1', '3', '/images/dame_total.png', 'false');
 INSERT INTO games (game_name, game_detail, min_player, max_player, thumbnail, ai_available)
 values ('Fake game 6', 'Fake game 6 to be implement, victoire random, nombre de joueurs variables selon mes tests, jeu non valable', '1', '3', '/images/dame_total.png', 'false');
-
--- INSERT INTO favorites (player_id, game_id) values ('1', '2');
--- INSERT INTO favorites (player_id, game_id) values ('1', '1');
