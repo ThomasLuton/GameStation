@@ -2,7 +2,7 @@
 import { useVuelidate } from '@vuelidate/core'
 import { mapStores } from 'pinia'
 import { useUserStore } from '../../stores/userStore'
-import { required, maxValue } from '@vuelidate/validators'
+import { required } from '@vuelidate/validators'
 
 export default {
     setup() {
@@ -46,7 +46,7 @@ export default {
             if (resp.status === 204) {
                 this.$toast.success('toast-global', "Player name updated");
             } else {
-                this.$toast.error('toast-global', resp.body)
+                this.$toast.error('toast-global', "The name should have 20 characters or less")
             }
         },
         async updateAvatar() {
@@ -60,9 +60,10 @@ export default {
                     }
                 });
                 if (resp.status === 204) {
-                    window.location.reload();
+                    this.$toast.success('toast-global', 'Avatar updated')
+                    this.$emit("avatarUpdated")
                 } else {
-                    this.$toast.error('toast-global', resp.body)
+                    this.$toast.error('toast-global', 'Error with this file')
                 }
             }
         },

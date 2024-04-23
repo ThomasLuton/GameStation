@@ -37,13 +37,12 @@ export default {
 <template>
     <section class="container-fluid">
         <h1 class="text-center my-2">Options</h1>
-        <div class="row">
-            <div class="col-1"></div>
-            <div class="col-2">
+        <div class="d-flex flex-column flex-md-row justify-content-around px-5">
+            <div class="">
                 <OptionsNav />
             </div>
-            <div class="border border-primary rounded p-2 col-8">
-                <RouterView :player="player"></RouterView>
+            <div class="p-2 flex-grow-1">
+                <RouterView :player="player" @avatar-updated="initPlayer"></RouterView>
             </div>
         </div>
     </section>

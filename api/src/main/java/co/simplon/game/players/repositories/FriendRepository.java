@@ -21,10 +21,6 @@ public interface FriendRepository
 	    @Param("playerId") Long playerId,
 	    @Param("friendId") Long friendId);
 
-    /*
-     * je veux mapper
-     */
-
     List<Friend> findByPlayerOrFriend(Player player,
 	    Player friend);
 

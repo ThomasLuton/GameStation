@@ -5,6 +5,7 @@ public enum CodeError {
     PlayerAlreadyExist, WrongCredentials,
     PlayerAlreadyConnected, UnknownPlayer, NotFriendWith,
     SamePlayer, AlreadyFriend, NotYourTurn,
-    NotificationAlreadyUnread, NotificationNotFound
+    NotificationAlreadyUnread, NotificationNotFound,
+    NoFavoriteFound
 
 }

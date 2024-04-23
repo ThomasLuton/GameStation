@@ -23,23 +23,23 @@ export default {
         },
         async getAllFavorites() {
             const token = this.userStore.token;
-            // const resp = await this.$http.get(`/favorites/${this.userStore.id}`, {
-            //     headers: {
-            //         Authorization: `Bearer ${token}`
-            //     }
-            // });
-            // if (resp.status == 200) {
-            //     if (resp.body != null) {
-            //         this.favorites = resp.body;
-            //     } else {
-            //         this.favorites = [];
-            //     }
-            // }
+            const resp = await this.$http.get(`/favorites`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (resp.status == 200) {
+                if (resp.body != null) {
+                    this.favorites = resp.body;
+                } else {
+                    this.favorites = [];
+                }
+            }
         },
         isFavorite(game) {
             if (this.favorites.length > 0) {
                 for (let i = 0; i < this.favorites.length; i++) {
-                    if (this.favorites[i].gameName === game.gameName) {
+                    if (this.favorites[i].game.gameName === game.gameName) {
                         return this.favorites[i];
                     }
                 }
@@ -53,13 +53,12 @@ export default {
         }
         await this.getAllGames();
     }
-    //un endpoint pour les jeux et si le user est connecté ramene ces favoris => ecoconception
 }
 
 </script>
 <template>
     <div class="container-fluid col-9">
-        <form novalidate @submit.prevent="" class="d-flex justify-content-end">
+        <form v-if="userStore.isAuthenticated" novalidate @submit.prevent="" class="d-flex justify-content-end">
             <div class="d-flex p-2 border rounded border-secondary">
                 <div class="mx-4">
                     <label class="form-label" for="joinGame">Type a game code</label>
