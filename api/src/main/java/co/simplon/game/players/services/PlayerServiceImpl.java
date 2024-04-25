@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -51,15 +50,15 @@ public class PlayerServiceImpl implements PlayerService {
     private final AuthHelper authHelper;
     private final PlayerRepository players;
     private final RoleRepository roles;
-    @Autowired
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     public PlayerServiceImpl(AuthHelper authHelper,
-	    PlayerRepository players,
-	    RoleRepository roles) {
+	    PlayerRepository players, RoleRepository roles,
+	    NotificationService notificationsService) {
 	this.authHelper = authHelper;
 	this.players = players;
 	this.roles = roles;
+	this.notificationService = notificationsService;
     }
 
     @Override
