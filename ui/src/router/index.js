@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../pages/HomePage.vue';
-import GameHistory from '../pages/GameHistory.vue';
-import EditGame from '../components/admin/EditGame.vue';
-import FakeGame from '../pages/FakeGame.vue';
+import Game from '../layouts/Game.vue';
 import { useUserStore } from '../stores/userStore';
 
 const delay = (t) => new Promise((r) => setTimeout(r, t)); // FF issue
@@ -12,36 +9,52 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomePage
+      name: 'hub',
+      component: () => import('../layouts/Hub.vue'),
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: () => import('../pages/HomePage.vue')
+        },
+        {
+          path: 'options',
+          name: 'options',
+          component: () => import('../pages/Options.vue'),
+          beforeEnter: () => {
+            const userStore = useUserStore();
+            return userStore.isAuthenticated;
+          },
+          children: [
+            {
+              path: 'notificationsSetup',
+              name: 'notificationsSetup',
+              component: () => import('../components/player/UpdateNotificationSetup.vue')
+            },
+            {
+              path: 'identity',
+              name: 'identity',
+              component: () => import('../components/player/IdentityUpdate.vue')
+            },
+            {
+              path: 'friendList',
+              name: 'friendList',
+              component: () => import('../components/player/FriendList.vue')
+            },
+            {
+              path: 'gameHistory',
+              name: 'gameHistory',
+              component: () => import('../components/player/GameHistory.vue')
+            }
+          ]
+        }
+      ]
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: EditGame,
-      beforeEnter: (to) => {
-        const userStore = useUserStore();
-        return userStore.isAuthenticated;
-      }
-    },
-    {
-      path: '/admin/game/:id/update',
-      name: 'game-update',
-      component: () => import('../components/admin/GameUpdate.vue')
-    },
-    {
-      path: '/history',
-      name: 'history',
-      component: GameHistory,
-      beforeEnter: (to) => {
-        const userStore = useUserStore();
-        return userStore.isAuthenticated;
-      }
-    },
-    {
-      path: '/fake-game',
-      name: 'fake game',
-      component: FakeGame
+      path: '/game',
+      name: 'game',
+      component: Game,
+      children: []
     }
   ],
   async scrollBehavior(to, from, savedPosition) {

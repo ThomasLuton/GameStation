@@ -34,10 +34,8 @@ export default {
                     Authorization: `Bearer ${token}`
                 }
             });
-            if (resp.body == null) {
-                this.favoriteClass = "bi bi-star";
-            } else {
-                this.favoriteClass = "bi bi-star-fill text-secondary";
+            if (resp.status === 204) {
+                this.favoriteClass = this.favoriteClass === "bi bi-star" ? "bi bi-star-fill text-secondary" : "bi bi-star";
             }
         }
     },
@@ -51,8 +49,8 @@ export default {
     <div class="card mx-1 my-3 col-12 col-md-5 col-lg-3 border-primary border-5 bg-primary bg-opacity-10 rounded-4">
         <div class="card-body position-relative">
             <h5 class="card-title text-center">{{ game.gameName }}</h5>
-            <button v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0" @click="switchFavorite"><i
-                    :class="favoriteClass"></i></button>
+            <button type="button" v-if="userStore.isAuthenticated" class="btn position-absolute top-0 end-0 m-1"
+                @click="switchFavorite"><i :class="favoriteClass"></i></button>
             <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="gameID">
                 <img :src="game.thumbnail" class="card-img-top" :alt=game.gameName>
             </button>

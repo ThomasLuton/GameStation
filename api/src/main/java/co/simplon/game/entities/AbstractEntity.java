@@ -25,4 +25,12 @@ public abstract class AbstractEntity {
 	this.id = id;
     }
 
+    @Override
+    public abstract boolean equals(Object obj);
+
+    @Override
+    public abstract int hashCode();
+
+    @Override
+    public abstract String toString();
 }

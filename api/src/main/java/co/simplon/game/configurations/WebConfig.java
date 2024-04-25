@@ -6,8 +6,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class WebConfig implements WebMvcConfigurer {
 
     @Value("${gameStation.cors.allowedOrigins}")
@@ -29,12 +30,18 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http)
 	    throws Exception {
-	http.cors().and().csrf().disable()
-		.authorizeRequests()
-		.requestMatchers("/ws/**", "/sign-in",
-			"/sign-up", "/game/**")
-		.permitAll().anyRequest().authenticated()
-		.and().oauth2ResourceServer().jwt();
+	http.cors(Customizer.withDefaults())
+		.csrf(csrf -> csrf.disable())
+		.authorizeHttpRequests((authz) -> authz
+			.requestMatchers("/players/sign-in",
+				"players/sign-up", "/games",
+				"games/{id}", "/hub")
+			.permitAll().anyRequest()
+			.authenticated())
+		.oauth2ResourceServer((
+			oauth2ResourceServer) -> oauth2ResourceServer
+				.jwt(Customizer
+					.withDefaults()));
 	return http.build();
     }
 

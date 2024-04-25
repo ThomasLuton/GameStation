@@ -1,0 +1,11 @@
+package co.simplon.game.errors;
+
+public enum CodeError {
+
+    PlayerAlreadyExist, WrongCredentials,
+    PlayerAlreadyConnected, UnknownPlayer, NotFriendWith,
+    SamePlayer, AlreadyFriend, NotYourTurn,
+    NotificationAlreadyUnread, NotificationNotFound,
+    NoFavoriteFound
+
+}

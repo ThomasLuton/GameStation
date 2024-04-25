@@ -2,10 +2,13 @@ package co.simplon.game.configurations;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+
+import co.simplon.game.utils.AuthHelper;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -15,29 +18,31 @@ public class WebSocketConfig
     @Value("${gameStation.cors.allowedOrigins}")
     private String[] allowedOrigins;
 
-    /*
-     * Realise le handshake en appelant le protocole HTTP via
-     * http:/localhost:8080/ws
-     */
+    private final AuthHelper authHelper;
+
+    public WebSocketConfig(AuthHelper authHelper) {
+	this.authHelper = authHelper;
+    }
+
+    @Override
+    public void configureMessageBroker(
+	    MessageBrokerRegistry config) {
+	config.enableSimpleBroker("/topic");
+	config.setApplicationDestinationPrefixes("/app");
+    }
+
     @Override
     public void registerStompEndpoints(
 	    StompEndpointRegistry registry) {
-	registry.addEndpoint("/ws")
-		.setAllowedOrigins(allowedOrigins)
-		.withSockJS();
+	registry.addEndpoint("/hub")
+		.setAllowedOrigins(allowedOrigins);
     }
 
-    /*
-     * Conventions de nommage websocket
-     * 
-     * app => Pour "appeler" l'application
-     * 
-     * topic => Pour "écouter" sur un sujet de l'application
-     */
     @Override
-    public void configureMessageBroker(
-	    MessageBrokerRegistry registry) {
-	registry.setApplicationDestinationPrefixes("/app");
-	registry.enableSimpleBroker("/topic");
+    public void configureClientInboundChannel(
+	    ChannelRegistration registration) {
+	registration.interceptors(
+		new WebSocketInterceptor(authHelper));
     }
+
 }

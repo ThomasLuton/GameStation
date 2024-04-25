@@ -7,10 +7,10 @@ const enMessages = {
             signIn: "Sign in",
             signUp: "Sign up",
             email: "Email",
-            nickName: "Nickname",
+            playerName: "Player name",
             password: "Password",
             helpEmail: "e.g. john.doemail.com",
-            helpNickName: "e.g. JohnDoe",
+            helpPlayerName: "e.g. JohnDoe",
             helpPassword: "e.g. Garfield2022!"
         },
         game: {
@@ -33,6 +33,7 @@ const enMessages = {
         navigation: {
             history: "Game history",
             admin: "Admin",
+            options: "Options",
             signIn: "Sign in",
             signUp: "Sign up",
             logOut: "Log out"

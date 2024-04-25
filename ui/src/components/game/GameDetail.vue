@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         async getGameById(id) {
-            const resp = await this.$http.get(`/game/${id}`);
+            const resp = await this.$http.get(`/games/${id}`);
             this.game = resp.body;
         },
         createID() {
@@ -50,17 +50,13 @@ export default {
                     <p>{{ $t('labels.game.rules') }}</p>
                     <p>{{ game.gameDetail }}</p>
                     <p>{{ $t('labels.game.playerNumber') }}</p>
-                    <p>{{ game.minPlayer }} {{ $t('labels.game.to') }} {{ game.maxPlayer }} {{ $t('labels.game.players') }}
-                    </p>
-                    <p>{{ $t('labels.game.victory') }} {{ game.victoryPoint }} {{ $t('labels.game.point') }} {{
-                        $t('labels.game.draw') }} {{
-        game.drawPoint }}{{ $t('labels.game.point') }} {{ $t('labels.game.lose') }} {{
-        game.losePoint }} {{ $t('labels.game.point') }}
+                    <p>{{ game.minPlayer }} {{ $t('labels.game.to') }} {{ game.maxPlayer }} {{ $t('labels.game.players')
+                        }}
                     </p>
                 </div>
                 <div class="modal-footer bg-primary bg-opacity-10">
                     <button type="button" class="btn btn-primary" :disabled="!isAvailable()">{{
-                        $t('labels.game.play') }}</button>
+        $t('labels.game.play') }}</button>
                 </div>
             </div>
         </div>

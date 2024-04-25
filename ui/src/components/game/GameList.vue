@@ -18,12 +18,12 @@ export default {
     },
     methods: {
         async getAllGames() {
-            const resp = await this.$http.get("/game");
+            const resp = await this.$http.get("/games");
             this.games = resp.body;
         },
         async getAllFavorites() {
             const token = this.userStore.token;
-            const resp = await this.$http.get(`/favorites/${this.userStore.id}`, {
+            const resp = await this.$http.get(`/favorites`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -39,7 +39,7 @@ export default {
         isFavorite(game) {
             if (this.favorites.length > 0) {
                 for (let i = 0; i < this.favorites.length; i++) {
-                    if (this.favorites[i].gameName === game.gameName) {
+                    if (this.favorites[i].game.gameName === game.gameName) {
                         return this.favorites[i];
                     }
                 }
@@ -53,12 +53,22 @@ export default {
         }
         await this.getAllGames();
     }
-    //un endpoint pour les jeux et si le user est connecté ramene ces favoris => ecoconception
 }
 
 </script>
 <template>
     <div class="container-fluid col-9">
+        <form v-if="userStore.isAuthenticated" novalidate @submit.prevent="" class="d-flex justify-content-end">
+            <div class="d-flex p-2 border rounded border-secondary">
+                <div class="mx-4">
+                    <label class="form-label" for="joinGame">Type a game code</label>
+                    <input class="form-control" type="text" name="joinGame" id="joinGame" placeholder="Not available">
+                </div>
+                <div class="pt-3">
+                    <button class="btn btn-primary" type="submit">Play</button>
+                </div>
+            </div>
+        </form>
         <div class="row d-flex justify-content-around">
             <GameCard v-for="game in games" :game="game" :favorite="isFavorite(game)"></GameCard>
         </div>
