@@ -1,9 +1,6 @@
 DROP TABLE IF EXISTS to_play;
 DROP TABLE IF EXISTS results;
-DROP TABLE IF EXISTS instances;
-DROP TABLE IF EXISTS instance_steps;
-DROP TABLE IF EXISTS to_earn;
-DROP TABLE IF EXISTS successes;
+DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS to_prefer;
 DROP TABLE IF EXISTS games;
 DROP TABLE IF EXISTS notifications;
@@ -70,26 +67,7 @@ CREATE TABLE to_prefer (
 	UNIQUE (player_id, game_id)
 );
 
-CREATE TABLE successes (
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL UNIQUE,
-	point INTEGER NOT NULL,
-	description VARCHAR(1000) NOT NULL,
-	game_id INTEGER REFERENCES games(id) NOT NULL
-);
-
-CREATE TABLE to_earn (
-	id SERIAL PRIMARY KEY,
-	player_id INTEGER REFERENCES players(id) NOT NULL,
-	success_id INTEGER REFERENCES successes(id) NOT NULL
-);
-
 -- instances related
-
-CREATE TABLE instance_steps (
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL UNIQUE
-);
 
 CREATE TABLE results (
 	id SERIAL PRIMARY KEY,
@@ -97,17 +75,19 @@ CREATE TABLE results (
 	ranking INTEGER
 );
 
-CREATE TABLE instances (
+CREATE TABLE sessions (
 	id SERIAL PRIMARY KEY, 
+	session_code CHAR(7) NOT NULL UNIQUE,
 	play_at TIMESTAMP,
-	only_friend BOOLEAN NOT NULL,
-	step_id INTEGER REFERENCES instance_steps(id) NOT NULL,
-	game_id INTEGER REFERENCES games(id) NOT NULL
+	only_friend BOOLEAN NOT NULL DEFAULT false,
+	step INTEGER NOT NULL,
+	game_id INTEGER REFERENCES games(id) NOT NULL,
+	player_id INTEGER REFERENCES players(id) NOT NULL
 );
 
 CREATE TABLE to_play (
 	id SERIAL PRIMARY KEY,
 	player_id INTEGER REFERENCES players(id) NOT NULL,
-	instance_id INTEGER REFERENCES instances(id) NOT NULL,
+	session_id INTEGER REFERENCES sessions(id) NOT NULL,
 	result_id INTEGER REFERENCES results(id)
 );
