@@ -6,6 +6,8 @@ public enum CodeError {
     PlayerAlreadyConnected, UnknownPlayer, NotFriendWith,
     SamePlayer, AlreadyFriend, NotYourTurn,
     NotificationAlreadyUnread, NotificationNotFound,
-    NoFavoriteFound, NoGameFound, PlayerAlreadyInGame
+    NoFavoriteFound, NoGameFound, PlayerAlreadyInGame,
+    SessionNotFound, PlayerIsNotCreator,
+    SessionAlreadyStarted, NumberOfPlayer
 
 }

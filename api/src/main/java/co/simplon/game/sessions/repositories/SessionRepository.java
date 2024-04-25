@@ -1,5 +1,7 @@
 package co.simplon.game.sessions.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +16,7 @@ public interface SessionRepository
     @Query(value = "select count(tp) from sessions s join to_play tp on tp.player_id = :playerId where s.step in (1,2);", nativeQuery = true)
     Integer countSessionNotFinishForOnePlayer(
 	    @Param("playerId") Long playerId);
+
+    Optional<Session> findBySessionCode(String sessionCode);
 
 }

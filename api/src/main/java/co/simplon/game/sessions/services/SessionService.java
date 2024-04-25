@@ -8,10 +8,10 @@ public interface SessionService {
 	    Integer creatorSuffix, Long gameId);
 
     public void joinSession(Integer playerSuffix,
-	    Integer sessionNumber);
+	    String sessionCode);
 
     public void startGame(Integer creatorSuffix,
-	    Integer sessionNumber);
+	    String sessionCode);
 
-    public void finishGame(Integer sessionNumber);
+    public void finishGame(String sessionCode);
 }

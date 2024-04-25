@@ -1,5 +1,6 @@
 package co.simplon.game.sessions.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import co.simplon.game.games.repositories.GameRepository;
 import co.simplon.game.players.entities.Player;
 import co.simplon.game.players.repositories.PlayerRepository;
 import co.simplon.game.sessions.dtos.SessionCreated;
+import co.simplon.game.sessions.entities.GamePlayed;
 import co.simplon.game.sessions.entities.Session;
 import co.simplon.game.sessions.enums.Step;
 import co.simplon.game.sessions.repositories.SessionRepository;
@@ -71,22 +73,52 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void joinSession(Integer playerSuffix,
-	    Integer sessionNumber) {
-	// TODO Auto-generated method stub
-
-    }
-
-    @Override
+    @Transactional
     public void startGame(Integer creatorSuffix,
-	    Integer sessionNumber) {
-	// TODO Auto-generated method stub
-
+	    String sessionCode) {
+	Player creator = players
+		.findOneByGamerTagSuffix(creatorSuffix);
+	if (creator == null) {
+	    throw new GameStationError(
+		    CodeError.UnknownPlayer,
+		    "Player not found",
+		    HttpStatus.BAD_REQUEST);
+	}
+	Session session = sessions
+		.findBySessionCode(sessionCode)
+		.orElseThrow(() -> new GameStationError(
+			CodeError.SessionNotFound,
+			"Session not found",
+			HttpStatus.BAD_REQUEST));
+	if (session.getStep() != Step.DRAFT.getNumber()) {
+	    throw new GameStationError(
+		    CodeError.SessionAlreadyStarted,
+		    "Session already started",
+		    HttpStatus.BAD_REQUEST);
+	}
+	if (!session.getCreator().equals(creator)) {
+	    throw new GameStationError(
+		    CodeError.PlayerIsNotCreator,
+		    "The player is not the creator of this session",
+		    HttpStatus.BAD_REQUEST);
+	}
+	checkNumberOfPlayer(session, session.getGame());
+	session.setStep(Step.STARTED.getNumber());
+	sessions.save(session);
     }
 
-    @Override
-    public void finishGame(Integer sessionNumber) {
-	// TODO Auto-generated method stub
+    private void checkNumberOfPlayer(Session session,
+	    Game game) {
+	List<GamePlayed> listOfPlayer = gamePlayedService
+		.getNumberOfPlayer(session);
+	int size = listOfPlayer.size();
+	if ((size < game.getMinPlayer())
+		|| (size > game.getMaxPlayer())) {
+	    throw new GameStationError(
+		    CodeError.NumberOfPlayer,
+		    "Number of player incorrect",
+		    HttpStatus.BAD_REQUEST);
+	}
 
     }
 
@@ -100,6 +132,19 @@ public class SessionServiceImpl implements SessionService {
 	String uuidString = uuid.toString().replaceAll("-",
 		"");
 	return uuidString.substring(0, 7);
+    }
+
+    @Override
+    public void joinSession(Integer playerSuffix,
+	    String sessionCode) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void finishGame(String sessionCode) {
+	// TODO Auto-generated method stub
+
     }
 
 }

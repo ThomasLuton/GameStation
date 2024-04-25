@@ -1,5 +1,7 @@
 package co.simplon.game.sessions.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,5 +29,11 @@ public class GamePlayedServiceImpl
 	gamePlayed.setPlayer(player);
 	gamePlayed.setSession(session);
 	gamesPlayed.save(gamePlayed);
+    }
+
+    @Override
+    public List<GamePlayed> getNumberOfPlayer(
+	    Session session) {
+	return gamesPlayed.findAllBySession(session);
     }
 }
