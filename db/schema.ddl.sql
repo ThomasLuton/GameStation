@@ -23,7 +23,7 @@ CREATE TABLE players (
 	password CHAR(60) NOT NULL,
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
     avatar VARCHAR(1000),
-	email_notification_enable BOOLEAN NOT NULL DEFAULT false,
+	email_notification_enable BOOLEAN NOT NULL,
 	day_before_notification INTEGER DEFAULT 7,
 	is_connected BOOLEAN NOT NULL
 );
@@ -79,7 +79,7 @@ CREATE TABLE sessions (
 	id SERIAL PRIMARY KEY, 
 	session_code CHAR(7) NOT NULL UNIQUE,
 	play_at TIMESTAMP,
-	only_friend BOOLEAN NOT NULL DEFAULT false,
+	only_friend BOOLEAN NOT NULL,
 	step INTEGER NOT NULL,
 	game_id INTEGER REFERENCES games(id) NOT NULL,
 	player_id INTEGER REFERENCES players(id) NOT NULL

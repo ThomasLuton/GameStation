@@ -55,12 +55,7 @@ public class SessionServiceImpl implements SessionService {
 		    "Player not found",
 		    HttpStatus.BAD_REQUEST);
 	}
-	if (isPlayerInGame(creator)) {
-	    throw new GameStationError(
-		    CodeError.PlayerAlreadyInGame,
-		    "Player already in game",
-		    HttpStatus.BAD_REQUEST);
-	}
+	checkIfPlayerIsInGame(creator);
 	Session session = new Session();
 	String sessionCode = generateRandomSessionCode();
 	session.setSessionCode(sessionCode);
@@ -90,12 +85,7 @@ public class SessionServiceImpl implements SessionService {
 			CodeError.SessionNotFound,
 			"Session not found",
 			HttpStatus.BAD_REQUEST));
-	if (session.getStep() != Step.DRAFT.getNumber()) {
-	    throw new GameStationError(
-		    CodeError.SessionAlreadyStarted,
-		    "Session already started",
-		    HttpStatus.BAD_REQUEST);
-	}
+	checkIfSessionIsNotStarted(session);
 	if (!session.getCreator().equals(creator)) {
 	    throw new GameStationError(
 		    CodeError.PlayerIsNotCreator,
@@ -122,9 +112,16 @@ public class SessionServiceImpl implements SessionService {
 
     }
 
-    private boolean isPlayerInGame(Player player) {
-	return sessions.countSessionNotFinishForOnePlayer(
-		player.getId()) != 0;
+    private void checkIfPlayerIsInGame(Player player) {
+	boolean check = sessions
+		.countSessionNotFinishForOnePlayer(
+			player.getId()) != 0;
+	if (check) {
+	    throw new GameStationError(
+		    CodeError.PlayerAlreadyInGame,
+		    "Player already in game",
+		    HttpStatus.BAD_REQUEST);
+	}
     }
 
     private String generateRandomSessionCode() {
@@ -137,8 +134,33 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public void joinSession(Integer playerSuffix,
 	    String sessionCode) {
-	// TODO Auto-generated method stub
+	Session session = sessions
+		.findBySessionCode(sessionCode)
+		.orElseThrow(() -> new GameStationError(
+			CodeError.SessionNotFound,
+			"Session not found",
+			HttpStatus.BAD_REQUEST));
+	Player joiner = players
+		.findOneByGamerTagSuffix(playerSuffix);
+	if (joiner == null) {
+	    throw new GameStationError(
+		    CodeError.UnknownPlayer,
+		    "Player not found",
+		    HttpStatus.BAD_REQUEST);
+	}
+	checkIfSessionIsNotStarted(session);
+	checkIfPlayerIsInGame(joiner);
+	gamePlayedService.create(joiner, session);
+    }
 
+    private void checkIfSessionIsNotStarted(
+	    Session session) {
+	if (session.getStep() != Step.DRAFT.getNumber()) {
+	    throw new GameStationError(
+		    CodeError.SessionAlreadyStarted,
+		    "Session already started",
+		    HttpStatus.BAD_REQUEST);
+	}
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.players.entities.Player;
 import co.simplon.game.sessions.entities.GamePlayed;
+import co.simplon.game.sessions.entities.Result;
 import co.simplon.game.sessions.entities.Session;
 import co.simplon.game.sessions.repositories.GamePlayedRepository;
 
@@ -35,5 +36,18 @@ public class GamePlayedServiceImpl
     public List<GamePlayed> getNumberOfPlayer(
 	    Session session) {
 	return gamesPlayed.findAllBySession(session);
+    }
+
+    @Override
+    public void addResult(Result result) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public List<GamePlayed> getGamePlayedByPlayer(
+	    Player player) {
+	// TODO Auto-generated method stub
+	return null;
     }
 }

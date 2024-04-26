@@ -50,4 +50,14 @@ public class SessionController {
 	service.startGame(suffix.intValue(), sessionCode);
     }
 
+    @PostMapping("/start/{session}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void joinGame(
+	    @PathVariable("session") String sessionCode,
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.joinSession(suffix.intValue(), sessionCode);
+    }
 }

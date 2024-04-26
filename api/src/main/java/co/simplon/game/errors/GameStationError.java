@@ -2,6 +2,7 @@ package co.simplon.game.errors;
 
 import org.springframework.http.HttpStatus;
 
+@SuppressWarnings("serial")
 public class GameStationError extends RuntimeException {
 
     private final ErrorMessage errorMessage;
