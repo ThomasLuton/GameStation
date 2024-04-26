@@ -6,34 +6,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.simplon.game.players.entities.Player;
-import co.simplon.game.sessions.entities.GamePlayed;
 import co.simplon.game.sessions.entities.Result;
 import co.simplon.game.sessions.entities.Session;
-import co.simplon.game.sessions.repositories.GamePlayedRepository;
+import co.simplon.game.sessions.entities.SessionPlayer;
+import co.simplon.game.sessions.repositories.SessionPlayerRepository;
 
 @Service
 @Transactional(readOnly = true)
-public class GamePlayedServiceImpl
-	implements GamePlayedService {
+public class SessionPlayerServiceImpl
+	implements SessionPlayerService {
 
-    private GamePlayedRepository gamesPlayed;
+    private SessionPlayerRepository gamesPlayed;
 
-    public GamePlayedServiceImpl(
-	    GamePlayedRepository gamesPlayed) {
+    public SessionPlayerServiceImpl(
+	    SessionPlayerRepository gamesPlayed) {
 	this.gamesPlayed = gamesPlayed;
     }
 
     @Override
     @Transactional
     public void create(Player player, Session session) {
-	GamePlayed gamePlayed = new GamePlayed();
-	gamePlayed.setPlayer(player);
-	gamePlayed.setSession(session);
-	gamesPlayed.save(gamePlayed);
+	SessionPlayer sessionPlayer = new SessionPlayer();
+	sessionPlayer.setPlayer(player);
+	sessionPlayer.setSession(session);
+	gamesPlayed.save(sessionPlayer);
     }
 
     @Override
-    public List<GamePlayed> getNumberOfPlayer(
+    public List<SessionPlayer> getNumberOfPlayer(
 	    Session session) {
 	return gamesPlayed.findAllBySession(session);
     }
@@ -45,7 +45,7 @@ public class GamePlayedServiceImpl
     }
 
     @Override
-    public List<GamePlayed> getGamePlayedByPlayer(
+    public List<SessionPlayer> getGamePlayedByPlayer(
 	    Player player) {
 	// TODO Auto-generated method stub
 	return null;

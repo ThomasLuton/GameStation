@@ -14,8 +14,8 @@ import co.simplon.game.games.repositories.GameRepository;
 import co.simplon.game.players.entities.Player;
 import co.simplon.game.players.repositories.PlayerRepository;
 import co.simplon.game.sessions.dtos.SessionCreated;
-import co.simplon.game.sessions.entities.GamePlayed;
 import co.simplon.game.sessions.entities.Session;
+import co.simplon.game.sessions.entities.SessionPlayer;
 import co.simplon.game.sessions.enums.Step;
 import co.simplon.game.sessions.repositories.SessionRepository;
 
@@ -26,22 +26,21 @@ public class SessionServiceImpl implements SessionService {
     private final SessionRepository sessions;
     private final PlayerRepository players;
     private final GameRepository games;
-    private final GamePlayedService gamePlayedService;
+    private final SessionPlayerService sessionPlayerService;
 
     public SessionServiceImpl(SessionRepository sessions,
 	    PlayerRepository players, GameRepository games,
-	    GamePlayedService gamePlayedService) {
+	    SessionPlayerService sessionPlayerService) {
 	this.sessions = sessions;
 	this.players = players;
 	this.games = games;
-	this.gamePlayedService = gamePlayedService;
+	this.sessionPlayerService = sessionPlayerService;
     }
 
     @Override
     @Transactional
     public SessionCreated createSession(
 	    Integer creatorSuffix, Long gameId) {
-	// cas 3 le creator est dans une session qui n'est pas fini
 	Game game = games.findById(gameId)
 		.orElseThrow(() -> new GameStationError(
 			CodeError.NoGameFound,
@@ -63,7 +62,7 @@ public class SessionServiceImpl implements SessionService {
 	session.setGame(game);
 	session.setStep(Step.DRAFT.getNumber());
 	session = sessions.save(session);
-	gamePlayedService.create(creator, session);
+	sessionPlayerService.create(creator, session);
 	return new SessionCreated(sessionCode, Step.DRAFT);
     }
 
@@ -99,7 +98,7 @@ public class SessionServiceImpl implements SessionService {
 
     private void checkNumberOfPlayer(Session session,
 	    Game game) {
-	List<GamePlayed> listOfPlayer = gamePlayedService
+	List<SessionPlayer> listOfPlayer = sessionPlayerService
 		.getNumberOfPlayer(session);
 	int size = listOfPlayer.size();
 	if ((size < game.getMinPlayer())
@@ -132,6 +131,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
+    @Transactional
     public void joinSession(Integer playerSuffix,
 	    String sessionCode) {
 	Session session = sessions
@@ -148,9 +148,9 @@ public class SessionServiceImpl implements SessionService {
 		    "Player not found",
 		    HttpStatus.BAD_REQUEST);
 	}
-	checkIfSessionIsNotStarted(session);
 	checkIfPlayerIsInGame(joiner);
-	gamePlayedService.create(joiner, session);
+	checkIfSessionIsNotStarted(session);
+	sessionPlayerService.create(joiner, session);
     }
 
     private void checkIfSessionIsNotStarted(
@@ -165,8 +165,9 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void finishGame(String sessionCode) {
-	// TODO Auto-generated method stub
-
+	// appelé à la fin d'un jeu
+	// session step => finish
+	// for each gamePlayed => addResult
     }
 
 }

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "to_play")
-public class GamePlayed extends AbstractEntity {
+public class SessionPlayer extends AbstractEntity {
 
     @JoinColumn(name = "player_id")
     @ManyToOne
@@ -23,7 +23,7 @@ public class GamePlayed extends AbstractEntity {
     @ManyToOne
     private Result result;
 
-    public GamePlayed() {
+    public SessionPlayer() {
 	// TODO Auto-generated constructor stub
     }
 
@@ -67,10 +67,10 @@ public class GamePlayed extends AbstractEntity {
 	if (this == obj) {
 	    return true;
 	}
-	if (!(obj instanceof GamePlayed)) {
+	if (!(obj instanceof SessionPlayer)) {
 	    return false;
 	}
-	GamePlayed other = (GamePlayed) obj;
+	SessionPlayer other = (SessionPlayer) obj;
 	return Objects.equals(player, other.player)
 		&& Objects.equals(result, other.result)
 		&& Objects.equals(session, other.session);

@@ -23,16 +23,16 @@ CREATE TABLE players (
 	password CHAR(60) NOT NULL,
 	role_id INTEGER REFERENCES roles(id) NOT NULL,
     avatar VARCHAR(1000),
-	email_notification_enable BOOLEAN NOT NULL,
-	day_before_notification INTEGER DEFAULT 7,
-	is_connected BOOLEAN NOT NULL
+	email_notification_enable BOOLEAN,
+	day_before_notification INTEGER,
+	is_connected BOOLEAN
 );
 
 CREATE TABLE to_be_friend (
 	id SERIAL PRIMARY KEY,
 	player_id INTEGER REFERENCES players(id) NOT NULL,
 	friend_id INTEGER REFERENCES players(id) NOT NULL,
-	pending BOOLEAN NOT NULL DEFAULT false,
+	pending BOOLEAN,
 	UNIQUE(player_id, friend_id)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE notifications(
 	title VARCHAR(255) NOT NULL,
 	content VARCHAR(1000) NOT NULL,
 	send_at TIMESTAMP NOT NULL,
-	is_read BOOLEAN NOT NULL,
+	is_read BOOLEAN,
 	redirect_link VARCHAR(255),
 	player_id INTEGER REFERENCES players(id) NOT NULL
 );
@@ -57,7 +57,7 @@ CREATE TABLE games (
 	min_player INTEGER NOT NULL,
 	max_player INTEGER NOT NULL,
 	thumbnail VARCHAR(1000) NOT NULL,
-	ai_available BOOLEAN NOT NULL
+	ai_available BOOLEAN
 );
 
 CREATE TABLE to_prefer (
