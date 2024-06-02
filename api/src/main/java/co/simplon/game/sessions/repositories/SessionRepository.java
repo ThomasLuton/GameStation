@@ -19,4 +19,8 @@ public interface SessionRepository
 
     Optional<Session> findBySessionCode(String sessionCode);
 
+    @Query(value = "select s.* from sessions s join to_play tp on tp.player_id = :playerId where s.step = 1;", nativeQuery = true)
+    Session getSessionInDraftForOnePlayer(
+	    @Param("playerId") Long playerId);
+
 }

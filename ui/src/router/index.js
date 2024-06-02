@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Game from '../layouts/Game.vue';
 import { useUserStore } from '../stores/userStore';
 
 const delay = (t) => new Promise((r) => setTimeout(r, t)); // FF issue
@@ -53,8 +52,14 @@ const router = createRouter({
     {
       path: '/game',
       name: 'game',
-      component: Game,
-      children: []
+      component: () => import('../layouts/Game.vue'),
+      children: [
+        {
+          path: '/:sessionCode',
+          name: 'session',
+          component: () => import('../pages/Session.vue')
+        }
+      ]
     }
   ],
   async scrollBehavior(to, from, savedPosition) {

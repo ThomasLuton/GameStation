@@ -170,4 +170,43 @@ public class SessionServiceImpl implements SessionService {
 	// for each gamePlayed => addResult
     }
 
+    @Override
+    @Transactional
+    public void leaveSession(Integer playerSuffix) {
+	Player leaver = players
+		.findOneByGamerTagSuffix(playerSuffix);
+	if (leaver == null) {
+	    throw new GameStationError(
+		    CodeError.UnknownPlayer,
+		    "Player not found",
+		    HttpStatus.BAD_REQUEST);
+	}
+	boolean check = sessions
+		.countSessionNotFinishForOnePlayer(
+			leaver.getId()) == 0;
+	if (check) {
+	    throw new GameStationError(
+		    CodeError.PlayerNotInGame,
+		    "Player not in game",
+		    HttpStatus.BAD_REQUEST);
+	}
+	// session pas commencer
+	sessionPlayerService.delete(leaver);
+    }
+
+    @Override
+    public SessionCreated getSessionInDraft(
+	    Integer playerSuffix) {
+	Player player = players
+		.findOneByGamerTagSuffix(playerSuffix);
+	Session session = sessions
+		.getSessionInDraftForOnePlayer(
+			player.getId());
+	if (session == null) {
+	    return null;
+	}
+	return new SessionCreated(session.getSessionCode(),
+		Step.DRAFT);
+    }
+
 }

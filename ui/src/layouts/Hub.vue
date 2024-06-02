@@ -41,13 +41,6 @@ onMounted(async () => {
     }
 })
 
-function sendTest() {
-    const message = {
-        name: "FrontEnd spam"
-    }
-    ws.send(JSON.stringify(message))
-}
-
 </script>
 
 <template>

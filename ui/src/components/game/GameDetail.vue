@@ -26,8 +26,26 @@ export default {
             this.gameID = `game${this.game.id}`;
         },
         isAvailable() {
-            const groupSize = this.connectedStore.members.length + 1;
-            return this.game.available && (groupSize >= this.game.minPlayer && groupSize <= this.game.maxPlayer) && this.userStore.isAuthenticated;
+            return this.userStore.isAuthenticated;
+        },
+        async startSession() {
+            const resp = await this.$http.post(`/sessions/create/${this.id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${this.userStore.token}`
+                }
+            })
+            if (resp.status == 200) {
+                this.$modal.remove(this.gameID)
+                this.$router.push({
+                    name: 'session',
+                    params: {
+                        sessionCode: resp.body.sessionCode
+                    }
+                })
+            } else {
+                this.$modal.remove(this.gameID)
+                this.$toast.error('toast-global', resp.body.message)
+            }
         }
     },
     async mounted() {
@@ -55,7 +73,7 @@ export default {
                     </p>
                 </div>
                 <div class="modal-footer bg-primary bg-opacity-10">
-                    <button type="button" class="btn btn-primary" :disabled="!isAvailable()">{{
+                    <button type="button" class="btn btn-primary" :disabled="!isAvailable()" @click="startSession">{{
         $t('labels.game.play') }}</button>
                 </div>
             </div>

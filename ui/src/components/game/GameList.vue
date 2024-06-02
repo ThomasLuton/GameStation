@@ -10,7 +10,8 @@ export default {
     data() {
         return {
             games: [],
-            favorites: []
+            favorites: [],
+            sessionCode: null
         }
     },
     computed: {
@@ -45,6 +46,28 @@ export default {
                 }
             }
             return null;
+        },
+        async getCurrentSession() {
+            const token = this.userStore.token;
+            const resp = await this.$http.get("/sessions/current", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if (resp.status == 200 && resp.body != null) {
+                this.sessionCode = resp.body.sessionCode;
+            }
+        },
+        goToCurrentSession() {
+            this.$router.push({
+                name: 'session',
+                params: {
+                    sessionCode: this.sessionCode
+                }
+            })
+        },
+        noCurrentSession() {
+            return this.sessionCode == null;
         }
     },
     async beforeMount() {
@@ -52,23 +75,29 @@ export default {
             await this.getAllFavorites();
         }
         await this.getAllGames();
+        await this.getCurrentSession();
     }
 }
 
 </script>
 <template>
     <div class="container-fluid col-9">
-        <form v-if="userStore.isAuthenticated" novalidate @submit.prevent="" class="d-flex justify-content-end">
-            <div class="d-flex p-2 border rounded border-secondary">
-                <div class="mx-4">
-                    <label class="form-label" for="joinGame">Type a game code</label>
-                    <input class="form-control" type="text" name="joinGame" id="joinGame" placeholder="Not available">
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-danger" @click="goToCurrentSession" :hidden="noCurrentSession()">Join
+                current party</button>
+            <form v-if="userStore.isAuthenticated" novalidate @submit.prevent="" class="d-flex justify-content-end">
+                <div class="d-flex p-2 border rounded border-secondary">
+                    <div class="mx-4">
+                        <label class="form-label" for="joinGame">Type a game code</label>
+                        <input class="form-control" type="text" name="joinGame" id="joinGame"
+                            placeholder="Not available">
+                    </div>
+                    <div class="pt-3">
+                        <button class="btn btn-primary" type="submit">Play</button>
+                    </div>
                 </div>
-                <div class="pt-3">
-                    <button class="btn btn-primary" type="submit">Play</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
         <div class="row d-flex justify-content-around">
             <GameCard v-for="game in games" :game="game" :favorite="isFavorite(game)"></GameCard>
         </div>

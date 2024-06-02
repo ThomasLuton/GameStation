@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +39,7 @@ import co.simplon.game.players.repositories.PlayerRepository;
 import co.simplon.game.players.repositories.RoleRepository;
 import co.simplon.game.utils.AuthHelper;
 import jakarta.validation.Valid;
+import reactor.core.publisher.Sinks;
 
 @Service
 @Transactional(readOnly = true)
@@ -51,14 +54,20 @@ public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository players;
     private final RoleRepository roles;
     private final NotificationService notificationService;
+    private final Sinks.Many<List<PlayerSimpleView>> sink;
+
+    @Autowired
+    private SimpMessagingTemplate messageTemplate;
 
     public PlayerServiceImpl(AuthHelper authHelper,
 	    PlayerRepository players, RoleRepository roles,
-	    NotificationService notificationsService) {
+	    NotificationService notificationsService,
+	    Sinks.Many<List<PlayerSimpleView>> sink) {
 	this.authHelper = authHelper;
 	this.players = players;
 	this.roles = roles;
 	this.notificationService = notificationsService;
+	this.sink = sink;
     }
 
     @Override
@@ -150,6 +159,10 @@ public class PlayerServiceImpl implements PlayerService {
 		candidate.getGamerTag().getSuffix());
 	candidate.setConnection(true);
 	players.save(candidate);
+	sink.tryEmitNext(getConnectedUsers());
+	List<PlayerSimpleView> message = getConnectedUsers();
+	messageTemplate.convertAndSend("/topic/users",
+		message);
 	return new TokenInfo(token, role, gamerTag);
     }
 
@@ -160,6 +173,9 @@ public class PlayerServiceImpl implements PlayerService {
 		.findOneByGamerTagSuffix(suffix);
 	player.setConnection(false);
 	players.save(player);
+	List<PlayerSimpleView> message = getConnectedUsers();
+	messageTemplate.convertAndSend("/topic/users",
+		message);
     }
 
     @Override

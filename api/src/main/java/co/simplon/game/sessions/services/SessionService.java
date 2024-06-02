@@ -14,4 +14,9 @@ public interface SessionService {
 	    String sessionCode);
 
     public void finishGame(String sessionCode);
+
+    public void leaveSession(Integer playerSuffix);
+
+    public SessionCreated getSessionInDraft(
+	    Integer playerSuffix);
 }

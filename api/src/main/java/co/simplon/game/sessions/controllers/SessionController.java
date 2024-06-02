@@ -4,6 +4,8 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +61,24 @@ public class SessionController {
 		.getPrincipalInfo(principal);
 	Long suffix = (Long) user.get("suffix");
 	service.joinSession(suffix.intValue(), sessionCode);
+    }
+
+    @DeleteMapping("/leave")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void leaveGame(
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	service.leaveSession(suffix.intValue());
+    }
+
+    @GetMapping("/current")
+    public SessionCreated getCurrentSession(
+	    JwtAuthenticationToken principal) {
+	Map<String, Object> user = authHelper
+		.getPrincipalInfo(principal);
+	Long suffix = (Long) user.get("suffix");
+	return service.getSessionInDraft(suffix.intValue());
     }
 }

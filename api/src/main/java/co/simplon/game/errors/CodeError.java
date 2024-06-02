@@ -8,6 +8,7 @@ public enum CodeError {
     NotificationAlreadyUnread, NotificationNotFound,
     NoFavoriteFound, NoGameFound, PlayerAlreadyInGame,
     SessionNotFound, PlayerIsNotCreator,
-    SessionAlreadyStarted, NumberOfPlayer
+    SessionAlreadyStarted, NumberOfPlayer, PlayerNotInGame,
+    CantLeaveFinishSession
 
 }
