@@ -1,7 +1,6 @@
 package co.simplon.game.notifications.controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,9 +34,7 @@ public class NotificationControllers {
     @GetMapping()
     public List<NotificationLightView> getAllForOnePlayer(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return notificationService
 		.getAllForOnePlayer(suffix.intValue());
     }
@@ -45,9 +42,7 @@ public class NotificationControllers {
     @GetMapping("/unread")
     public Integer getNumberOfUnreadNotifications(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return notificationService
 		.getNumberOfUnreadNotifications(
 			suffix.intValue());

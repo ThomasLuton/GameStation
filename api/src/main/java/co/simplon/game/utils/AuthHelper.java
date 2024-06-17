@@ -72,6 +72,12 @@ public class AuthHelper {
 	return info;
     }
 
+    public Long getSuffix(
+	    JwtAuthenticationToken principal) {
+	return (Long) principal.getTokenAttributes()
+		.get("suffix");
+    }
+
     public void verifyToken(String token) throws Exception {
 	algorithm.verify(JWT.decode(token));
     }

@@ -1,7 +1,5 @@
 package co.simplon.game.sessions.controllers;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,9 +32,7 @@ public class SessionController {
     public SessionCreated createSession(
 	    @PathVariable("game") Long gameId,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return service.createSession(suffix.intValue(),
 		gameId);
     }
@@ -46,9 +42,7 @@ public class SessionController {
     public void startGame(
 	    @PathVariable("session") String sessionCode,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.startGame(suffix.intValue(), sessionCode);
     }
 
@@ -57,9 +51,7 @@ public class SessionController {
     public void joinGame(
 	    @PathVariable("session") String sessionCode,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.joinSession(suffix.intValue(), sessionCode);
     }
 
@@ -67,18 +59,14 @@ public class SessionController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void leaveGame(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.leaveSession(suffix.intValue());
     }
 
     @GetMapping("/current")
     public SessionCreated getCurrentSession(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return service.getSessionInDraft(suffix.intValue());
     }
 }

@@ -1,7 +1,6 @@
 package co.simplon.game.favorites.controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -35,9 +34,7 @@ public class FavoriteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void add(@PathVariable("game") Long gameID,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	favoriteService.add(suffix.intValue(), gameID);
     }
 
@@ -51,9 +48,7 @@ public class FavoriteController {
     @GetMapping()
     public List<FavoriteView> allForOnePlayer(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return favoriteService.getAllFavoriteForOnePlayer(
 		suffix.intValue());
     }
@@ -62,9 +57,7 @@ public class FavoriteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Long patch(@PathVariable("id") Long gameID,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return favoriteService.patch(suffix.intValue(),
 		gameID);
     }

@@ -82,6 +82,7 @@ export default {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div v-if="notifications.length == 0">No notification</div>
                     <div v-for="notification in notifications ">
                         <div class="d-flex mt-2 mb-1 border border-primary rounded bg-primary bg-opacity-10">
                             <p class="mx-1">{{ notification.title }}</p>

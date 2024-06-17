@@ -65,7 +65,8 @@ export default {
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                         <li v-if="userStore.isAuthenticated" class="nav-item">
-                            <RouterLink :to="{ name: 'options' }" class="nav-link">{{ $t('labels.navigation.options') }}
+                            <RouterLink :to="{ name: 'options' }" class="nav-link">{{ $t('labels.navigation.options')
+                                }}
                             </RouterLink>
                         </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"

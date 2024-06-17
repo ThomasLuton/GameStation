@@ -1,7 +1,6 @@
 package co.simplon.game.players.controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -35,9 +34,7 @@ public class FriendController {
     public void requestFriend(
 	    @RequestBody GamerTagDto newFriend,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.request(newFriend, suffix.intValue());
     }
 
@@ -46,9 +43,7 @@ public class FriendController {
     public void acceptFriend(
 	    @RequestBody GamerTagDto newFriend,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.accept(newFriend, suffix.intValue());
     }
 
@@ -57,9 +52,7 @@ public class FriendController {
     public void refuseFriend(
 	    @RequestBody GamerTagDto newFriend,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.refuse(newFriend, suffix.intValue());
     }
 
@@ -68,18 +61,14 @@ public class FriendController {
     public void deleteFriend(
 	    @RequestBody GamerTagDto oldFriend,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.delete(oldFriend, suffix.intValue());
     }
 
     @GetMapping
     public List<FriendView> getFriends(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return service.getFriends(suffix.intValue());
     }
 

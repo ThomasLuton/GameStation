@@ -1,13 +1,11 @@
 <script setup>
 import { useUserStore } from '../stores/userStore';
 import { useConnectedStore } from '../stores/connectedStore';
-import { onMounted, inject } from 'vue';
+import { onMounted } from 'vue';
 import { jwtDecode } from "jwt-decode";
 import { Client } from '@stomp/stompjs';
 
-const http = inject("http");
 const store = useUserStore();
-let ws;
 onMounted(async () => {
     if (store.token !== "") {
         const token = store.token;

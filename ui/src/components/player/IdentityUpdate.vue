@@ -45,6 +45,7 @@ export default {
             })
             if (resp.status === 204) {
                 this.$toast.success('toast-global', "Player name updated");
+                this.userStore.changeName(input.playerName);
             } else {
                 this.$toast.error('toast-global', "The name should have 20 characters or less")
             }

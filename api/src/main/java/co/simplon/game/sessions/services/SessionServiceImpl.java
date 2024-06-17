@@ -190,7 +190,6 @@ public class SessionServiceImpl implements SessionService {
 		    "Player not in game",
 		    HttpStatus.BAD_REQUEST);
 	}
-	// session pas commencer
 	sessionPlayerService.delete(leaver);
     }
 

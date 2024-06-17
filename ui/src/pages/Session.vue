@@ -1,16 +1,18 @@
 <script>
-
-/*
-    TODO: rejoindre la session en cours pour le joueur
-    Quitter la session 
-    Jouer 
-*/
+import { useUserStore } from '../stores/userStore';
+import { mapStores } from 'pinia';
 
 export default {
     data() {
         return {
             sessionCode: this.$route.params.sessionCode
         }
+    },
+    computed: {
+        ...mapStores(useUserStore)
+    },
+    methods: {
+
     }
 }
 

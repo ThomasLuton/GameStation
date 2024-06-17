@@ -1,7 +1,6 @@
 package co.simplon.game.players.controllers;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -42,9 +41,7 @@ public class PlayerController {
     @GetMapping("/options")
     public PlayerOptionsView getUserForOptions(
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	return service.getOneForOptions(suffix.intValue());
     }
 
@@ -63,9 +60,7 @@ public class PlayerController {
     @PostMapping("/log-out")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void logOut(JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.logOut(suffix.intValue());
     }
 
@@ -84,9 +79,7 @@ public class PlayerController {
     public void updateNotification(
 	    @Valid @RequestBody PlayerUpdateNotification inputs,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.updatePlayerNotification(inputs,
 		suffix.intValue());
     }
@@ -96,9 +89,7 @@ public class PlayerController {
     public void updatePlayerName(
 	    @Valid @RequestBody PlayerUpdatePlayerName inputs,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.updatePlayerName(inputs, suffix.intValue());
     }
 
@@ -107,9 +98,7 @@ public class PlayerController {
     public void updateAvatar(
 	    @ModelAttribute @Valid PlayerUpdateAvatar input,
 	    JwtAuthenticationToken principal) {
-	Map<String, Object> user = authHelper
-		.getPrincipalInfo(principal);
-	Long suffix = (Long) user.get("suffix");
+	Long suffix = authHelper.getSuffix(principal);
 	service.updateAvatar(input, suffix.intValue());
     }
 

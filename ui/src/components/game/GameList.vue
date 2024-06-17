@@ -73,9 +73,9 @@ export default {
     async beforeMount() {
         if (this.userStore.isAuthenticated) {
             await this.getAllFavorites();
+            await this.getCurrentSession();
         }
         await this.getAllGames();
-        await this.getCurrentSession();
     }
 }
 
@@ -83,7 +83,8 @@ export default {
 <template>
     <div class="container-fluid col-9">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-danger" @click="goToCurrentSession" :hidden="noCurrentSession()">Join
+            <button type="button" class="btn btn-danger my-5" @click="goToCurrentSession"
+                :hidden="noCurrentSession()">Join
                 current party</button>
             <form v-if="userStore.isAuthenticated" novalidate @submit.prevent="" class="d-flex justify-content-end">
                 <div class="d-flex p-2 border rounded border-secondary">

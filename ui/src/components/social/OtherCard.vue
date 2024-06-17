@@ -32,7 +32,7 @@ export default {
         </div>
         <div class="py-1">
             {{ player.gamerTag.playerName }}#{{ player.gamerTag.suffix }}
-            <button type="button" @click="addFriend" class="btn btn-primary">Add a friend</button>
+            <button type="button" @click="addFriend" class="btn btn-primary">Click to add this player</button>
         </div>
 
     </li>

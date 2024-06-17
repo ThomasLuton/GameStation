@@ -39,7 +39,9 @@ export const useConnectedStore = defineStore('connected', {
             });
             if (friendRequest.status === 200) {
                 const friends = friendRequest.body;
-                this.friends = friends.filter((friend) => !friend.pending)
+                if (friends !== null) {
+                    this.friends = friends.filter((friend) => !friend.pending)
+                }
             }
         }
     }

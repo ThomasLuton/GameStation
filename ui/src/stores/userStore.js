@@ -16,6 +16,9 @@ export const useUserStore = defineStore('user', {
             this.gamerTag = {};
             this.role = "";
             this.token = "";
+        },
+        changeName(newName) {
+            this.gamerTag.playerName = newName;
         }
     }
 })
