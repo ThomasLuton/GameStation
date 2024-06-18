@@ -9,28 +9,28 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${gameStation.cors.allowedOrigins}")
-    private String[] allowedOrigins;
-
     @Value("${gameStation.auth.secret}")
     private String secret;
+
+    @Value("${gameStation.cors.enabled}")
+    private boolean corsEnabled;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http)
 	    throws Exception {
-	http.cors(Customizer.withDefaults())
+	http.cors(corsCustomizer())
 		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests((authz) -> authz
 			.requestMatchers("/players/sign-in",
@@ -66,11 +66,8 @@ public class WebConfig implements WebMvcConfigurer {
 		.build();
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-	registry.addMapping("/**")
-		.allowedOrigins(allowedOrigins)
-		.allowedMethods("POST", "GET", "PUT",
-			"PATCH", "DELETE");
+    private Customizer<CorsConfigurer<HttpSecurity>> corsCustomizer() {
+	return corsEnabled ? Customizer.withDefaults()
+		: cors -> cors.disable();
     }
 }

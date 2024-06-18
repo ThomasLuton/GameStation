@@ -26,7 +26,6 @@ public class WebSocketInterceptor
 		    .substring(23, 253);
 	    try {
 		authHelper.verifyToken(token);
-		System.out.println("token valid");
 	    } catch (Exception e) {
 
 	    }
