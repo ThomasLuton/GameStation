@@ -4,7 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 !**/src/main/resources/application-dev.properties
-!**/src/test/resources/application-test.properties
+!**/src/test/resources/application-devtest.properties
 secrets/
 logs/
 

@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(value = "test")
+@ActiveProfiles(value = "devtest")
 @Sql(scripts = { "classpath:db/schema-tests.ddl.sql",
 	"classpath:db/data-tests.dml.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
 @Import(ControllerMocks.class)
