@@ -15,11 +15,13 @@ onMounted(async () => {
             const body = {
                 gamerTag: store.gamerTag.playerName + '#' + store.gamerTag.suffix
             }
+            const wsBaseURL = import.meta.env.VITE_API_WS_URL;
             const client = new Client({
                 connectHeaders: {
                     Authorization: `Bearer ${token}`
                 },
-                brokerURL: 'ws://localhost:8080/hub',
+
+                brokerURL: `${wsBaseURL}/hub`,
                 onConnect: () => {
                     client.subscribe('/topic/users', message => {
                         const body = JSON.parse(message.body);
