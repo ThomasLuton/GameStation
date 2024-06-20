@@ -69,13 +69,13 @@ export default {
                                 }}
                             </RouterLink>
                         </li>
-                        <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
-                            data-bs-target="#signIn">
-                            <a class="nav-link" href="#">{{ $t('labels.navigation.signIn') }}</a>
+                        <li v-if="!userStore.isAuthenticated" class="nav-item">
+                            <button class="nav-link" href="#" type="button" data-bs-toggle="modal"
+                                data-bs-target="#signIn">{{ $t('labels.navigation.signIn') }}</button>
                         </li>
-                        <li v-if="!userStore.isAuthenticated" class="nav-item" type="button" data-bs-toggle="modal"
-                            data-bs-target="#signUp">
-                            <a class="nav-link" href="#">{{ $t('labels.navigation.signUp') }}</a>
+                        <li v-if="!userStore.isAuthenticated" class="nav-item">
+                            <button class="nav-link" href="#" type="button" data-bs-toggle="modal"
+                                data-bs-target="#signUp">{{ $t('labels.navigation.signUp') }}</button>
                         </li>
                         <li v-if="userStore.isAuthenticated" type="button" @click="disconnect()" class="nav-item">
                             <a class="nav-link" href="#">{{ $t('labels.navigation.logOut') }}</a>
