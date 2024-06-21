@@ -3,6 +3,7 @@ package co.simplon.game.players.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +23,8 @@ import co.simplon.game.players.repositories.PlayerRepository;
 @Transactional(readOnly = true)
 public class FriendServiceImpl implements FriendService {
 
-    /*
-     * Refacto possible le code de vérification se répète beaucoup à étudier
-     */
+    @Value("${gameStation.ui.url}")
+    private String url;
 
     private final PlayerRepository players;
     private final FriendRepository friends;
@@ -73,8 +73,7 @@ public class FriendServiceImpl implements FriendService {
 		"FriendShip request",
 		"I am " + player.getGamerTag()
 			+ ", do you want to be my friend?",
-		"http://localhost:5173/options/friendList",
-		friend);
+		this.url + "/options/friendList", friend);
 	notificationService.create(request);
 	Friend entity = new Friend();
 	entity.setPlayer(player);
