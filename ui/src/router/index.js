@@ -38,11 +38,7 @@ const router = createRouter({
             {
               path: 'friendList',
               name: 'friendList',
-              component: () => import('../components/player/FriendList.vue'),
-              beforeEnter: () => {
-                const userStore = useUserStore();
-                return userStore.isAuthenticated;
-              },
+              component: () => import('../components/player/FriendList.vue')
             },
             {
               path: 'gameHistory',
