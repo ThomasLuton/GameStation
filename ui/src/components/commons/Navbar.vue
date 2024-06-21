@@ -57,8 +57,8 @@ export default {
 
 <template>
     <NotificationModal @reload-unread="getUnreadNotification"></NotificationModal>
-    <SignIn></SignIn>
-    <SignUp></SignUp>
+    <SignIn />
+    <SignUp />
     <header class="sticky-top bg-primary">
         <nav class="container-xl navbar navbar-expand-lg">
             <div class="container-fluid">
