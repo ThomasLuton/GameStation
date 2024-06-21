@@ -49,12 +49,12 @@ export default {
 </script>
 
 <template>
-    <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="signUp" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary bg-opacity-10">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $t('labels.auth.signUp') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form novalidate @submit.prevent="submit">

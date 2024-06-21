@@ -37,14 +37,14 @@ export default {
 </script>
 
 <template>
-    <div class="modal fade" id="signIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="signIn" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary bg-opacity-10">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $t('labels.auth.signIn') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class=" modal-body">
                     <form novalidate @submit.prevent="submit">
                         <div class="mb-3">
                             <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
@@ -53,7 +53,8 @@ export default {
                             <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label required">{{ $t('labels.auth.password') }}</label>
+                            <label for="password" class="form-label required">{{ $t('labels.auth.password')
+                                }}</label>
                             <input type="password" name="password" class="form-control" id="password"
                                 v-model="credentials.password">
                             <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
