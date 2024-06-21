@@ -21,7 +21,7 @@ onMounted(async () => {
                     Authorization: `Bearer ${token}`
                 },
 
-                brokerURL: `${wsBaseURL}/hub`,
+                brokerURL: `${wsBaseURL}`,
                 onConnect: () => {
                     client.subscribe('/topic/users', message => {
                         const body = JSON.parse(message.body);
