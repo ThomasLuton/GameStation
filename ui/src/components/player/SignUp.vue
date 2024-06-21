@@ -13,6 +13,7 @@ export default {
     },
     data() {
         return {
+            id: "signUp",
             inputs: {
                 email: "",
                 password: "",
@@ -49,7 +50,7 @@ export default {
 </script>
 
 <template>
-    <div class="modal fade" id="signUp" tabindex="-1">
+    <div class="modal fade" :id="id" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary bg-opacity-10">
