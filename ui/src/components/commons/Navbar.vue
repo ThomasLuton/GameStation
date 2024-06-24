@@ -54,7 +54,7 @@ export default {
 </script>
 
 <template>
-    <NotificationModal @reload-unread="getUnreadNotification"></NotificationModal>
+    <NotificationModal v-if="userStore.isAuthenticated" @reload-unread="getUnreadNotification" />
     <header class="sticky-top bg-primary">
         <nav class="container-xl navbar navbar-expand-lg">
             <div class="container-fluid">
