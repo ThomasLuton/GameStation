@@ -9,8 +9,6 @@ import NotificationModal from '../notifications/NotificationModal.vue';
 
 export default {
     components: {
-        SignIn: SignIn,
-        SignUp: SignUp,
         NotificationModal: NotificationModal
     },
     data() {
@@ -57,8 +55,6 @@ export default {
 
 <template>
     <NotificationModal @reload-unread="getUnreadNotification"></NotificationModal>
-    <SignIn />
-    <SignUp />
     <header class="sticky-top bg-primary">
         <nav class="container-xl navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -73,12 +69,12 @@ export default {
                             </RouterLink>
                         </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item">
-                            <button class="nav-link" href="#" type="button" data-bs-toggle="modal"
-                                data-bs-target="#signIn">{{ $t('labels.navigation.signIn') }}</button>
+                            <RouterLink :to="{ name: 'signIn' }" class="nav-link">{{ $t('labels.navigation.signIn') }}
+                            </RouterLink>
                         </li>
                         <li v-if="!userStore.isAuthenticated" class="nav-item">
-                            <button class="nav-link" href="#" type="button" data-bs-toggle="modal"
-                                data-bs-target="#signUp">{{ $t('labels.navigation.signUp') }}</button>
+                            <RouterLink :to="{ name: 'signUp' }" class="nav-link">{{ $t('labels.navigation.signUp') }}
+                            </RouterLink>
                         </li>
                         <li v-if="userStore.isAuthenticated" type="button" @click="disconnect()" class="nav-item">
                             <a class="nav-link" href="#">{{ $t('labels.navigation.logOut') }}</a>

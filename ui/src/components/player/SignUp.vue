@@ -39,9 +39,8 @@ export default {
                     Object.assign(this.inputs, this.$options.data().inputs);
                     this.validator.$reset();
                     this.$toast.success('toast-global', 'Account created with success.');
-                    this.$modal.remove('signUp');
                 } else {
-                    this.$toast.error('toast-global', resp.body);
+                    this.$toast.error('toast-global', resp.body.message);
                 }
             }
         }
@@ -50,49 +49,39 @@ export default {
 </script>
 
 <template>
-    <div class="modal fade" :id="id" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary bg-opacity-10">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $t('labels.auth.signUp') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form novalidate @submit.prevent="submit">
-                        <div class="mb-3">
-                            <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
-                            <input type="email" class="form-control" name="email" id="email" v-model="inputs.email"
-                                :class="{ 'is-invalid': validator.inputs.email.$error }">
-                            <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
-                            <span v-if="validator.inputs.email.$error">
-                                {{ validator.inputs.email.$errors[0].$message }}
-                            </span>
-                        </div>
-                        <div class="mb-3">
-                            <label for="playerName" class="form-label required ">{{ $t('labels.auth.playerName')
-                                }}</label>
-                            <input type="playerName" class="form-control" name="playerName" id="playerName"
-                                v-model="inputs.playerName"
-                                :class="{ 'is-invalid': validator.inputs.playerName.$error }">
-                            <div class=" form-text">{{ $t('labels.auth.helpPlayerName') }}</div>
-                            <span v-if="validator.inputs.playerName.$error">
-                                {{ validator.inputs.playerName.$errors[0].$message }}
-                            </span>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label required">{{ $t('labels.auth.password') }}</label>
-                            <input type="password" name="password" class="form-control" id="password"
-                                v-model="inputs.password" :class="{ 'is-invalid': validator.inputs.password.$error }">
-                            <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
-                            <span v-if="validator.inputs.password.$error">
-                                {{ validator.inputs.password.$errors[0].$message }}
-                            </span>
-                        </div>
-                        <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signUp')
-                            }}</button>
-                    </form>
-                </div>
+    <div class="container-fluid my-3">
+        <h1>{{ $t('labels.auth.signUp') }}</h1>
+        <form novalidate @submit.prevent="submit">
+            <div class="mb-3">
+                <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
+                <input type="email" class="form-control" name="email" id="email" v-model="inputs.email"
+                    :class="{ 'is-invalid': validator.inputs.email.$error }">
+                <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
+                <span v-if="validator.inputs.email.$error">
+                    {{ validator.inputs.email.$errors[0].$message }}
+                </span>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="playerName" class="form-label required ">{{ $t('labels.auth.playerName')
+                    }}</label>
+                <input type="playerName" class="form-control" name="playerName" id="playerName"
+                    v-model="inputs.playerName" :class="{ 'is-invalid': validator.inputs.playerName.$error }">
+                <div class=" form-text">{{ $t('labels.auth.helpPlayerName') }}</div>
+                <span v-if="validator.inputs.playerName.$error">
+                    {{ validator.inputs.playerName.$errors[0].$message }}
+                </span>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label required">{{ $t('labels.auth.password') }}</label>
+                <input type="password" name="password" class="form-control" id="password" v-model="inputs.password"
+                    :class="{ 'is-invalid': validator.inputs.password.$error }">
+                <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
+                <span v-if="validator.inputs.password.$error">
+                    {{ validator.inputs.password.$errors[0].$message }}
+                </span>
+            </div>
+            <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signUp')
+                }}</button>
+        </form>
     </div>
 </template>

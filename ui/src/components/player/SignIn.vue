@@ -5,7 +5,6 @@ import { mapStores, mapActions } from 'pinia';
 export default {
     data() {
         return {
-            id: "signIn",
             credentials: {
                 email: "",
                 password: ""
@@ -21,7 +20,7 @@ export default {
             const resp = await this.$http.post("/players/sign-in", this.credentials);
             if (resp.status === 200) {
                 this.setUserStore(resp.body);
-                window.location.reload();
+                this.$router.push('/');
             } else {
                 this.$toast.error('toast-global', "Wrong credentials");
             }
@@ -38,33 +37,23 @@ export default {
 </script>
 
 <template>
-    <div class="modal fade" :id="id" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-primary bg-opacity-10">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ $t('labels.auth.signIn') }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class=" modal-body">
-                    <form novalidate @submit.prevent="submit">
-                        <div class="mb-3">
-                            <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
-                            <input type="email" class="form-control" name="email" id="email"
-                                v-model="credentials.email">
-                            <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label required">{{ $t('labels.auth.password')
-                                }}</label>
-                            <input type="password" name="password" class="form-control" id="password"
-                                v-model="credentials.password">
-                            <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signIn')
-                            }}</button>
-                    </form>
-                </div>
+    <div class="container-fluid my-3">
+        <h1>{{ $t('labels.auth.signIn') }}</h1>
+        <form novalidate @submit.prevent="submit">
+            <div class="mb-3">
+                <label for="email" class="form-label required ">{{ $t('labels.auth.email') }}</label>
+                <input type="email" class="form-control" name="email" id="email" v-model="credentials.email">
+                <div class=" form-text">{{ $t('labels.auth.helpEmail') }}</div>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="password" class="form-label required">{{ $t('labels.auth.password')
+                    }}</label>
+                <input type="password" name="password" class="form-control" id="password"
+                    v-model="credentials.password">
+                <div class="form-text">{{ $t('labels.auth.helpPassword') }}</div>
+            </div>
+            <button type="submit" class="btn btn-primary col-12 col-md-3">{{ $t('labels.auth.signIn')
+                }}</button>
+        </form>
     </div>
 </template>
