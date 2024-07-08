@@ -37,7 +37,7 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid my-3">
+    <div class="container-fluid my-3 col-12 col-lg-4">
         <h1>{{ $t('labels.auth.signIn') }}</h1>
         <form novalidate @submit.prevent="submit">
             <div class="mb-3">
